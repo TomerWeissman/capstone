@@ -359,3 +359,12 @@ files: work/12_10/README.md, work/OVERVIEW.md, work/HYPOTHESES.md, work/12_10/sc
 commits: pending (this commit)
 outcome: week 12_10 created. Goals: paper structure for the Oct 30 midterm; simulation answer-key test (H44, H45 pre-registered); a second goal still to be named. Overview rewritten as a draft.
 notes: the user asked to start and answer the week-start questions later. hybrid_bands.py copied because verification_checks imports it. Gantt shows the Second Reader Meeting on both Oct 8 and Oct 16.
+
+## 2026-10-12 | 12_10 | Simulation answer-key test (H44, H45)
+type: experiment
+status: done
+files: work/12_10/scripts/simulate_patients.py, work/12_10/scripts/sim_answer_key.py, work/12_10/results/verdict_h44_h45.txt, work/12_10/results/h45_noise_recovery.csv, work/12_10/results/sim_realism.csv, work/12_10/results/simulate_log.txt, work/12_10/figures/sim_realism.png, work/12_10/figures/h44_sim_coverage.png, work/12_10/figures/h45_noise_recovery.png, data/processed/checkpoints/sim_clean_cnn_lstm_v0/, data/processed/checkpoints/sim_noisy_cnn_lstm_v0/, work/HYPOTHESES.md, work/12_10/README.md, requirements.txt
+commits: pending (this commit); pre-registration in 273da68
+runtime: simulation 399 s; training and analysis 243 s
+outcome: H44 not supported (coverage error GARCH 4.6, situation 7.0 points). H45 not supported (3 of 5 level bands in 0.5-2). Actual squared error rose 1.1x-3.5x the planted noise variance (noise in the inputs also hurts the model). Post hoc: situation band widening tracks the actual error rise in every level; GARCH does not. Simulated patients too easy (RMSE median 11/16 vs 31/39 real).
+notes: design cut from 10 patients x 40 days to 8 x 30 before the run (runtime); the pre-registration row was edited to match before running. One seed per patient. simglucose 0.2.11 needs setuptools<81.

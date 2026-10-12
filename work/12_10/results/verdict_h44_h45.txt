@@ -1,0 +1,18 @@
+H44 (situation bands beat GARCH per situation on simulated noisy data): NOT SUPPORTED
+  coverage error GARCH 4.6, situation 7.0 points (-52%); situation better for 4 of 8 patients
+  overall coverage GARCH 83.1%, situation 77.8%
+  rule: at least 20% lower coverage error
+H45 (situation bands recover the planted noise): NOT SUPPORTED (3 of 5 level bands inside 0.5-2)
+     level  planted_sd_at_targets  ratio_situation  ratio_garch  ratio_sq_error  n_test_noisy
+  under 70                  12.42             0.66         1.43            1.10           483
+    70-120                   5.75             1.76         4.52            2.39          5311
+   120-180                   5.50             3.20         3.37            3.49          6928
+   180-250                   8.86             2.88        -0.15            2.29           838
+      250+                  18.14             1.29        -0.56            1.57           208
+Realism:
+    dataset  patients    mean     sd  time_in_range_70_180  time_below_70  sd_30min_change  share_under 70  share_70-120  share_120-180  share_180-250  share_250+  rmse_median  rmse_min  rmse_max
+      AZT1D        25 146.449 47.554                 0.782          0.015           24.019           0.015         0.295          0.482          0.170       0.037       31.249    20.967    45.546
+   HUPA-UCM        25 141.425 57.085                 0.717          0.066           20.612           0.066         0.337          0.378          0.167       0.052       38.695    19.401    82.334
+  sim clean         8 132.505 45.392                 0.855          0.036           12.733           0.036         0.391          0.465          0.081       0.027       11.311     7.587    20.532
+  sim noisy         8 132.496 45.614                 0.861          0.033           15.964           0.033         0.392          0.469          0.079       0.026       15.518    12.061    23.814
+runtime 243s; one seed per patient; preliminary (8 simulated patients)

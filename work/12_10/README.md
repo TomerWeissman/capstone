@@ -3,14 +3,23 @@
 Started Oct 12. The user asked to start now and answer the week-start questions later (findings, overview corrections, Volkan's feedback, the second goal).
 
 ## Hypotheses this week
-- **H44, testing**: on simulated patients with planted, level-dependent sensor noise, situation bands are closer to 80% per situation than GARCH (rule: at least 20% lower coverage error).
-- **H45, testing**: situation bands recover the planted noise. Per level band, the rise in squared 80% half-width from clean to noisy data, over 1.28 squared, is within a factor of 2 of the planted noise variance in at least 4 of 5 level bands.
+- **H44, not supported**: on simulated patients with planted, level-dependent sensor noise, situation bands were further from 80% per situation than GARCH (7.0 vs 4.6 points). Preliminary: the simulated patients were too easy to forecast.
+- **H45, not supported**: the situation band's widening matched the planted noise variance (within a factor of 2) in 3 of 5 level bands, not 4. The rule was wrong-footed: noise raised the actual error by 1.1x to 3.5x its own variance.
 
 ## Findings
+- **Noise costs more than its own size.** Planting sensor noise raised the 60-minute forecast's squared error by 1.1x to 3.5x the noise variance, depending on level. The noise hits twice: once in the reading being forecast, and again in the past readings the model uses as inputs. So an error-based noise estimate (like H23's) would overstate the sensor's noise.
+- **The situation band follows the real change in error; GARCH does not.** From clean to noisy data, the situation band widened by 0.6x to 1.3x the actual rise in error in every level band. GARCH's width rose too much in 70-120 and fell above 180, where the noise was largest. Post hoc, not the pre-registered rule.
+- **On simulated data, situation bands were less calibrated than GARCH** (7.0 vs 4.6 points), mostly under-covering (77.8% overall). GARCH adapts to recent errors. The real-data result (H28) does not carry over to these simulated patients.
+- **The simulator is too easy.** Glucose levels match the real datasets well, but glucose moves more slowly and the forecaster's error is about half of real (median 11 clean, 16 noisy vs 31 AZT1D, 39 HUPA-UCM). Missing: day-to-day changes in insulin sensitivity, exercise, stress, sensor artifacts.
 
 ## Outcomes
+- H44: coverage error GARCH 4.6, situation 7.0 points; situation better for 4 of 8 patients; overall coverage GARCH 83.1%, situation 77.8%.
+- H45 ratios (situation band / GARCH / actual squared error), by level: under 70 0.66 / 1.43 / 1.10; 70-120 1.76 / 4.52 / 2.39; 120-180 3.20 / 3.37 / 3.49; 180-250 2.88 / -0.15 / 2.29; 250+ 1.29 / -0.56 / 1.57. Test windows per level 483, 5311, 6928, 838, 208.
+- Realism: mean glucose 132 sim vs 146 AZT1D and 141 HUPA-UCM; SD 45 vs 48 and 57; time in range 86% vs 78% and 72%; SD of the 30-minute change 13 to 16 vs 24 and 21; CNN-LSTM RMSE median 11 (clean) and 16 (noisy) vs 31 and 39.
+- Runtime: simulation 399 s; training 16 models and analysis 243 s.
 
 ## Work done
+- Oct 12: simglucose installed (needs setuptools<81); simulated 8 virtual adults x 30 days; ran H44/H45.
 - Oct 12: week start. Carried forward the situation band scripts, the presentation figure, and the literature review (copies; originals stay in 5_10).
 
 ## Files
@@ -23,9 +32,20 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [scripts/presentation_figure.py](scripts/presentation_figure.py) | Carried from 5_10. Presentation figure script | carried; original in 5_10 |
 | [figures/presentation_situation_aware.png](figures/presentation_situation_aware.png) | Carried from 5_10. Presentation figure | carried; original in 5_10 |
 | [docs/literature_review_uncertainty.md](docs/literature_review_uncertainty.md) | Carried from 5_10. Literature review, seven gaps | carried; original in 5_10 |
+| [scripts/simulate_patients.py](scripts/simulate_patients.py) | Simulates 8 virtual adults x 30 days with simglucose, messier boluses and unlogged snacks; saves noise-free glucose | current |
+| [scripts/sim_answer_key.py](scripts/sim_answer_key.py) | H44/H45: plants level-dependent noise, trains the CNN-LSTM on clean and noisy copies, scores both bands, realism table | current |
+| [results/verdict_h44_h45.txt](results/verdict_h44_h45.txt) | H44/H45 verdicts, recovery table, realism table | current |
+| [results/h45_noise_recovery.csv](results/h45_noise_recovery.csv) | Per-level widening ratios | current |
+| [results/sim_realism.csv](results/sim_realism.csv) | Simulated vs AZT1D vs HUPA-UCM summary statistics | current |
+| [results/simulate_log.txt](results/simulate_log.txt) | Console log of the simulation run | current |
+| [figures/sim_realism.png](figures/sim_realism.png) | Glucose levels, 30-minute change, and forecast error: simulated vs real | current |
+| [figures/h44_sim_coverage.png](figures/h44_sim_coverage.png) | H44: coverage per situation, GARCH vs situation bands, simulated noisy data | current |
+| [figures/h45_noise_recovery.png](figures/h45_noise_recovery.png) | H45: widening from clean to noisy, per level, vs planted noise | current |
 | README.md | This page | current |
 
 ## Remember
+- Simulated glucose is in data/processed/simulated/ (not in git; rerun simulate_patients.py). Simulated checkpoints are sim_clean_cnn_lstm_v0 and sim_noisy_cnn_lstm_v0.
+- The planted noise is independent reading to reading. Real sensor noise is correlated over time.
 - Simulated data is an answer key for testing methods, not training data for real patients, and not a source of band widths for real patients.
 - The Gantt lists the Second Reader Meeting twice: Oct 8 on its own row, Oct 16 in this week's row. Check with the user.
 - Week-start questions are still unanswered: corrections to the overview, Volkan's feedback, and the second goal.
