@@ -11,3 +11,5 @@ torch>=2.14
 pyarrow>=25.0
 duckdb>=1.5
 arch>=8.0
+simglucose==0.2.11
+setuptools<81  # simglucose pulls an old gym that imports pkg_resources

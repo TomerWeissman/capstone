@@ -12,7 +12,8 @@ Start here. One folder per week, named by the Monday that starts it (`28_9` is t
 | 14_9 | Sep 14 to 20 | GLIMMER replicated; personalization gain was a seed bug | [14_9/](14_9/README.md) |
 | 21_9 | Sep 21 to 27 | Uncertainty bands cry wolf; methods indistinguishable at matched alarms | [21_9/](21_9/README.md) |
 | 28_9 | Sep 28 to Oct 4 | Plain model wins on interval quality; fine-tuning shows no clear gain | [28_9/](28_9/README.md) |
-| 5_10 | Oct 5 to 11 | Not started. Goals to be set at week start. | [5_10/](5_10/README.md) |
+| 5_10 | Oct 5 to 11 | Situation-aware bands confirmed on fresh data; autoencoder line closed | [5_10/](5_10/README.md) |
+| 12_10 | Oct 12 to 18 | Simulation answer-key test; paper structure | [12_10/](12_10/README.md) |
 
 ## How to read a week folder
 

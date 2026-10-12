@@ -351,3 +351,11 @@ commits: pending (this week's commit)
 runtime: about 1 min
 outcome: with activity inputs, the map has two axes: glucose level (left to right, still the main one) and activity (steps and heart rate high at the top, low at the bottom). Time of day, not an input, follows the activity axis (night hours at the bottom). Basal is less dominant than in the 4-input map. Teacher-forced next-hour decoder error 5.8 (7 inputs) vs 6.1 mg/dL (4 inputs), one seed.
 notes: visual; the decoder difference is small and one seed.
+
+## 2026-10-12 | 12_10 | Week start: goals and carry-forward
+type: docs
+status: done
+files: work/12_10/README.md, work/OVERVIEW.md, work/HYPOTHESES.md, work/12_10/scripts/situation_bands.py, work/12_10/scripts/predictability_map.py, work/12_10/scripts/hybrid_bands.py, work/12_10/scripts/verification_checks.py, work/12_10/scripts/presentation_figure.py, work/12_10/figures/presentation_situation_aware.png, work/12_10/docs/literature_review_uncertainty.md
+commits: pending (this commit)
+outcome: week 12_10 created. Goals: paper structure for the Oct 30 midterm; simulation answer-key test (H44, H45 pre-registered); a second goal still to be named. Overview rewritten as a draft.
+notes: the user asked to start and answer the week-start questions later. hybrid_bands.py copied because verification_checks imports it. Gantt shows the Second Reader Meeting on both Oct 8 and Oct 16.
