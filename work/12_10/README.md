@@ -35,7 +35,8 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [figures/presentation_situation_aware.png](figures/presentation_situation_aware.png) | Carried from 5_10. Presentation figure | carried; original in 5_10 |
 | [docs/literature_review_uncertainty.md](docs/literature_review_uncertainty.md) | Carried from 5_10. Literature review, seven gaps | carried; original in 5_10 |
 | [notebooks/01_uncertainty_band_figures.ipynb](notebooks/01_uncertainty_band_figures.ipynb) | All saved uncertainty-band figures from 5_10 and 12_10 in one place, images only | current |
-| [notebooks/02_key_figures.ipynb](notebooks/02_key_figures.ipynb) | Short selection, in order: band methods before situations, situation grid, teacher-forcing encoder, distance from 80% (H28 on). Images only | current |
+| [notebooks/02_key_figures.ipynb](notebooks/02_key_figures.ipynb) | Short selection, in order: bands with false triggers marked, band methods before situations, situation grid, teacher-forcing encoder, distance from 80% (H28 on). Images only | current |
+| figures/alarms_*_21_9.png (5 files) | Extracted from 21_9 notebooks 01 and 02: 24-hour band views with correct and false triggers marked | current |
 | [figures/methods_tradeoff_21_9.png](figures/methods_tradeoff_21_9.png) | Extracted from 21_9 notebook 01: danger caught vs false triggers, three methods | current |
 | [figures/methods_width_vs_error_28_9.png](figures/methods_width_vs_error_28_9.png) | Extracted from 28_9 notebook 04: band width vs forecast error, six methods | current |
 | [scripts/simulate_patients.py](scripts/simulate_patients.py) | Simulates 8 virtual adults x 30 days with simglucose, messier boluses and unlogged snacks; saves noise-free glucose | current |

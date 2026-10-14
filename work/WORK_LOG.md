@@ -397,3 +397,10 @@ status: done
 files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/figures/methods_tradeoff_21_9.png, work/12_10/figures/methods_width_vs_error_28_9.png, work/12_10/README.md
 commits: pending (this commit)
 outcome: order is now: method comparison without situations (21_9 trade-off, 28_9 width vs error, both extracted from notebook outputs), situation grid, teacher-forcing encoder, distance from 80% (H28, H27, H32, H37, H38). 12 figures.
+
+## 2026-10-14 | 12_10 | Key figures: add bands with false triggers marked
+type: notebook
+status: done
+files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/figures/alarms_three_methods_patient_a_21_9.png, work/12_10/figures/alarms_three_methods_patient_b_21_9.png, work/12_10/figures/alarms_three_methods_patient_c_21_9.png, work/12_10/figures/alarms_garch_35pct_weighted_vs_plain_21_9.png, work/12_10/figures/alarms_garch_80pct_weighted_vs_plain_21_9.png, work/12_10/README.md
+commits: pending (this commit)
+outcome: new first section with 5 figures extracted from 21_9 notebook outputs (01 section 5, 02 section 6). 17 figures total.
