@@ -383,3 +383,10 @@ status: done
 files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/README.md
 commits: pending (this commit)
 outcome: 9 figures in three sections: band method comparison (H32 OhioT1DM, H37), how often bands miss (H28, H27, H38), teacher-forcing encoder (H39 and H40 PCA, situation t-SNE, 7-input HUPA t-SNE). Executed with no errors.
+
+## 2026-10-14 | 12_10 | Key figures: add the situation grid
+type: notebook
+status: done
+files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/README.md
+commits: pending (this commit)
+outcome: predictability map (25 situation squares, H26) added as the first section; 10 figures total.

@@ -35,7 +35,7 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [figures/presentation_situation_aware.png](figures/presentation_situation_aware.png) | Carried from 5_10. Presentation figure | carried; original in 5_10 |
 | [docs/literature_review_uncertainty.md](docs/literature_review_uncertainty.md) | Carried from 5_10. Literature review, seven gaps | carried; original in 5_10 |
 | [notebooks/01_uncertainty_band_figures.ipynb](notebooks/01_uncertainty_band_figures.ipynb) | All saved uncertainty-band figures from 5_10 and 12_10 in one place, images only | current |
-| [notebooks/02_key_figures.ipynb](notebooks/02_key_figures.ipynb) | Short selection: band method comparison, how often bands miss, teacher-forcing encoder. Images only | current |
+| [notebooks/02_key_figures.ipynb](notebooks/02_key_figures.ipynb) | Short selection: situation grid, band method comparison, how often bands miss, teacher-forcing encoder. Images only | current |
 | [scripts/simulate_patients.py](scripts/simulate_patients.py) | Simulates 8 virtual adults x 30 days with simglucose, messier boluses and unlogged snacks; saves noise-free glucose | current |
 | [scripts/sim_answer_key.py](scripts/sim_answer_key.py) | H44/H45: plants level-dependent noise, trains the CNN-LSTM on clean and noisy copies, scores both bands, realism table | current |
 | [results/verdict_h44_h45.txt](results/verdict_h44_h45.txt) | H44/H45 verdicts, recovery table, realism table | current |
