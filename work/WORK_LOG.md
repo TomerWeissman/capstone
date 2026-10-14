@@ -376,3 +376,10 @@ files: work/12_10/notebooks/01_uncertainty_band_figures.ipynb, work/12_10/README
 commits: pending (this commit)
 outcome: 21 saved band figures from 5_10 and 12_10, embedded, one heading each. Executed with no errors.
 notes: weeks 21_9 and 28_9 have band plots only inside their notebooks' outputs (no PNG files), so they are not included.
+
+## 2026-10-14 | 12_10 | Notebook: key figures (methods, misses, teacher forcing)
+type: notebook
+status: done
+files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/README.md
+commits: pending (this commit)
+outcome: 9 figures in three sections: band method comparison (H32 OhioT1DM, H37), how often bands miss (H28, H27, H38), teacher-forcing encoder (H39 and H40 PCA, situation t-SNE, 7-input HUPA t-SNE). Executed with no errors.
