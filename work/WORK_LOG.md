@@ -390,3 +390,10 @@ status: done
 files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/README.md
 commits: pending (this commit)
 outcome: predictability map (25 situation squares, H26) added as the first section; 10 figures total.
+
+## 2026-10-14 | 12_10 | Key figures: reorder, add pre-situation method comparisons
+type: notebook
+status: done
+files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/figures/methods_tradeoff_21_9.png, work/12_10/figures/methods_width_vs_error_28_9.png, work/12_10/README.md
+commits: pending (this commit)
+outcome: order is now: method comparison without situations (21_9 trade-off, 28_9 width vs error, both extracted from notebook outputs), situation grid, teacher-forcing encoder, distance from 80% (H28, H27, H32, H37, H38). 12 figures.
