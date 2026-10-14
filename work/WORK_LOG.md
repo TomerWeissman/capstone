@@ -368,3 +368,11 @@ commits: pending (this commit); pre-registration in 273da68
 runtime: simulation 399 s; training and analysis 243 s
 outcome: H44 not supported (coverage error GARCH 4.6, situation 7.0 points). H45 not supported (3 of 5 level bands in 0.5-2). Actual squared error rose 1.1x-3.5x the planted noise variance (noise in the inputs also hurts the model). Post hoc: situation band widening tracks the actual error rise in every level; GARCH does not. Simulated patients too easy (RMSE median 11/16 vs 31/39 real).
 notes: design cut from 10 patients x 40 days to 8 x 30 before the run (runtime); the pre-registration row was edited to match before running. One seed per patient. simglucose 0.2.11 needs setuptools<81.
+
+## 2026-10-14 | 12_10 | Notebook: all uncertainty-band figures in one place
+type: notebook
+status: done
+files: work/12_10/notebooks/01_uncertainty_band_figures.ipynb, work/12_10/README.md
+commits: pending (this commit)
+outcome: 21 saved band figures from 5_10 and 12_10, embedded, one heading each. Executed with no errors.
+notes: weeks 21_9 and 28_9 have band plots only inside their notebooks' outputs (no PNG files), so they are not included.
