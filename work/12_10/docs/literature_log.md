@@ -19,3 +19,11 @@ Sources: [Bunescu et al. 2013](https://webpages.charlotte.edu/rbunescu/data/ohio
 | adaptive conformal inference glucose forecasting CGM online coverage distribution shift | ACI method (Gibbs and Candes, NeurIPS 2021, arXiv:2106.00170). CGM: neural CDE forecaster with conformal risk control and deferral (KTU repository); conformal imputation (arXiv:2403.18069). | No CGM forecasting paper found using ACI-style online updating or evaluating per-patient coverage under drift. |
 
 Sources: [ACI](https://arxiv.org/pdf/2106.00170), [KTU](https://epubl.ktu.edu/object/elaba:279147543/index.html), [arXiv:2403.18069](https://arxiv.org/pdf/2403.18069).
+
+## Oct 17: is the calibration noise floor new?
+
+| Query | What came back | Gap status |
+|---|---|---|
+| conditional coverage evaluation sampling noise autocorrelated time series prediction intervals subgroup coverage variability null baseline | Conformal for dynamic time series with conditional-coverage bounds (Xu and Xie, ICML 2021); conditional guarantees over subgroup classes (Gibbs, Cherian, Candes, arXiv:2305.12616), which notes small-subgroup width problems; pintervals R package (arXiv:2601.03994) summarizes coverage uniformity across groups without autocorrelation or a null; online multi-step conformal preserving score dependence (arXiv:2410.13115); interval-length vs coverage correlation as a conditional diagnostic (arXiv:2406.14904); evaluation of interval forecasts in econometrics (Diebold's J. Time Ser. Anal. 2018 paper; Christoffersen-style unconditional coverage, independence, and conditional coverage tests). | No method found for a sampling-noise floor of group-level coverage dispersion under autocorrelation. Christoffersen's independence test (clustering of misses) is the closest relative and should be cited and contrasted: it tests serial independence of misses, not whether between-group coverage differences exceed what autocorrelated sampling produces. |
+
+Sources: [Xu and Xie 2021](https://proceedings.mlr.press/v139/xu21h/xu21h.pdf), [Gibbs et al.](https://arxiv.org/pdf/2305.12616), [pintervals](https://arxiv.org/pdf/2601.03994), [arXiv:2410.13115](https://arxiv.org/html/2410.13115v2), [arXiv:2406.14904](https://arxiv.org/html/2406.14904), [Diebold](https://www.sas.upenn.edu/~fdiebold/papers2/Eval.pdf).
