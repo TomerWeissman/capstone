@@ -32,6 +32,8 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 
 - **H70, supported**: bands calibrated only on other patients plus the online patient scale are as honest as own-data bands.
 
+- **H72, supported**: adaptive bands even out coverage from day to day; the patient-scale band is most even.
+
 ## Findings
 - **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
 - **Round 4: how predictable is error size, and can a learned band be both sharp and calibrated?** Error size is mostly unpredictable even with rich context (at most 20%), and recent errors barely help: errors do not cluster at the 60-minute horizon. Learned bands are sharper but uneven; adding situation calibration and patient scaling fixes patients but leaves about 2 points of situation unevenness. Sharpness and conditional calibration trade off.
@@ -101,6 +103,10 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [scripts/round8_cold_start.py](scripts/round8_cold_start.py) | H70: cold-start bands (leave-one-patient-out calibration) with and without the online patient scale | current |
 | [results/verdict_h70.txt](results/verdict_h70.txt) | H70 verdict and tables | current |
 | [docs/paper_draft.md](docs/paper_draft.md) | Paper draft built from the findings ledger | current |
+| [scripts/round10_daily_coverage.py](scripts/round10_daily_coverage.py) | H72: SD of daily coverage per method | current |
+| [results/verdict_h72.txt](results/verdict_h72.txt) | H72 verdict | current |
+| [scripts/train_horizon30.py](scripts/train_horizon30.py) | 30-minute-horizon CNN-LSTMs for H71 | current |
+| [scripts/round9_horizon30.py](scripts/round9_horizon30.py) | H71: Rounds 2-3 findings at 30 minutes | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |

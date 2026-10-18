@@ -53,7 +53,8 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 ### F10. GARCH x situation bands are the most even across patients and situations. Tier 1 (post hoc, Round 1); mostly explained by F11.
 - Lowest patient-by-situation calibration error on all three datasets (8.5, 7.6, 12.3 points vs 9.7, 8.3, 16.7 for situation-only), and still lowest or tied after removing each method's overall coverage offset.
 - Patient-scaled situation bands (H50) help only on HUPA-UCM.
-- Puzzle: GARCH's scale does not predict error size (F9), yet normalizing by it evens out coverage. Round 2 answer: GARCH-based bands have lower sampling-noise floors (6.5-6.8 vs 8.5 AZT1D), so their raw unevenness is lower mostly because of noise, not calibration; by real excess, situation bands are equal or better. Hypothesis: GARCH spreads misses out in time (H57).
+- Puzzle: GARCH's scale does not predict error size (F9), yet normalizing by it evens out coverage. Round 2 answer: GARCH-based bands have lower sampling-noise floors (6.5-6.8 vs 8.5 AZT1D), so their raw unevenness is lower mostly because of noise, not calibration; by real excess, situation bands are equal or better.
+- Mechanism (H57 no, H72 yes): not shorter miss streaks, but more even coverage from day to day.
 
 ### F12. An online per-patient scale correction removes the real between-patient miscalibration and sharpens the bands. Tier 1 to 2 (H58, H59; second try, recorded as such).
 - Situation bands times exp(theta), theta adapted per patient from misses known 60 minutes later (eta 0.01): per-patient excess above the noise floor goes from 3.5, 2.3, 9.1 points to -0.9, -0.9, +0.4; interval score improves (112.0 vs 113.5; 130.2 vs 130.8; 107.5 vs 110.8).
@@ -77,3 +78,8 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Without the online scale, cold bands are uneven across patients (3.6, 2.5, 11.5 points above the noise floor).
 - The situation shape of uncertainty transfers between patients; the patient-specific part is a scale that can be learned while the band is in use.
 - Caveat: the forecaster itself was still trained per patient.
+
+### F16. Honesty has a third axis: the day. Tier 2 (H72).
+- A static band covers some days far less than others: the SD of daily coverage for situation bands is 10.3, 9.3, 12.4 points.
+- Bands that adapt to recent errors even this out: GARCH x situation 7.2, 6.3, 8.9. The online per-patient scale band does best: 5.5, 5.9, 6.7.
+- This is what lowers the noise floors of adaptive bands (F11).

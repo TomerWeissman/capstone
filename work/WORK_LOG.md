@@ -473,3 +473,12 @@ files: work/12_10/scripts/round8_cold_start.py, work/12_10/results/verdict_h70.t
 commits: pending (this commit)
 runtime: about 3 min
 outcome: H70 supported 3 of 3: cold + patient scale per-patient excess -0.87/-0.89/0.49 vs own-data -0.88/-0.91/0.43; without the scale 3.59/2.47/11.45.
+
+## 2026-10-17 | 12_10 | H72: day-to-day coverage evenness
+type: experiment
+status: done
+files: work/12_10/scripts/round10_daily_coverage.py, work/12_10/results/verdict_h72.txt, work/12_10/scripts/train_horizon30.py, work/12_10/scripts/round9_horizon30.py, src/azt1d/uq_frames.py, src/azt1d/glimmer/uncertainty.py, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: about 1 min
+outcome: H72 supported 3 of 3: daily coverage SD GARCH x situation 7.2/6.3/8.9 vs situation 10.3/9.3/12.4; patient-scale band 5.5/5.9/6.7. Mechanism for the lower noise floors of adaptive bands.
+notes: forecast_frames and garch_sigma now take a horizon/lag (defaults unchanged; 60-minute frames verified identical).

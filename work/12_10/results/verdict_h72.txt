@@ -1,0 +1,4 @@
+H72 (GARCH x situation daily-coverage SD >= 15% lower than situation bands): SUPPORTED (3 of 3)
+azt1d: SD of daily coverage (points): GARCH 6.8, situation (Mondrian) 10.3, GARCH x situation 7.2, situation x patient scale (0.01) 5.5
+ohiot1dm: SD of daily coverage (points): GARCH 6.0, situation (Mondrian) 9.3, GARCH x situation 6.3, situation x patient scale (0.01) 5.9
+hupa_ucm: SD of daily coverage (points): GARCH 8.8, situation (Mondrian) 12.4, GARCH x situation 8.9, situation x patient scale (0.01) 6.7
