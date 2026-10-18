@@ -1,0 +1,21 @@
+H46 (level and trend explain < 70% of the summary): NOT SUPPORTED; they explain 87%
+  leftover PCA, share of leftover variance per direction: 65%, 23%, 6%, 3%, 1%, 1%, 1%, 0%
+H47 (one variable explains >= 20% of the leftover): SUPPORTED; best: patient (between-patient share, in-sample) 28%
+                                    variable r2_of_leftover
+                                 carbs (2 h)          -7.8%
+                                 bolus (2 h)          -9.5%
+                      insulin on board (4 h)          -5.7%
+                                       basal          21.0%
+                                  heart rate          11.5%
+                                 steps (2 h)           5.5%
+                              calories (2 h)           0.6%
+                                 time of day           1.7%
+                                2-hour trend          -8.1%
+                                acceleration          -8.0%
+                                   bumpiness         -11.8%
+                   all of the above together          48.1%
+  patient (between-patient share, in-sample)          28.0%
+Decoder teacher-forced next-hour error (mg/dL): full summary 5.77, level-and-trend part only 5.85, summary zeroed 17.07
+H48 (leftover improves prediction of CNN-LSTM error size by >= 10%): NOT SUPPORTED; gain +1.2%
+  matched test windows 9,994 of 10,000; mean absolute error of predicting |error| (mg/dL): level + trend 20.23, level + trend + leftover 19.99, level + trend + recorded variables 20.95, always the median 20.13
+runtime 531s; one seed; folds by patient (5); preliminary

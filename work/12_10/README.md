@@ -6,11 +6,14 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - **H44, not supported**: on simulated patients with planted, level-dependent sensor noise, situation bands were further from 80% per situation than GARCH (7.0 vs 4.6 points). Preliminary: the simulated patients were too easy to forecast.
 - **H45, not supported**: the situation band's widening matched the planted noise variance (within a factor of 2) in 3 of 5 level bands, not 4. The rule was wrong-footed: noise raised the actual error by 1.1x to 3.5x its own variance.
 
-- **H46, testing**: level and trend explain less than 70% of the encoder summary (HUPA-UCM, 7 inputs).
-- **H47, testing**: one recorded variable explains at least 20% of the leftover.
-- **H48, testing**: the leftover improves prediction of the CNN-LSTM's error size by at least 10% over level and trend.
+- **H46, not supported**: level and trend explain 87% of the encoder summary (rule: under 70%).
+- **H47, supported (narrowly)**: basal explains 21% of the leftover (rule 20%), likely standing in for patient identity.
+- **H48, not supported**: the leftover improves prediction of the CNN-LSTM's error size by 1.2% (rule 10%).
 
 ## Findings
+- **The encoder summary is mostly level and trend (87%).** The leftover 13% has two main directions. Removing it barely changes the decoder (5.77 to 5.85 mg/dL).
+- **The leftover is mostly "which patient, on which pump settings".** Basal explains 21% of it and heart rate 12%; meals, insulin, and curve shape explain nothing for new patients. Everything recorded together explains 48%, so about half is still unexplained.
+- **The leftover does not predict how wrong the forecast will be** (1.2% better). More striking: for a patient the model has never seen, level and trend don't predict the size of the forecast error better than a constant guess. Error size is set mostly by the patient, not the moment. This fits H29 (errors follow each patient's variability) and says per-patient calibration matters at least as much as per-situation.
 - **Noise costs more than its own size.** Planting sensor noise raised the 60-minute forecast's squared error by 1.1x to 3.5x the noise variance, depending on level. The noise hits twice: once in the reading being forecast, and again in the past readings the model uses as inputs. So an error-based noise estimate (like H23's) would overstate the sensor's noise.
 - **The situation band follows the real change in error; GARCH does not.** From clean to noisy data, the situation band widened by 0.6x to 1.3x the actual rise in error in every level band. GARCH's width rose too much in 70-120 and fell above 180, where the noise was largest. Post hoc, not the pre-registered rule.
 - **On simulated data, situation bands were less calibrated than GARCH** (7.0 vs 4.6 points), mostly under-covering (77.8% overall). GARCH adapts to recent errors. The real-data result (H28) does not carry over to these simulated patients.
@@ -23,6 +26,7 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - Runtime: simulation 399 s; training 16 models and analysis 243 s.
 
 ## Work done
+- Oct 17: H46-H48, encoder leftover after level and trend (531 s).
 - Oct 14: key-figures notebook (9 figures in three sections).
 - Oct 14: notebook collecting all 21 uncertainty-band figures (5_10, 12_10).
 - Oct 12: simglucose installed (needs setuptools<81); simulated 8 virtual adults x 30 days; ran H44/H45.
@@ -43,6 +47,12 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | figures/alarms_*_21_9.png (5 files) | Extracted from 21_9 notebooks 01 and 02: 24-hour band views with correct and false triggers marked | current |
 | [figures/methods_tradeoff_21_9.png](figures/methods_tradeoff_21_9.png) | Extracted from 21_9 notebook 01: danger caught vs false triggers, three methods | current |
 | [figures/methods_width_vs_error_28_9.png](figures/methods_width_vs_error_28_9.png) | Extracted from 28_9 notebook 04: band width vs forecast error, six methods | current |
+| [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |
+| [results/verdict_h46_h48.txt](results/verdict_h46_h48.txt) | H46-H48 verdicts and numbers | current |
+| [results/encoder_leftover_variables.csv](results/encoder_leftover_variables.csv) | Share of the leftover explained by each variable | current |
+| [figures/h46_leftover_share.png](figures/h46_leftover_share.png) | H46: level-and-trend share of the summary; PCA of the leftover | current |
+| [figures/h47_leftover_variables.png](figures/h47_leftover_variables.png) | H47: what each variable explains of the leftover | current |
+| [figures/h48_leftover_error.png](figures/h48_leftover_error.png) | Decoder with and without the leftover; H48 error-size prediction | current |
 | [scripts/simulate_patients.py](scripts/simulate_patients.py) | Simulates 8 virtual adults x 30 days with simglucose, messier boluses and unlogged snacks; saves noise-free glucose | current |
 | [scripts/sim_answer_key.py](scripts/sim_answer_key.py) | H44/H45: plants level-dependent noise, trains the CNN-LSTM on clean and noisy copies, scores both bands, realism table | current |
 | [results/verdict_h44_h45.txt](results/verdict_h44_h45.txt) | H44/H45 verdicts, recovery table, realism table | current |

@@ -404,3 +404,12 @@ status: done
 files: work/12_10/notebooks/02_key_figures.ipynb, work/12_10/figures/alarms_three_methods_patient_a_21_9.png, work/12_10/figures/alarms_three_methods_patient_b_21_9.png, work/12_10/figures/alarms_three_methods_patient_c_21_9.png, work/12_10/figures/alarms_garch_35pct_weighted_vs_plain_21_9.png, work/12_10/figures/alarms_garch_80pct_weighted_vs_plain_21_9.png, work/12_10/README.md
 commits: pending (this commit)
 outcome: new first section with 5 figures extracted from 21_9 notebook outputs (01 section 5, 02 section 6). 17 figures total.
+
+## 2026-10-17 | 12_10 | Encoder leftover after level and trend (H46-H48)
+type: experiment
+status: done
+files: work/12_10/scripts/encoder_leftover.py, work/12_10/results/verdict_h46_h48.txt, work/12_10/results/encoder_leftover_variables.csv, work/12_10/figures/h46_leftover_share.png, work/12_10/figures/h47_leftover_variables.png, work/12_10/figures/h48_leftover_error.png, work/HYPOTHESES.md, work/12_10/README.md
+commits: pending (this commit); pre-registration in cc71edc
+runtime: 531 s (estimated 2-3 min; the cross-fitted gradient boosting was slower)
+outcome: H46 not supported (level and trend explain 87%). H47 supported narrowly (basal 21% of leftover; patient 28% in-sample; all variables 48%). H48 not supported (+1.2%). For new patients, level and trend predict CNN-LSTM error size no better than a constant (20.23 vs 20.13 mg/dL).
+notes: HUPA-UCM, 7-input encoder, one seed, 10,000 test windows (9,994 matched to forecasts), 5 folds by patient. The verdict file names "patient" as best variable; the H47 verdict rests on basal, the best cross-fitted recorded variable.
