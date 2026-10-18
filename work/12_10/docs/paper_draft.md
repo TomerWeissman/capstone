@@ -37,7 +37,10 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
   - Gluformer (arXiv:2209.04526).
   - Temporal Fusion Transformer with quantiles (PMC12349322).
   - Evidential vs MC dropout on HUPA-UCM (Tan and McBeth 2026, arXiv:2603.04955).
-  - Calibration is reported marginally; accuracy is sometimes stratified by glycemic range (GlyRAG, arXiv:2601.05353), but interval coverage is not.
+  - Calibration is mostly reported marginally. Accuracy is sometimes stratified by glycemic range (GlyRAG, arXiv:2601.05353).
+  - Interval coverage by glucose range has one precedent, in ICU glucose prediction (PMC8324237), without trend and without a correction.
+  - Uncertainty-aware horizon control (MAKE 8:145, 2026) links calibration to volatility.
+  - Personalization of uncertainty: meta-learning with evidential heads (Zhu et al.), applied before deployment rather than online during use.
 - **Conformal prediction.**
   - Mondrian / group-conditional conformal (Vovk 2003; Vovk 2012).
   - Conditional guarantees over subgroup classes (Gibbs, Cherian, Candes, arXiv:2305.12616).
