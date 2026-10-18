@@ -1,0 +1,19 @@
+training windows 622,245, validation 77,830 (3s)
+epoch 1: validation RMSE 39.20 mg/dL (24s)
+epoch 2: validation RMSE 38.49 mg/dL (41s)
+epoch 3: validation RMSE 38.34 mg/dL (63s)
+epoch 4: validation RMSE 38.26 mg/dL (84s)
+epoch 5: validation RMSE 38.26 mg/dL (103s)
+epoch 6: validation RMSE 38.27 mg/dL (122s)
+epoch 7: validation RMSE 38.06 mg/dL (140s)
+epoch 8: validation RMSE 38.09 mg/dL (171s)
+epoch 9: validation RMSE 38.09 mg/dL (191s)
+epoch 10: validation RMSE 38.00 mg/dL (216s)
+epoch 11: validation RMSE 38.11 mg/dL (234s)
+epoch 12: validation RMSE 38.03 mg/dL (252s)
+epoch 13: validation RMSE 38.02 mg/dL (270s)
+epoch 14: validation RMSE 38.24 mg/dL (288s)
+azt1d: pooled test RMSE 31.4 mg/dL; median per patient 31.5
+ohiot1dm: pooled test RMSE 34.7 mg/dL; median per patient 32.7
+hupa_ucm: pooled test RMSE 30.6 mg/dL; median per patient 35.8
+runtime 347s

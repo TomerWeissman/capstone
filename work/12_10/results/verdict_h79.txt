@@ -1,0 +1,25 @@
+H79 (pooled forecaster, full cold start): NOT SUPPORTED (a 3 of 3, b 1 of 3)
+azt1d (median patient RMSE: pooled 31.5, per-patient models 31.2):
+                                coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                          
+GARCH                              83.32  84.20          117.46           5.23              2.72            2.31
+situation (Mondrian)               79.81  73.46          111.46           4.08              1.58            2.63
+situation x patient scale          80.09  74.76          111.29           3.84              1.78           -0.65
+cold situation                     79.82  73.54          111.61           3.92              1.42            2.69
+cold situation x patient scale     80.09  74.83          111.43           3.56              1.46           -0.65
+ohiot1dm (median patient RMSE: pooled 32.7, per-patient models 37.3):
+                                coverage   width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                           
+GARCH                              86.17  101.36          131.83           7.25              2.85            1.53
+situation (Mondrian)               81.20   83.48          123.28           5.45              2.99            1.88
+situation x patient scale          80.07   81.62          123.25           5.55              3.35           -0.77
+cold situation                     81.15   83.80          123.65           5.30              2.75            2.38
+cold situation x patient scale     80.07   81.93          123.38           5.35              3.13           -0.76
+hupa_ucm (median patient RMSE: pooled 35.8, per-patient models 38.7):
+                                coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                          
+GARCH                              80.17  75.76          112.26           8.29              4.64            4.66
+situation (Mondrian)               79.02  69.85          106.14           4.17              0.76            5.55
+situation x patient scale          79.49  71.44          105.51           3.91              1.77            0.48
+cold situation                     80.70  73.06          107.43           4.41              0.98            6.48
+cold situation x patient scale     79.49  71.55          105.94           5.11              3.04            0.50
