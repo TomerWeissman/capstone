@@ -13,8 +13,13 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - **H49, not supported**: patient explains more of the error size than situation on 1 of 3 datasets; error size is weakly predictable (at most 15%).
 - **H50, not supported**: patient-scaled situation bands help only on HUPA-UCM (+28%); post hoc, GARCH x situation is most even everywhere.
 
+- **H51, supported**: situation calibration is at the sampling-noise floor on 2 of 3 datasets.
+- **H52, not supported**: patient-by-situation unevenness is mostly sampling noise (real excess 1 to 2 points).
+- **H53, supported**: real miscalibration remains between patients (2.3 to 9.1 points above noise).
+
 ## Findings
 - **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
+- **Round 2: how much of the bands' unevenness is real?** A sampling-noise floor (situation labels circularly shifted within each patient) shows situation calibration is solved to the limit of detection, patient-by-situation unevenness is mostly noise, and the real remaining miscalibration is between patients. GARCH-based bands look more even mainly because their noise floor is lower.
 - **Round 1: what sets the size of the forecast error?** Neither patient nor situation dominates, and both together explain at most 15% (H49). The earlier "patient dominates" hint was HUPA-UCM only. Patient-scaled bands help only there (H50). GARCH x situation is the most even band across patient-by-situation cells on all three datasets.
 - **The encoder summary is mostly level and trend (87%).** The leftover 13% has two main directions. Removing it barely changes the decoder (5.77 to 5.85 mg/dL).
 - **The leftover is mostly "which patient, on which pump settings".** Basal explains 21% of it and heart rate 12%; meals, insulin, and curve shape explain nothing for new patients. Everything recorded together explains 48%, so about half is still unexplained.
@@ -58,6 +63,10 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | results/round1_*.csv | Per-dataset band metrics; R^2 table | current |
 | [figures/h49_error_sources.png](figures/h49_error_sources.png) | H49: what predicts the size of the forecast error | current |
 | [figures/h50_patient_scaled_bands.png](figures/h50_patient_scaled_bands.png) | H50: calibration by situation, patient, patient x situation for six band methods | current |
+| [scripts/round2_noise_floor.py](scripts/round2_noise_floor.py) | Round 2, H51-H53: observed unevenness vs sampling-noise floor, three levels, five methods | current |
+| [results/verdict_h51_h53.txt](results/verdict_h51_h53.txt) | H51-H53 verdicts with every observed/floor pair | current |
+| [results/round2_noise_floor.csv](results/round2_noise_floor.csv) | Observed, floor, excess per dataset, method, level | current |
+| [figures/h51_noise_floor.png](figures/h51_noise_floor.png) | Observed unevenness vs noise floor, 3 datasets x 3 levels | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |

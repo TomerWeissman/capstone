@@ -422,3 +422,11 @@ commits: pending (this commit); pre-registration in 4c6a3a0
 runtime: about 1 min per run (frames cached)
 outcome: H49 not supported (patient > situation on 1 of 3; all groupings explain at most 15% of |error|). H50 not supported (+3%, -8%, +28%). Post hoc: GARCH x situation lowest patient-by-situation calibration error on all three datasets, also after removing the overall coverage offset (new dispersion metric).
 notes: the user authorized autonomous work (no check-ins, no runtime limit) on Oct 17. GARCH scale predictor was rescaled on validation after a first run showed the raw scale is off by a constant; GARCH x situation predictor uses a ratio of sums after the ratio of means blew up on HUPA-UCM. Both fixes were to unfair or unstable baselines, not to the tested methods.
+
+## 2026-10-17 | 12_10 | Round 2: calibration noise floors (H51-H53)
+type: experiment
+status: done
+files: src/azt1d/group_bands.py, work/12_10/scripts/round2_noise_floor.py, work/12_10/results/verdict_h51_h53.txt, work/12_10/results/round2_noise_floor.csv, work/12_10/figures/h51_noise_floor.png, work/12_10/docs/literature_log.md, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit); pre-registration in cb1e9df
+runtime: about 3 min
+outcome: H51 supported (2 of 3). H52 not supported (0 of 3; patient-by-situation unevenness 80-95% noise). H53 supported (3 of 3; per-patient excess 3.5, 2.3, 9.1 points for situation bands). GARCH-based bands have lower noise floors, which explains most of F10. H57 and H58 pre-registered.

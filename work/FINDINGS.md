@@ -42,7 +42,13 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Time of day explains 2 to 3%.
 - The earlier claim (from H48) that the patient dominates holds only for HUPA-UCM.
 
-### F10. GARCH x situation bands are the most even across patients and situations. Tier 1 (post hoc, Round 1).
+### F11. Situation calibration is solved to the limit of what can be measured; the real remaining miscalibration is between patients. Tier 2 (H51-H53).
+- A new noise floor for calibration metrics: circularly shift situation labels within each patient (keeps autocorrelation, breaks the link) to see how uneven coverage looks from sampling noise alone.
+- Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM; OhioT1DM 1.6 above).
+- Patient-by-situation unevenness is 80-95% sampling noise (floors 6.5 to 15.3 points). Comparing methods at that level without a floor is misleading.
+- Per-patient unevenness is real: 3.5, 2.3, 9.1 points above the floor.
+
+### F10. GARCH x situation bands are the most even across patients and situations. Tier 1 (post hoc, Round 1); mostly explained by F11.
 - Lowest patient-by-situation calibration error on all three datasets (8.5, 7.6, 12.3 points vs 9.7, 8.3, 16.7 for situation-only), and still lowest or tied after removing each method's overall coverage offset.
 - Patient-scaled situation bands (H50) help only on HUPA-UCM.
-- Puzzle: GARCH's scale does not predict error size (F9), yet normalizing by it evens out coverage. To test: is the remaining unevenness just sampling noise (Round 2)?
+- Puzzle: GARCH's scale does not predict error size (F9), yet normalizing by it evens out coverage. Round 2 answer: GARCH-based bands have lower sampling-noise floors (6.5-6.8 vs 8.5 AZT1D), so their raw unevenness is lower mostly because of noise, not calibration; by real excess, situation bands are equal or better. Hypothesis: GARCH spreads misses out in time (H57).

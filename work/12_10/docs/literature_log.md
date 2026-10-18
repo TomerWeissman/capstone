@@ -11,3 +11,11 @@ Searches run for the research program (see work/RESEARCH_PROTOCOL.md, step 2). G
 | MetaboNet public dataset license | MetaboNet (arXiv:2601.11505): public subset downloadable from metabo-net.org; the consolidated dataset is for non-commercial research and education; JAEB-hosted studies under JAEB terms of use, others CC BY 4.0. MetaboNet-Bench (arXiv:2606.18640): accuracy benchmark for multimodal forecasting; abstract mentions no intervals, calibration, or per-patient variance. | Using the public subset for this research is within its terms. Data stays out of git. MetaboNet-Bench is the closest large-scale benchmark and does not cover uncertainty. |
 
 Sources: [Bunescu et al. 2013](https://webpages.charlotte.edu/rbunescu/data/ohiot1dm/pubs/ICMLA-2013.pdf), [GLYFE](https://arxiv.org/pdf/2006.15946), [PMC12650137](https://pmc.ncbi.nlm.nih.gov/articles/PMC12650137/), [PubMed 22677264](https://pubmed.ncbi.nlm.nih.gov/22677264/), [arXiv:2511.13911](https://arxiv.org/pdf/2511.13911), [MetaboNet](https://arxiv.org/pdf/2601.11505), [MetaboNet-Bench](https://arxiv.org/abs/2606.18640).
+
+## Oct 17: adaptive conformal inference for glucose
+
+| Query | What came back | Gap status |
+|---|---|---|
+| adaptive conformal inference glucose forecasting CGM online coverage distribution shift | ACI method (Gibbs and Candes, NeurIPS 2021, arXiv:2106.00170). CGM: neural CDE forecaster with conformal risk control and deferral (KTU repository); conformal imputation (arXiv:2403.18069). | No CGM forecasting paper found using ACI-style online updating or evaluating per-patient coverage under drift. |
+
+Sources: [ACI](https://arxiv.org/pdf/2106.00170), [KTU](https://epubl.ktu.edu/object/elaba:279147543/index.html), [arXiv:2403.18069](https://arxiv.org/pdf/2403.18069).

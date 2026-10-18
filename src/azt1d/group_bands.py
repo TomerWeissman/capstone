@@ -152,3 +152,46 @@ def patient_bootstrap(t, stat, n_boot=1000, seed=0):
         idx = np.concatenate([idx_by[p] for p in pick])
         vals.append(stat(idx))
     return tuple(np.nanpercentile(vals, [5, 95]))
+
+
+# ---- noise floors: how uneven would coverage look from sampling noise alone? ----
+
+def dispersion_null_shift(inside, groups, subjects, n_rep: int = 50, min_shift: int = 288, seed: int = 0,
+                          min_n: int = 30):
+    """Dispersion expected if coverage were the same in every group.
+
+    Within each patient, the group labels are circularly shifted by a random lag of at least
+    min_shift windows (one day), so labels keep their own autocorrelation but lose their link to the
+    inside/outside sequence. Groups may combine patient and situation (the patient part stays fixed).
+    Rows must be in time order within each patient. Returns (mean, 95th percentile) over n_rep shifts."""
+    rng = np.random.default_rng(seed)
+    groups = np.asarray(groups)
+    idx_by = pd.Series(np.arange(len(groups))).groupby(np.asarray(subjects)).indices
+    vals = []
+    for _ in range(n_rep):
+        shifted = groups.copy()
+        for idx in idx_by.values():
+            n = len(idx)
+            if n <= 2 * min_shift:
+                continue
+            shifted[idx] = np.roll(groups[idx], int(rng.integers(min_shift, n - min_shift)))
+        vals.append(dispersion(inside, shifted, min_n=min_n))
+    return float(np.mean(vals)), float(np.percentile(vals, 95))
+
+
+def dispersion_null_patient(inside, subjects, block: int = 288, n_boot: int = 200, seed: int = 0):
+    """Expected per-patient dispersion from sampling noise alone: mean over patients of
+    sqrt(2/pi) times the standard error of that patient's coverage, from a moving-block bootstrap
+    (one-day blocks) of the patient's own inside/outside sequence."""
+    rng = np.random.default_rng(seed)
+    ins = np.asarray(inside, float)
+    out = []
+    for idx in pd.Series(np.arange(len(ins))).groupby(np.asarray(subjects)).indices.values():
+        x = ins[idx]
+        n = len(x)
+        b = min(block, n)
+        starts = np.arange(n - b + 1)
+        k = int(np.ceil(n / b))
+        means = [np.concatenate([x[s:s + b] for s in rng.choice(starts, k)])[:n].mean() for _ in range(n_boot)]
+        out.append(np.sqrt(2 / np.pi) * np.std(means))
+    return float(np.mean(out))
