@@ -61,6 +61,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Cost: per-situation evenness erodes as adaptation speeds up (excess 0.9, 2.5, 1.2 at eta 0.01). Adapting the quantile level (standard ACI, H58) erodes it more.
 - Interpretation: the remaining miscalibration is a slowly drifting patient-level error scale, consistent with F6 (error tracks each patient's variability over time).
 - Holds for a second forecaster, the CNN-Transformer (H69): per-patient excess 3.5 to -0.8 (AZT1D) and 2.6 to -0.9 (OhioT1DM), interval score slightly better.
+- Holds at a 30-minute horizon (H71b): per-patient excess 3.7 to -0.5 (AZT1D), 1.8 to -0.9 (OhioT1DM), interval score better. Situation bands sit at 1.56 and 1.25 points above the floor at 30 minutes (H71a missed its 1.5 rule narrowly).
 - External test pending (H60).
 
 ### F13. The size of each forecast's error is mostly unpredictable, and errors barely cluster at the 60-minute horizon. Tier 2 (H49, H61, H62).

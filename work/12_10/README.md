@@ -36,6 +36,8 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 
 - **H73, supported (2 of 3)**: a per-patient, per-level online scale keeps situation evenness and fixes patients on long records; too slow on HUPA-UCM's short ones.
 
+- **H71, not supported (narrowly)**: at 30 minutes the patient-scale result holds; situation bands are 1.56 points above the floor on AZT1D (rule 1.5).
+
 ## Findings
 - **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
 - **Round 4: how predictable is error size, and can a learned band be both sharp and calibrated?** Error size is mostly unpredictable even with rich context (at most 20%), and recent errors barely help: errors do not cluster at the 60-minute horizon. Learned bands are sharper but uneven; adding situation calibration and patient scaling fixes patients but leaves about 2 points of situation unevenness. Sharpness and conditional calibration trade off.
@@ -114,6 +116,7 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [scripts/paper_figures.py](scripts/paper_figures.py) | Paper Figures 1-2: situation coverage maps; three axes of honesty | current |
 | [figures/paper_fig1_situation_coverage.png](figures/paper_fig1_situation_coverage.png) | Coverage in each of 25 situations for GARCH, situation, situation x patient scale | current |
 | [figures/paper_fig2_three_axes.png](figures/paper_fig2_three_axes.png) | Situation excess, patient excess, daily-coverage SD per dataset | current |
+| [results/verdict_h71.txt](results/verdict_h71.txt) | H71 verdict and tables (30-minute horizon) | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |

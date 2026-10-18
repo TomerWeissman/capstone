@@ -491,3 +491,11 @@ commits: pending (this commit)
 runtime: about 3 min each
 outcome: H73 supported 2 of 3 (AZT1D, OhioT1DM meet all criteria; HUPA-UCM per-patient excess 4.72). Situation excess below single scale on all three. Figure 1 shows the single scale over-covers rare extreme situations.
 notes: fourth design for the patient-level fix; tuning stopped per protocol.
+
+## 2026-10-17 | 12_10 | H71: 30-minute horizon
+type: experiment
+status: done
+files: work/12_10/scripts/train_horizon30.py, work/12_10/scripts/round9_horizon30.py, work/12_10/results/verdict_h71.txt, work/12_10/results/round9_horizon30.csv, work/12_10/results/train_horizon30_log.txt, data/processed/checkpoints/cnn_lstm_v0_h6/, data/processed/checkpoints/ohiot1dm_cnn_lstm_v0_h6/, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit); pre-registration in 5f8436c
+runtime: training 777 s (37 patients, one seed each); analysis about 2 min
+outcome: H71 not supported narrowly: (a) situation excess 1.56 AZT1D (rule 1.5), 1.25 OhioT1DM; (b) holds on both.

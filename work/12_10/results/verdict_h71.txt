@@ -1,0 +1,13 @@
+H71 (30-minute horizon): NOT SUPPORTED (a False, b True)
+azt1d (RMSE 21.6; R^2 situation 0.076, patient 0.017):
+                                  coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                            
+GARCH                                81.98  52.26           75.40           4.94              3.10            1.91
+situation (Mondrian)                 77.92  44.19           75.82           5.33              1.56            3.71
+situation x patient scale (0.01)     79.62  47.08           73.88           2.55              0.42           -0.45
+ohiot1dm (RMSE 23.2; R^2 situation 0.043, patient -0.023):
+                                  coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                            
+GARCH                                83.71  59.28           83.24           6.46              3.49            1.49
+situation (Mondrian)                 80.58  51.77           80.98           3.73              1.25            1.83
+situation x patient scale (0.01)     79.72  50.94           80.13           4.14              2.03           -0.85
