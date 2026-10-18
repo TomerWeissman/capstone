@@ -516,3 +516,11 @@ files: work/12_10/scripts/round13_level90.py, work/12_10/results/verdict_h76.txt
 commits: pending (this commit)
 runtime: about 3 min
 outcome: H76 supported 3 of 3 (situation beats GARCH per situation; patient scale removes per-patient excess; single scale within situation rule at 90%).
+
+## 2026-10-17 | 12_10 | H75: second training seed; paper figures over 11 studies
+type: experiment
+status: done
+files: work/12_10/scripts/train_seed2.py, work/12_10/scripts/round14_seed2.py, work/12_10/results/verdict_h75.txt, work/12_10/results/round14_seed2.csv, work/12_10/results/train_seed2_log.txt, data/processed/checkpoints/cnn_lstm_v0_seed2/, data/processed/checkpoints/ohiot1dm_cnn_lstm_v0_seed2/, work/12_10/docs/paper_draft.md, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: training 494 s; analysis about 2 min
+outcome: H75 not supported on part (a): OhioT1DM situation excess 1.87 (seed 1: 1.62); part (b) holds. RMSE across seeds correlates 0.97/0.94.

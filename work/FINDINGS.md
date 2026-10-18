@@ -46,7 +46,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 
 ### F11. Situation calibration is solved to the limit of what can be measured; the real remaining miscalibration is between patients. Tier 2 (H51-H53).
 - A new noise floor for calibration metrics: circularly shift situation labels within each patient (keeps autocorrelation, breaks the link) to see how uneven coverage looks from sampling noise alone.
-- Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM; OhioT1DM 1.6 above).
+- Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM; OhioT1DM 1.6 above, and 1.9 above with a second seed, H75: a small real residual there).
 - Patient-by-situation unevenness is 80-95% sampling noise (floors 6.5 to 15.3 points). Comparing methods at that level without a floor is misleading.
 - Per-patient unevenness is real: 3.5, 2.3, 9.1 points above the floor.
 - Same pattern with the CNN-Transformer forecaster (H69).
@@ -64,6 +64,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Holds for a second forecaster, the CNN-Transformer (H69): per-patient excess 3.5 to -0.8 (AZT1D) and 2.6 to -0.9 (OhioT1DM), interval score slightly better.
 - Holds at a 30-minute horizon (H71b): per-patient excess 3.7 to -0.5 (AZT1D), 1.8 to -0.9 (OhioT1DM), interval score better. Situation bands sit at 1.56 and 1.25 points above the floor at 30 minutes (H71a missed its 1.5 rule narrowly).
 - External (H60): the per-patient fix replicates in all 8 MetaboNet studies (per-patient excess -0.55 to -0.84; interval score better or within 0.5%), but the single scale costs per-situation evenness (excess over 1.5 in 6 of 8).
+- Holds with a second training seed for every development forecaster (H75b): per-patient excess 4.5 to -0.8 (AZT1D), 2.9 to -1.0 (OhioT1DM).
 - Holds at 90% bands (H76): per-patient excess 2.6 to -0.6, 1.2 to -0.5, 8.0 to 1.0; at 90% the single scale stays within 1.5 points of situation evenness on all three datasets.
 - External (H74): one scale per patient per glucose level keeps the per-patient fix and meets all three criteria in 6 of 8 studies (per-situation excess 0.61-1.62), with the best interval score in 6 of 8. Recommended design for records of several weeks; the single scale for short records (H73 on HUPA-UCM).
 

@@ -100,7 +100,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 - Also holds at 90% nominal (H76), at a 30-minute horizon (H71), and for a CNN-Transformer (H69).
 
 ### 5.2 A noise floor separates real from apparent miscalibration (F11)
-- Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM; OhioT1DM 1.6 above).
+- Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM). OhioT1DM keeps a small real residual (1.6 above; 1.9 with a second seed, H75).
 - Patient-by-situation unevenness is 80-95% sampling noise (floors 6.5-15.3 points; real excess 0.8-1.8). Method rankings at that granularity, without a floor, are misleading (H51-H52).
 - Real miscalibration remains between patients: 3.5, 2.3, 9.1 points above the floor (H53), and 1.4-4.8 in the external studies.
 
@@ -109,7 +109,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 - External: removed in all 8 studies (-0.55 to -0.84), interval score better or within 0.5% (H60).
 - Trade-off: a single scale over-covers rare extreme situations (Figure 1) and costs about one point of situation evenness. One scale per glucose level keeps both and meets all criteria in 6 of 8 external studies (H74), but needs longer records (it fails on HUPA-UCM's 2.6-day test periods, H73).
 - Standard ACI (adapting the quantile level) also fixes patients but costs more situation evenness (H58).
-- Robust to a second architecture (H69), a 30-minute horizon (H71), and 90% nominal (H76). **[PENDING H75: second seed]**
+- Robust to a second architecture (H69), a 30-minute horizon (H71), 90% nominal (H76), and a second training seed (H75b).
 
 ### 5.4 The new patient needs no calibration data of their own (F15)
 - With situation quantiles from other patients only, the online scale gives per-patient excess -0.87, -0.89, 0.49 vs -0.88, -0.91, 0.43 for own-data calibration (H70). The forecaster was still per patient.
@@ -157,7 +157,7 @@ Source: `work/12_10/results/paper_three_axes.csv`.
 - Clinical caveat: per-situation honesty does not equal catching dangerous misses.
 - Limits:
   - per-patient forecasters (the cold start covers only the band)
-  - one seed per patient (second-seed check pending)
+  - one seed per patient in the main analysis (a second seed for the 37 development patients changes patient RMSE by a median 0.8-1.5 mg/dL and leaves the conclusions intact)
   - 45-day external records and 20 patients per study
   - modality labels as given by MetaboNet
   - simulator too easy for a noise ceiling

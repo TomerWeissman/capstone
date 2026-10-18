@@ -1,0 +1,13 @@
+H75 (findings hold with a second seed): NOT SUPPORTED (a False, b True)
+azt1d:
+                                  coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                            
+GARCH                                82.04  84.77          119.68           6.21              3.81            2.59
+situation (Mondrian)                 77.15  72.18          117.63           4.00             -0.45            4.52
+situation x patient scale (0.01)     79.65  77.90          114.77           2.65              0.53           -0.83
+ohiot1dm:
+                                  coverage   width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                             
+GARCH                                82.38  100.17          138.93           7.21              4.71            0.74
+situation (Mondrian)                 77.93   85.78          132.19           4.45              1.87            2.90
+situation x patient scale (0.01)     79.61   89.46          130.92           4.74              2.32           -0.95
