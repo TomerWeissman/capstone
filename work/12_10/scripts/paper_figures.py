@@ -25,7 +25,15 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from azt1d import group_bands as gb, plotting, uq_frames  # noqa: E402
-from round1_patient_vs_situation import LABEL, run_for  # noqa: E402
+from round1_patient_vs_situation import LABEL as _LABEL, run_for  # noqa: E402
+
+
+class _Labels(dict):
+    def get(self, k, d=None):
+        return _LABEL.get(k, k.replace("panel:", ""))
+
+
+LABEL = _Labels()
 
 METHODS = {"GARCH": gb.garch, "situation (Mondrian)": gb.situation_mondrian,
            "situation x patient scale": partial(gb.scale_aci_situation, eta=0.01)}
@@ -76,11 +84,11 @@ def main(datasets):
     axes[0].set_ylabel("current glucose (mg/dL)")
     axes[1].set_xlabel("30-minute trend")
     fig.colorbar(im, ax=axes, shrink=0.8, label="coverage of the 80% band (%)")
-    fig.suptitle(f"Where an 80% band is honest: coverage in each glycemic situation ({', '.join(LABEL.get(d, d) for d in datasets)} pooled; 80 is right)",
+    fig.suptitle(f"Where an 80% band is honest: coverage in each glycemic situation ({len(datasets)} studies pooled; 80 is right)",
                  x=0.01, ha="left", fontsize=11)
     fig.savefig(WEEK / "figures" / "paper_fig1_situation_coverage.png", dpi=150, bbox_inches="tight"); plt.close(fig)
 
-    fig, axes = plt.subplots(1, 3, figsize=(17, 4.8))
+    fig, axes = plt.subplots(1, 3, figsize=(max(17, 1.6 * len(datasets) * 1.0 + 6), 4.8))
     x = np.arange(len(datasets))
     for k, m in enumerate(METHODS):
         d = A[A.method == m].set_index("dataset").loc[datasets]

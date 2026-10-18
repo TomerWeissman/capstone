@@ -12,7 +12,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 - Evaluation: a new circular-shift noise floor that separates real conditional miscalibration from the sampling noise of autocorrelated forecast windows.
 
 **Results.**
-- **Situation.** Standard intervals were miscalibrated across 25 glycemic situations (level by 30-minute trend). Pooled coverage of nominal 80% GARCH intervals ranged from 65% (70-120 mg/dL, rising fast) to 95% (below 70, falling fast). Situation-conditional conformal calibration reduced per-situation miscalibration in all 8 external studies (2.3-4.2 vs 5.5-6.8 points), down to the noise floor.
+- **Situation.** Standard intervals were miscalibrated across 25 glycemic situations (level by 30-minute trend). Pooled over all 11 studies, coverage of nominal 80% GARCH intervals ranged from 62% (70-120 mg/dL, rising fast) to 91% (250 mg/dL and over, rising fast). Situation-conditional conformal calibration reduced per-situation miscalibration in all 8 external studies (2.3-4.2 vs 5.5-6.8 points), down to the noise floor.
 - **Patient.** Real miscalibration remained between patients. An online per-patient scale, updated from errors observed one horizon later, removed it in every development dataset and every external study. It also sharpened intervals, and it needed no calibration data from the new patient.
 - **Day.** Adaptive intervals halved the day-to-day spread of coverage.
 - **Error size.** It was largely unpredictable: at most 20% of its variation was explained, even by gradient boosting with rich context. Recent errors carried little information, contrary to the volatility-clustering premise of GARCH-type intervals.
@@ -95,7 +95,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 ## 5. Results
 
 ### 5.1 Standard intervals are miscalibrated by situation; situation calibration fixes it (F1, tier 3)
-- Pooled over the development datasets, GARCH coverage of a nominal 80% band ranged from 65% (70-120, fast rise) to 95% (<70, fast fall). Situation calibration brought every situation to 76-87% (Figure 1).
+- Pooled over all 11 studies, GARCH coverage of a nominal 80% band ranged from 62% (70-120, fast rise) to 91% (>=250, fast rise). Situation calibration held every situation between 72% and 82%, and 23 of 24 between 78% and 82% (Figure 1). (Development datasets only: GARCH 65-95%, situation 76-87%.)
 - External: per-situation distance from 80% fell in all 8 held-out studies, from 5.5-6.8 to 2.3-4.2 points (H54).
 - Also holds at 90% nominal (H76), at a 30-minute horizon (H71), and for a CNN-Transformer (H69).
 
@@ -113,6 +113,15 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 
 ### 5.4 The new patient needs no calibration data of their own (F15)
 - With situation quantiles from other patients only, the online scale gives per-patient excess -0.87, -0.89, 0.49 vs -0.88, -0.91, 0.43 for own-data calibration (H70). The forecaster was still per patient.
+
+### 5.4b Summary over all 11 studies (Figure 2; medians, points)
+| Method | Situation excess above floor | Patient excess above floor | SD of daily coverage |
+|---|---|---|---|
+| GARCH | 3.8 | 1.7 | 6.0 |
+| Situation (Mondrian) | 0.7 | 3.2 | 9.3 |
+| Situation x patient scale | 1.8 | -0.7 | 5.5 |
+
+Source: `work/12_10/results/paper_three_axes.csv`.
 
 ### 5.5 Honesty by day (F16)
 - Static situation bands cover some days far less than others (SD of daily coverage 10.3, 9.3, 12.4 points). Adaptive bands halve this (patient scale 5.5, 5.9, 6.7; H72).
@@ -155,8 +164,8 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 
 ## 7. Figures
 
-1. Coverage in each of 25 situations: GARCH, situation, situation x patient scale (`figures/paper_fig1_situation_coverage.png`).
-2. Three axes of honesty, by situation, by patient, by day (`figures/paper_fig2_three_axes.png`; to be extended to all 11 studies).
+1. Coverage in each of 25 situations, 11 studies pooled: GARCH, situation, situation x patient scale (`figures/paper_fig1_situation_coverage.png`).
+2. Three axes of honesty, by situation, by patient, by day, all 11 studies (`figures/paper_fig2_three_axes.png`).
 3. Noise floor vs observed unevenness (`figures/h51_noise_floor.png`).
 4. External validation (`figures/h54_panel_external.png`).
 5. Error-size predictability and drivers (`figures/h61_h62_ml_error_size.png`).
