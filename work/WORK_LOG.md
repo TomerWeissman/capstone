@@ -465,3 +465,11 @@ files: work/12_10/scripts/round7_other_forecaster.py, work/12_10/results/verdict
 commits: pending (this commit)
 runtime: about 2 min
 outcome: H69 supported: situation excess 0.61, 1.38; patient-scale band per-patient excess 3.50 to -0.84, 2.61 to -0.87; interval score slightly better.
+
+## 2026-10-17 | 12_10 | H70: cold-start band calibration; paper draft
+type: experiment
+status: done
+files: work/12_10/scripts/round8_cold_start.py, work/12_10/results/verdict_h70.txt, work/12_10/results/round8_cold_start.csv, work/12_10/docs/paper_draft.md, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: about 3 min
+outcome: H70 supported 3 of 3: cold + patient scale per-patient excess -0.87/-0.89/0.49 vs own-data -0.88/-0.91/0.43; without the scale 3.59/2.47/11.45.
