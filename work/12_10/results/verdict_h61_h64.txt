@@ -1,0 +1,44 @@
+H64 (Mondrian CQR x patient scale: >= 2% better interval score than H59 band, excess <= 1.5): NOT SUPPORTED (0 of 3)
+H61 (ML explains >= 2x the patient x situation R^2): NOT SUPPORTED (0 of 3)
+   dataset  r2_ml  r2_patient_x_situation
+     azt1d  0.098                   0.069
+  ohiot1dm  0.037                   0.025
+  hupa_ucm  0.199                   0.147
+H62 (latest known error is the top feature): NOT SUPPORTED (0 of 3); top: azt1d pred, hupa_ucm patient_scale, ohiot1dm pred
+  dataset          azt1d  hupa_ucm  ohiot1dm
+  feature                                   
+  pred            0.0623    0.0342    0.1017
+  patient_scale   0.0510    0.1394    0.0171
+  g_now           0.0378    0.0225    0.0347
+  recent_abs_err  0.0228    0.0185    0.0251
+  trend_30m       0.0201    0.0334    0.0428
+  hour_cos        0.0184    0.0230    0.0148
+  hour_sin        0.0157    0.0284    0.0054
+  bolus_2h        0.0145    0.0058   -0.0008
+  carbs_2h        0.0063    0.0024    0.0206
+  last_err        0.0051    0.0105   -0.0030
+  sigma           0.0028    0.0066    0.0113
+  trend_2h        0.0022    0.0063    0.0070
+  last_abs_err   -0.0011    0.0252    0.0023
+H63 (CQR rich features >= 3% better interval score, excess <= 1.5): NOT SUPPORTED (0 of 3)
+  azt1d:
+                                      coverage  width  interval_score  excess_situation  excess_patient
+    method                                                                                             
+    situation (Mondrian)                 77.41  71.21          113.49             -0.11            3.43
+    situation x patient scale (0.01)     79.72  76.45          111.98              1.03           -0.88
+    CQR, rich features                   78.31  70.48          109.02              3.95            2.82
+    Mondrian CQR x patient scale         79.89  76.49          108.03              2.15           -1.03
+  ohiot1dm:
+                                      coverage  width  interval_score  excess_situation  excess_patient
+    method                                                                                             
+    situation (Mondrian)                 79.31  86.50          130.75              1.57            2.33
+    situation x patient scale (0.01)     79.85  88.10          130.14              2.36           -0.92
+    CQR, rich features                   78.84  85.99          128.98              2.36            2.29
+    Mondrian CQR x patient scale         79.78  89.02          128.10              2.07           -0.70
+  hupa_ucm:
+                                      coverage  width  interval_score  excess_situation  excess_patient
+    method                                                                                             
+    situation (Mondrian)                 78.30  66.84          110.82             -1.77            9.05
+    situation x patient scale (0.01)     78.86  68.88          107.46              1.23            0.43
+    CQR, rich features                   79.07  63.88          100.64              2.91            6.17
+    Mondrian CQR x patient scale         79.47  67.56           99.59              2.29           -0.65

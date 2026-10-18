@@ -58,3 +58,13 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Cost: per-situation evenness erodes as adaptation speeds up (excess 0.9, 2.5, 1.2 at eta 0.01). Adapting the quantile level (standard ACI, H58) erodes it more.
 - Interpretation: the remaining miscalibration is a slowly drifting patient-level error scale, consistent with F6 (error tracks each patient's variability over time).
 - External test pending (H60).
+
+### F13. The size of each forecast's error is mostly unpredictable, and errors barely cluster at the 60-minute horizon. Tier 2 (H49, H61, H62).
+- Gradient boosting with rich context explains 9.8%, 3.7%, 19.9% of the variation in absolute test error, about 1.4 times the patient x situation group means.
+- The top drivers are the forecast value itself and the patient's error scale. The most recently observed error adds little, so volatility clustering (the premise of GARCH) is weak at this horizon.
+
+### F14. Sharpness and conditional calibration trade off. Tier 2 (H58, H59, H63, H64).
+- Learned bands (rich-feature CQR) are sharpest but uneven across situations and patients.
+- Group-conditional bands are even by situation; online per-patient scaling makes them even by patient; each added adaptation costs about one point of per-situation evenness.
+- Best interval score with per-patient calibration: Mondrian CQR x patient scale (108.0, 128.1, 99.6), at a per-situation excess of about 2 points. Best balance of all three criteria: situation x patient scale (H59).
+- Three designs were tried for the patient-level fix (H58, H59, H64); all are reported.

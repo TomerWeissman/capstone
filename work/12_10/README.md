@@ -21,8 +21,14 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - **H58, not supported**: standard adaptive conformal fixes per-patient calibration but erodes per-situation calibration.
 - **H59, supported (2 of 3)**: a per-patient multiplicative scale, adapted online, fixes per-patient calibration, sharpens the band, and mostly keeps situation calibration.
 
+- **H61, not supported**: machine learning explains 1.4x what groups explain of error size (up to 20%).
+- **H62, not supported**: the latest known error is a weak predictor; forecast value and patient scale lead.
+- **H63, not supported**: rich-feature CQR is sharpest but conditionally miscalibrated.
+- **H64, not supported**: Mondrian CQR with patient scale is sharpest and patient-calibrated but about 2 points uneven by situation.
+
 ## Findings
 - **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
+- **Round 4: how predictable is error size, and can a learned band be both sharp and calibrated?** Error size is mostly unpredictable even with rich context (at most 20%), and recent errors barely help: errors do not cluster at the 60-minute horizon. Learned bands are sharper but uneven; adding situation calibration and patient scaling fixes patients but leaves about 2 points of situation unevenness. Sharpness and conditional calibration trade off.
 - **Round 3: can the between-patient miscalibration be fixed?** Yes, online. Situation bands times a per-patient scale updated from misses known 60 minutes later remove the real per-patient miscalibration on all three datasets and lower the interval score. Faster adaptation erodes situation evenness; standard adaptive conformal (shifting the quantile level) erodes it more.
 - **Round 2: how much of the bands' unevenness is real?** A sampling-noise floor (situation labels circularly shifted within each patient) shows situation calibration is solved to the limit of detection, patient-by-situation unevenness is mostly noise, and the real remaining miscalibration is between patients. GARCH-based bands look more even mainly because their noise floor is lower.
 - **Round 1: what sets the size of the forecast error?** Neither patient nor situation dominates, and both together explain at most 15% (H49). The earlier "patient dominates" hint was HUPA-UCM only. Patient-scaled bands help only there (H50). GARCH x situation is the most even band across patient-by-situation cells on all three datasets.
@@ -76,6 +82,10 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [results/verdict_h57_h59.txt](results/verdict_h57_h59.txt) | H57-H59 verdicts and full tables | current |
 | [results/round3_aci.csv](results/round3_aci.csv) | Per-dataset, per-method metrics incl. noise floors and miss runs | current |
 | [figures/h57_h59_aci.png](figures/h57_h59_aci.png) | Miss runs, per-patient excess, interval score for nine methods | current |
+| [scripts/round4_ml_error_size.py](scripts/round4_ml_error_size.py) | Round 4, H61-H64: gradient boosting of error size, permutation importance, CQR and Mondrian CQR bands | current |
+| [results/verdict_h61_h64.txt](results/verdict_h61_h64.txt) | H61-H64 verdicts, importance table, band table | current |
+| results/round4_*.csv | R^2, importance, band metrics | current |
+| [figures/h61_h62_ml_error_size.png](figures/h61_h62_ml_error_size.png) | Error-size predictability and feature importance | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |

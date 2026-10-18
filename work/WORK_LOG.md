@@ -439,3 +439,12 @@ commits: pending (this commit); H59 pre-registration in the commit before
 runtime: about 6 min
 outcome: H57 not supported (miss runs 1-12% shorter). H58 not supported (ACI fixes patients, erodes situations on 2 datasets). H59 supported 2 of 3 (scale-adaptive: per-patient excess -0.9, -0.9, +0.4; situation excess 0.9, 2.5, 1.2; interval score better on all three). H60 pre-registered for the panel.
 notes: H59 is the second try at the patient-level fix; both tries are reported.
+
+## 2026-10-17 | 12_10 | Round 4: machine-learned error size and learned bands (H61-H64)
+type: experiment
+status: done
+files: work/12_10/scripts/round4_ml_error_size.py, work/12_10/results/verdict_h61_h64.txt, work/12_10/results/round4_ml.csv, work/12_10/results/round4_importance.csv, work/12_10/results/round4_bands.csv, work/12_10/figures/h61_h62_ml_error_size.png, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit); pre-registrations in f134bf3 and the H64 commit
+runtime: about 5 min per run
+outcome: H61 not supported (ML R^2 9.8/3.7/19.9% vs groups 6.9/2.5/14.7%). H62 not supported (top: forecast value, patient scale; latest error weak). H63 not supported (CQR sharpest, uneven). H64 not supported (best interval score everywhere, patient-calibrated, situation excess about 2.1-2.3).
+notes: H64 is the third design for a sharp and calibrated band; tuning stopped per protocol.
