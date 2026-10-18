@@ -10,7 +10,12 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - **H47, supported (narrowly)**: basal explains 21% of the leftover (rule 20%), likely standing in for patient identity.
 - **H48, not supported**: the leftover improves prediction of the CNN-LSTM's error size by 1.2% (rule 10%).
 
+- **H49, not supported**: patient explains more of the error size than situation on 1 of 3 datasets; error size is weakly predictable (at most 15%).
+- **H50, not supported**: patient-scaled situation bands help only on HUPA-UCM (+28%); post hoc, GARCH x situation is most even everywhere.
+
 ## Findings
+- **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
+- **Round 1: what sets the size of the forecast error?** Neither patient nor situation dominates, and both together explain at most 15% (H49). The earlier "patient dominates" hint was HUPA-UCM only. Patient-scaled bands help only there (H50). GARCH x situation is the most even band across patient-by-situation cells on all three datasets.
 - **The encoder summary is mostly level and trend (87%).** The leftover 13% has two main directions. Removing it barely changes the decoder (5.77 to 5.85 mg/dL).
 - **The leftover is mostly "which patient, on which pump settings".** Basal explains 21% of it and heart rate 12%; meals, insulin, and curve shape explain nothing for new patients. Everything recorded together explains 48%, so about half is still unexplained.
 - **The leftover does not predict how wrong the forecast will be** (1.2% better). More striking: for a patient the model has never seen, level and trend don't predict the size of the forecast error better than a constant guess. Error size is set mostly by the patient, not the moment. This fits H29 (errors follow each patient's variability) and says per-patient calibration matters at least as much as per-situation.
@@ -26,6 +31,7 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - Runtime: simulation 399 s; training 16 models and analysis 243 s.
 
 ## Work done
+- Oct 17: research protocol, findings ledger, shared frames and band modules; Round 1 (H49, H50); MetaboNet panel training started.
 - Oct 17: H46-H48, encoder leftover after level and trend (531 s).
 - Oct 14: key-figures notebook (9 figures in three sections).
 - Oct 14: notebook collecting all 21 uncertainty-band figures (5_10, 12_10).
@@ -47,6 +53,13 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | figures/alarms_*_21_9.png (5 files) | Extracted from 21_9 notebooks 01 and 02: 24-hour band views with correct and false triggers marked | current |
 | [figures/methods_tradeoff_21_9.png](figures/methods_tradeoff_21_9.png) | Extracted from 21_9 notebook 01: danger caught vs false triggers, three methods | current |
 | [figures/methods_width_vs_error_28_9.png](figures/methods_width_vs_error_28_9.png) | Extracted from 28_9 notebook 04: band width vs forecast error, six methods | current |
+| [scripts/round1_patient_vs_situation.py](scripts/round1_patient_vs_situation.py) | Round 1, H49/H50: error-size predictors and seven band methods, three calibration levels | current |
+| [results/verdict_h49_h50.txt](results/verdict_h49_h50.txt) | H49/H50 verdicts with bootstrap intervals | current |
+| results/round1_*.csv | Per-dataset band metrics; R^2 table | current |
+| [figures/h49_error_sources.png](figures/h49_error_sources.png) | H49: what predicts the size of the forecast error | current |
+| [figures/h50_patient_scaled_bands.png](figures/h50_patient_scaled_bands.png) | H50: calibration by situation, patient, patient x situation for six band methods | current |
+| [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
+| [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |
 | [results/verdict_h46_h48.txt](results/verdict_h46_h48.txt) | H46-H48 verdicts and numbers | current |
 | [results/encoder_leftover_variables.csv](results/encoder_leftover_variables.csv) | Share of the leftover explained by each variable | current |

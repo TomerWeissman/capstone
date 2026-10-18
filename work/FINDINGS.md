@@ -36,6 +36,13 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 ### F8. Sensor noise costs more than its own variance. Tier 1 (simulation, post hoc).
 - Planting level-dependent noise raised squared forecast error by 1.1 to 3.5 times the noise variance, because noise also corrupts the inputs (H45, post hoc). Simulated patients were easier to forecast than real ones.
 
-### F9. For a new patient, error size is set more by who the patient is than by the moment. Tier 0 (post hoc, H48).
-- On HUPA-UCM with folds by patient, level and trend predicted the size of the CNN-LSTM's error no better than a constant.
-- Next: a direct variance decomposition (patient vs situation vs time) on several datasets.
+### F9. Error size is only weakly predictable, and neither patient nor situation dominates. Tier 2 (H49; replaces the Oct 17 post-hoc hint from H48).
+- Group means fitted on validation explain at most 15% of the variation in absolute test error. Situation beats patient on AZT1D (5.8% vs 2.8%) and OhioT1DM (3.3% vs -0.8%); patient wins on HUPA-UCM (11.2% vs 8.0%), the most heterogeneous cohort. Combining both is best on AZT1D and HUPA-UCM.
+- GARCH's moment-to-moment scale predicts error size no better than a constant once rescaled (R^2 -0.6%, -6.7%, -4.7%).
+- Time of day explains 2 to 3%.
+- The earlier claim (from H48) that the patient dominates holds only for HUPA-UCM.
+
+### F10. GARCH x situation bands are the most even across patients and situations. Tier 1 (post hoc, Round 1).
+- Lowest patient-by-situation calibration error on all three datasets (8.5, 7.6, 12.3 points vs 9.7, 8.3, 16.7 for situation-only), and still lowest or tied after removing each method's overall coverage offset.
+- Patient-scaled situation bands (H50) help only on HUPA-UCM.
+- Puzzle: GARCH's scale does not predict error size (F9), yet normalizing by it evens out coverage. To test: is the remaining unevenness just sampling noise (Round 2)?

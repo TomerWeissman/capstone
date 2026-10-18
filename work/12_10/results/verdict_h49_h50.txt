@@ -1,0 +1,8 @@
+H49 (patient explains more of the error size than situation): NOT SUPPORTED (1 of 3)
+H50 (patient-scaled situation bands >= 20% better per patient-by-situation cell): NOT SUPPORTED (1 of 3)
+azt1d: R2 patient 0.028, situation 0.058, patient x situation 0.069; patient minus situation -0.030 (90% patient bootstrap -0.055 to +0.001)
+  bands: patient-by-situation error 9.7 -> 9.4 points (+3%; bootstrap gain -0.7 to +1.0 points); interval score 113.5 -> 112.6
+ohiot1dm: R2 patient -0.008, situation 0.033, patient x situation 0.025; patient minus situation -0.041 (90% patient bootstrap -0.066 to -0.006)
+  bands: patient-by-situation error 8.3 -> 9.0 points (-8%; bootstrap gain -1.9 to +0.3 points); interval score 130.8 -> 131.3
+hupa_ucm: R2 patient 0.112, situation 0.080, patient x situation 0.147; patient minus situation +0.032 (90% patient bootstrap -0.011 to +0.114)
+  bands: patient-by-situation error 16.7 -> 12.1 points (+28%; bootstrap gain +2.6 to +6.9 points); interval score 110.8 -> 107.0

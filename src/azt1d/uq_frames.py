@@ -9,6 +9,7 @@ Datasets:
   "hupa_ucm"   HUPA-UCM preprocessed files (hupa.py)
   "ohiot1dm"   OhioT1DM through MetaboNet
   "mb:<Src>"   any MetaboNet source, e.g. "mb:BrisT1D"
+  "panel:<Src>" the 45-day MetaboNet panel built by work/12_10/scripts/build_metabonet_panel.py
 """
 from __future__ import annotations
 
@@ -42,6 +43,8 @@ def load_dataset(name: str, subject_ids=None) -> pd.DataFrame:
         df = pd.concat([hupa.load_subject(s, root / hupa.DEFAULT_DIR) for s in ids], ignore_index=True)
     elif name == "ohiot1dm":
         df = metabonet.load_source("OhioT1DM")
+    elif name.startswith("panel:"):
+        df = pd.read_parquet(root / "data" / "processed" / "metabonet_panel" / f"{name[6:]}.parquet")
     elif name.startswith("mb:"):
         df = metabonet.load_source(name[3:], subject_ids=subject_ids)
     else:

@@ -413,3 +413,12 @@ commits: pending (this commit); pre-registration in cc71edc
 runtime: 531 s (estimated 2-3 min; the cross-fitted gradient boosting was slower)
 outcome: H46 not supported (level and trend explain 87%). H47 supported narrowly (basal 21% of leftover; patient 28% in-sample; all variables 48%). H48 not supported (+1.2%). For new patients, level and trend predict CNN-LSTM error size no better than a constant (20.23 vs 20.13 mg/dL).
 notes: HUPA-UCM, 7-input encoder, one seed, 10,000 test windows (9,994 matched to forecasts), 5 folds by patient. The verdict file names "patient" as best variable; the H47 verdict rests on basal, the best cross-fitted recorded variable.
+
+## 2026-10-17 | 12_10 | Research program setup and Round 1 (H49, H50)
+type: experiment
+status: done
+files: work/RESEARCH_PROTOCOL.md, work/FINDINGS.md, src/azt1d/uq_frames.py, src/azt1d/group_bands.py, work/12_10/scripts/round1_patient_vs_situation.py, work/12_10/scripts/build_metabonet_panel.py, work/12_10/results/verdict_h49_h50.txt, work/12_10/results/round1_azt1d.csv, work/12_10/results/round1_ohiot1dm.csv, work/12_10/results/round1_hupa_ucm.csv, work/12_10/results/round1_r2.csv, work/12_10/figures/h49_error_sources.png, work/12_10/figures/h50_patient_scaled_bands.png, work/12_10/docs/literature_log.md, work/HYPOTHESES.md, work/12_10/README.md
+commits: pending (this commit); pre-registration in 4c6a3a0
+runtime: about 1 min per run (frames cached)
+outcome: H49 not supported (patient > situation on 1 of 3; all groupings explain at most 15% of |error|). H50 not supported (+3%, -8%, +28%). Post hoc: GARCH x situation lowest patient-by-situation calibration error on all three datasets, also after removing the overall coverage offset (new dispersion metric).
+notes: the user authorized autonomous work (no check-ins, no runtime limit) on Oct 17. GARCH scale predictor was rescaled on validation after a first run showed the raw scale is off by a constant; GARCH x situation predictor uses a ratio of sums after the ratio of means blew up on HUPA-UCM. Both fixes were to unfair or unstable baselines, not to the tested methods.
