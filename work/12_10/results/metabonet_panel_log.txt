@@ -1,0 +1,141 @@
+Loop: 20 patients from 835 eligible (9s)
+  Loop 10087: RMSE 42.8 (20s)
+  Loop 10155: RMSE 44.3 (33s)
+  Loop 10227: RMSE 33.3 (49s)
+  Loop 10245: RMSE 35.9 (65s)
+  Loop 10302: RMSE 44.6 (83s)
+  Loop 10329: RMSE 36.5 (91s)
+  Loop 10346: RMSE 41.2 (109s)
+  Loop 10347: RMSE 30.8 (122s)
+  Loop 10444: RMSE 51.8 (131s)
+  Loop 10604: RMSE 35.6 (138s)
+  Loop 10621: RMSE 33.4 (151s)
+  Loop 10633: RMSE 33.3 (159s)
+  Loop 10666: RMSE 31.6 (176s)
+  Loop 10690: RMSE 29.6 (184s)
+  Loop 10701: RMSE 45.7 (208s)
+  Loop 10737: RMSE 31.6 (215s)
+  Loop 10743: RMSE 57.6 (229s)
+  Loop 10781: RMSE 40.0 (243s)
+  Loop 10796: RMSE 35.4 (260s)
+  Loop 10824: RMSE 23.6 (279s)
+DCLP3: 20 patients from 112 eligible (284s)
+  DCLP3 20009: RMSE 24.8 (295s)
+  DCLP3 20011: RMSE 55.0 (310s)
+  DCLP3 20013: RMSE 33.3 (325s)
+  DCLP3 20020: RMSE 28.4 (338s)
+  DCLP3 20021: RMSE 35.5 (352s)
+  DCLP3 20022: RMSE 24.7 (369s)
+  DCLP3 20030: RMSE 36.3 (378s)
+  DCLP3 20035: RMSE 45.5 (392s)
+  DCLP3 20039: RMSE 31.7 (399s)
+  DCLP3 20050: RMSE 37.6 (409s)
+  DCLP3 20051: RMSE 45.0 (427s)
+  DCLP3 20053: RMSE 36.8 (442s)
+  DCLP3 20066: RMSE 29.9 (459s)
+  DCLP3 20068: RMSE 30.9 (475s)
+  DCLP3 20074: RMSE 30.8 (494s)
+  DCLP3 20087: RMSE 38.7 (516s)
+  DCLP3 20089: RMSE 48.6 (524s)
+  DCLP3 20090: RMSE 34.7 (542s)
+  DCLP3 20094: RMSE 27.2 (561s)
+  DCLP3 20108: RMSE 48.0 (576s)
+DCLP5: 20 patients from 100 eligible (581s)
+  DCLP5 30000: RMSE 37.1 (590s)
+  DCLP5 30007: RMSE 34.3 (605s)
+  DCLP5 30008: RMSE 36.9 (613s)
+  DCLP5 30010: RMSE 38.3 (620s)
+  DCLP5 30011: RMSE 39.0 (629s)
+  DCLP5 30026: RMSE 44.3 (637s)
+  DCLP5 30029: RMSE 32.9 (652s)
+  DCLP5 30031: RMSE 46.0 (663s)
+  DCLP5 30035: RMSE 41.4 (679s)
+  DCLP5 30038: RMSE 68.8 (694s)
+  DCLP5 30043: RMSE 44.9 (717s)
+  DCLP5 30046: RMSE 46.8 (735s)
+  DCLP5 30047: RMSE 47.3 (752s)
+  DCLP5 30070: RMSE 49.8 (760s)
+  DCLP5 30072: RMSE 30.8 (766s)
+  DCLP5 30073: RMSE 35.8 (781s)
+  DCLP5 30076: RMSE 44.1 (792s)
+  DCLP5 30083: RMSE 32.2 (811s)
+  DCLP5 30086: RMSE 44.2 (826s)
+  DCLP5 30087: RMSE 34.4 (835s)
+PEDAP: 20 patients from 63 eligible (842s)
+  PEDAP 40003: RMSE 50.1 (857s)
+  PEDAP 40004: RMSE 31.2 (866s)
+  PEDAP 40007: RMSE 38.5 (880s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40008: RMSE nan (885s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40009: RMSE nan (889s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40010: RMSE nan (894s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40015: RMSE nan (899s)
+  PEDAP 40024: RMSE 35.0 (938s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40026: RMSE nan (944s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40029: RMSE nan (950s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40030: RMSE nan (956s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40033: RMSE nan (964s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40037: RMSE nan (968s)
+  PEDAP 40045: RMSE 41.1 (985s)
+  PEDAP 40049: RMSE 37.0 (994s)
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1211: RuntimeWarning: invalid value encountered in divide
+  updated_mean = (last_sum + new_sum) / updated_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1216: RuntimeWarning: invalid value encountered in divide
+  T = new_sum / new_sample_count
+/Users/tomerweissman/Projects/AZT1D Analysis/venv/lib/python3.14/site-packages/sklearn/utils/extmath.py:1240: RuntimeWarning: invalid value encountered in divide
+  new_unnormalized_variance -= correction**2 / new_sample_count
+  PEDAP 40050: RMSE nan (1002s)
+  PEDAP 40056: RMSE 47.7 (1014s)

@@ -38,8 +38,18 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 
 - **H71, not supported (narrowly)**: at 30 minutes the patient-scale result holds; situation bands are 1.56 points above the floor on AZT1D (rule 1.5).
 
+- **H54, confirmed**: situation bands beat GARCH per situation in all 8 external MetaboNet studies.
+- **H55, supported**: situation explains more error size than patient in 7 of 8 studies.
+- **H56, supported**: GARCH x situation most even by patient-by-situation in 7 of 8 (mostly a lower noise floor).
+- **H60, not supported**: the single patient scale fixes patients in all 8 studies but costs situation evenness in 6.
+- **H74, supported**: the per-level patient scale meets all criteria in 6 of 8 studies.
+- **H65, not supported**: glucose variability explains 44% of between-patient difficulty in new studies.
+- **H66, not supported**: closed loop makes no detectable difference.
+- **H67, supported**: children are 7.5% harder to forecast after variability.
+
 ## Findings
 - **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
+- **External validation (MetaboNet panel, 153 patients, 8 studies never used for design).** Situation calibration replicates everywhere (tier 3). The per-patient scale fixes between-patient miscalibration everywhere; with one scale per glucose level it also keeps situation calibration in 6 of 8 studies. Across 215 patients from 11 studies, glucose variability explains 44% of how hard a patient is to forecast; children are 7.5% harder; closed loop makes no difference.
 - **Round 4: how predictable is error size, and can a learned band be both sharp and calibrated?** Error size is mostly unpredictable even with rich context (at most 20%), and recent errors barely help: errors do not cluster at the 60-minute horizon. Learned bands are sharper but uneven; adding situation calibration and patient scaling fixes patients but leaves about 2 points of situation unevenness. Sharpness and conditional calibration trade off.
 - **Round 3: can the between-patient miscalibration be fixed?** Yes, online. Situation bands times a per-patient scale updated from misses known 60 minutes later remove the real per-patient miscalibration on all three datasets and lower the interval score. Faster adaptation erodes situation evenness; standard adaptive conformal (shifting the quantile level) erodes it more.
 - **Round 2: how much of the bands' unevenness is real?** A sampling-noise floor (situation labels circularly shifted within each patient) shows situation calibration is solved to the limit of detection, patient-by-situation unevenness is mostly noise, and the real remaining miscalibration is between patients. GARCH-based bands look more even mainly because their noise floor is lower.
@@ -117,6 +127,15 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [figures/paper_fig1_situation_coverage.png](figures/paper_fig1_situation_coverage.png) | Coverage in each of 25 situations for GARCH, situation, situation x patient scale | current |
 | [figures/paper_fig2_three_axes.png](figures/paper_fig2_three_axes.png) | Situation excess, patient excess, daily-coverage SD per dataset | current |
 | [results/verdict_h71.txt](results/verdict_h71.txt) | H71 verdict and tables (30-minute horizon) | current |
+| [results/verdict_h54_h56_h60.txt](results/verdict_h54_h56_h60.txt) | External panel verdicts H54-H56, H60, full per-study tables | current |
+| [results/verdict_h65_h67.txt](results/verdict_h65_h67.txt) | Patient-difficulty verdicts H65-H67 | current |
+| [results/round6_panel_bands.csv](results/round6_panel_bands.csv) | Panel band metrics per study and method | current |
+| [results/round6_patients.csv](results/round6_patients.csv) | 215 patients: RMSE, glucose stats, source, modality, age | current |
+| [figures/h54_panel_external.png](figures/h54_panel_external.png) | External validation: per-situation error, per-patient excess, interval score | current |
+| [figures/h65_patient_difficulty.png](figures/h65_patient_difficulty.png) | Patient RMSE vs glucose SD, 11 studies | current |
+| [scripts/round12_panel_level_scale.py](scripts/round12_panel_level_scale.py) | H74: per-level patient scale on the panel | current |
+| [results/verdict_h74.txt](results/verdict_h74.txt) | H74 verdict and per-study tables | current |
+| results/metabonet_panel_log*.txt | Panel build and training logs | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |

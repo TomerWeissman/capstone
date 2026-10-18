@@ -1,0 +1,92 @@
+H54 (situation >= 20% lower per-situation error than GARCH): SUPPORTED (8 of 8)
+H55 (situation R^2 > patient R^2): SUPPORTED (7 of 8)
+H56 (GARCH x situation lowest patient-by-situation dispersion): SUPPORTED (7 of 8)
+H60 (patient-scale band meets H58 criteria): NOT SUPPORTED (2 of 8)
+Loop (20 patients; R^2 situation 0.078, patient 0.032, both 0.072):
+                                    coverage  width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                      
+  pooled conformal                     79.00  86.94          142.15          12.00              7.78            4.21                     12.90
+  per-patient conformal                78.24  86.86          139.78           9.85              6.59            2.70                     11.68
+  GARCH                                80.16  97.40          145.23           5.97              4.04            1.15                      8.56
+  situation (Mondrian)                 79.29  87.34          136.43           4.19              1.07            3.16                      9.51
+  GARCH x situation                    79.21  92.91          143.01           3.36              1.18            1.26                      7.47
+  patient-scaled situation             78.43  87.44          136.43           4.67              1.67            3.03                      9.77
+  patient x situation cells            77.91  86.75          137.26           6.49              3.20            1.35                     10.18
+  situation x patient scale (0.01)     79.97  90.86          135.68           3.88              1.89           -0.73                      7.25
+DCLP3 (20 patients; R^2 situation 0.067, patient 0.044, both 0.088):
+                                    coverage  width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                      
+  pooled conformal                     79.39  83.81          135.52          10.81              7.19            4.77                     11.59
+  per-patient conformal                78.26  83.44          132.64           9.39              6.39            2.04                     10.00
+  GARCH                                80.51  94.85          140.37           6.06              4.03            1.30                      8.08
+  situation (Mondrian)                 79.39  83.72          130.50           2.94              0.32            3.21                      8.26
+  GARCH x situation                    78.86  88.96          138.10           2.59              0.31            1.46                      7.01
+  patient-scaled situation             78.61  84.18          129.54           3.27              0.79            2.32                      7.51
+  patient x situation cells            78.26  84.04          131.44           5.14              2.60            1.75                      8.98
+  situation x patient scale (0.01)     80.18  87.84          129.83           4.12              2.14           -0.57                      6.61
+DCLP5 (20 patients; R^2 situation 0.065, patient 0.025, both 0.076):
+                                    coverage   width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                       
+  pooled conformal                     79.42   97.37          154.53           9.74              7.11            3.80                     10.75
+  per-patient conformal                79.22   97.40          153.06           8.81              6.60            2.75                     11.10
+  GARCH                                81.62  107.08          156.07           5.70              3.93            1.66                      8.11
+  situation (Mondrian)                 79.72   97.14          148.77           2.86              0.72            3.01                      8.46
+  GARCH x situation                    79.77  101.00          153.43           2.51              0.68            1.90                      7.07
+  patient-scaled situation             79.57   97.46          148.32           3.11              1.03            2.54                      8.53
+  patient x situation cells            79.08   97.74          151.13           4.55              2.48            2.12                      9.93
+  situation x patient scale (0.01)     80.00   99.62          147.20           3.39              1.58           -0.68                      6.78
+PEDAP (20 patients; R^2 situation 0.041, patient -0.004, both 0.029):
+                                    coverage   width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                       
+  pooled conformal                     82.10  100.48          144.76           7.28              5.31            2.79                      9.15
+  per-patient conformal                81.49  100.70          144.33           5.63              4.08            2.47                      9.21
+  GARCH                                82.55  107.88          149.09           5.90              3.83            1.41                      7.64
+  situation (Mondrian)                 81.20   98.56          141.33           3.68              1.25            2.08                      7.05
+  GARCH x situation                    80.86  102.02          146.42           2.50              0.22            1.66                      6.54
+  patient-scaled situation             80.74  100.13          141.87           2.92              0.81            2.67                      7.47
+  patient x situation cells            80.13   98.16          143.03           3.08              1.13            2.03                      8.62
+  situation x patient scale (0.01)     80.13   97.89          141.53           3.86              1.82           -0.55                      6.49
+Flair (20 patients; R^2 situation 0.044, patient 0.002, both 0.035):
+                                    coverage   width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                       
+  pooled conformal                     81.19   99.22          144.75           8.24              6.72            1.96                     10.21
+  per-patient conformal                80.67   98.98          144.46           7.79              6.10            1.37                     10.57
+  GARCH                                81.48  105.69          151.74           5.68              3.74            2.42                      8.89
+  situation (Mondrian)                 81.08   97.85          141.22           3.71              1.96            1.37                      7.37
+  GARCH x situation                    80.19  101.00          149.72           3.73              1.91            2.35                      7.77
+  patient-scaled situation             80.49   97.71          141.35           3.53              1.59            1.50                      8.22
+  patient x situation cells            80.29   98.47          143.27           4.10              2.40            1.00                      9.78
+  situation x patient scale (0.01)     80.25   96.90          141.84           3.71              1.86           -0.84                      7.26
+IOBP2 (20 patients; R^2 situation 0.061, patient 0.042, both 0.078):
+                                    coverage   width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                       
+  pooled conformal                     78.91   92.24          146.19           9.89              6.62            5.83                     11.20
+  per-patient conformal                79.20   93.76          143.44           7.69              5.47            2.27                     10.10
+  GARCH                                81.61  103.28          147.44           5.48              3.43            1.84                      7.56
+  situation (Mondrian)                 78.49   91.14          141.86           2.55             -0.13            4.80                      9.30
+  GARCH x situation                    79.94   97.42          145.51           2.16              0.42            1.89                      6.53
+  patient-scaled situation             78.64   92.74          140.58           3.21              1.07            2.27                      8.02
+  patient x situation cells            77.47   91.50          142.36           4.88              2.09            2.38                      9.86
+  situation x patient scale (0.01)     79.92   96.16          140.46           3.21              1.49           -0.65                      6.68
+ReplaceBG (20 patients; R^2 situation 0.052, patient 0.038, both 0.073):
+                                    coverage  width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                      
+  pooled conformal                     80.21  84.71          133.65           7.98              5.02            4.97                     11.32
+  per-patient conformal                79.91  84.96          131.22           7.91              5.81            2.45                     10.32
+  GARCH                                81.85  94.11          135.10           6.76              4.32            2.06                      8.80
+  situation (Mondrian)                 79.96  84.25          129.79           2.25             -0.33            3.84                      9.44
+  GARCH x situation                    80.11  88.96          132.72           2.44              0.52            2.28                      7.75
+  patient-scaled situation             79.62  84.83          128.06           2.61              0.57            1.63                      7.87
+  patient x situation cells            78.45  84.30          130.33           3.95              1.32            1.02                     10.02
+  situation x patient scale (0.01)     80.12  86.59          128.22           4.25              2.27           -0.74                      7.37
+BrisT1D (13 patients; R^2 situation 0.048, patient 0.051, both 0.074):
+                                    coverage   width  interval_score  err_situation  excess_situation  excess_patient  disp_patient_x_situation
+  method                                                                                                                                       
+  pooled conformal                     79.85   91.79          145.05          10.38              7.01            4.48                     11.43
+  per-patient conformal                79.84   93.11          141.72           7.70              5.17            1.51                      9.08
+  GARCH                                80.97  100.21          146.15           5.61              3.64            0.60                      7.88
+  situation (Mondrian)                 79.75   92.03          141.21           3.96              0.93            3.51                      8.84
+  GARCH x situation                    79.95   96.50          144.66           4.32              2.18            0.62                      7.03
+  patient-scaled situation             79.70   92.77          139.28           3.57              1.02            1.46                      7.36
+  patient x situation cells            79.58   93.18          140.99           4.91              2.40            1.08                      8.92
+  situation x patient scale (0.01)     80.18   94.15          139.70           3.62              1.27           -0.84                      6.34

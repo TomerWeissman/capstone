@@ -499,3 +499,12 @@ files: work/12_10/scripts/train_horizon30.py, work/12_10/scripts/round9_horizon3
 commits: pending (this commit); pre-registration in 5f8436c
 runtime: training 777 s (37 patients, one seed each); analysis about 2 min
 outcome: H71 not supported narrowly: (a) situation excess 1.56 AZT1D (rule 1.5), 1.25 OhioT1DM; (b) holds on both.
+
+## 2026-10-17 | 12_10 | External validation on the MetaboNet panel (H54-H56, H60, H65-H67, H74)
+type: experiment
+status: done
+files: work/12_10/scripts/build_metabonet_panel.py, work/12_10/scripts/round6_panel.py, work/12_10/scripts/round12_panel_level_scale.py, work/12_10/results/verdict_h54_h56_h60.txt, work/12_10/results/verdict_h65_h67.txt, work/12_10/results/verdict_h74.txt, work/12_10/results/round6_panel_bands.csv, work/12_10/results/round6_patients.csv, work/12_10/results/round12_panel_level_scale.csv, work/12_10/results/metabonet_panel_log.txt, work/12_10/results/metabonet_panel_log2.txt, work/12_10/figures/h54_panel_external.png, work/12_10/figures/h65_patient_difficulty.png, data/processed/checkpoints/panel_*_cnn_lstm_v0/, datasets/README.md, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: panel training 1331 s after restart (plus about 25 min before); analysis about 10 min
+outcome: H54 confirmed 8/8. H55 supported 7/8. H56 supported 7/8. H60 not supported 2/8 (patient fix 8/8, situation cost 6/8). H74 supported 6/8. H65 not supported (R^2 0.44). H66 not supported (AID +2.4%, CI crosses 0). H67 supported (children +7.5%, CI +3.3 to +12.4).
+notes: 153 panel patients (BrisT1D 13 of 19 eligible passed coverage). Pushes now go over HTTPS with the gh credential helper (the SSH agent lost its key).

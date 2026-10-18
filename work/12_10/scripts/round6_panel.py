@@ -184,12 +184,17 @@ def main():
     fig.tight_layout(); fig.savefig(FIGS / "h54_panel_external.png", dpi=150); plt.close(fig)
 
     fig, ax = plt.subplots(figsize=(8.5, 6))
-    for s, dd in P.groupby("source"):
-        ax.scatter(dd.glucose_sd, dd.rmse, s=22, label=s, alpha=0.8)
+    cmap = plt.get_cmap("tab20")
+    for k, (s, dd) in enumerate(P.groupby("source")):
+        ax.scatter(dd.glucose_sd, dd.rmse, s=24, label=s, alpha=0.85, color=cmap(2 * k % 20 + (k >= 10)),
+                   marker="os^D"[k % 4])
     xs = np.linspace(P.glucose_sd.min(), P.glucose_sd.max(), 50)
     bb = ols(np.log(P.glucose_sd.to_numpy())[:, None], np.log(P.rmse.to_numpy()))
     ax.plot(xs, np.exp(bb[0]) * xs ** bb[1], color="black", lw=1.5)
     ax.set_xscale("log"); ax.set_yscale("log")
+    from matplotlib.ticker import ScalarFormatter
+    for axis in (ax.xaxis, ax.yaxis):
+        axis.set_major_formatter(ScalarFormatter()); axis.set_minor_formatter(ScalarFormatter())
     ax.set_xlabel("patient's glucose SD, training period (mg/dL)"); ax.set_ylabel("patient's 60-minute forecast RMSE (mg/dL)")
     ax.set_title(f"H65: how much of a patient's forecast difficulty is their glucose variability? (R^2 {d['loso_r2']:.2f}, new studies)", loc="left", fontsize=10)
     ax.legend(frameon=False, fontsize=7, ncol=2)

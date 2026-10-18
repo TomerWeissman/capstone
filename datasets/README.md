@@ -12,6 +12,9 @@ Every dataset this project has imported, with where it came from and where it li
 | [hupa_ucm](hupa_ucm) | HUPA-UCM Diabetes Dataset: 25 patients, CGM with insulin, carbs, and heart rate | `data/hupa_ucm/HUPA-UCM Diabetes Dataset/` | [data.mendeley.com/datasets/3hbcscwz44/1](https://data.mendeley.com/datasets/3hbcscwz44/1) | 2026-09-28 |
 | [metabonet](metabonet) | MetaboNet: 14 public T1D datasets in one parquet file, including OhioT1DM | `~/Downloads/metabonet_public.parquet` (1.3 GB, outside the repo) | Paper: [arXiv:2601.11505](https://arxiv.org/abs/2601.11505). Download link not recorded. | 2026-09-14 |
 
+Derived from MetaboNet (not a new import):
+- **MetaboNet panel** (`data/processed/metabonet_panel/`, regenerable, not in git): 153 patients from Loop, DCLP3, DCLP5, PEDAP, Flair, IOBP2, ReplaceBG, BrisT1D (20 per study; BrisT1D 13), the best 45-day CGM stretch per patient. Built Oct 17, 2026 by `work/12_10/scripts/build_metabonet_panel.py`. MetaboNet's public subset is for non-commercial research; JAEB-hosted studies follow JAEB terms of use, others CC BY 4.0 (MetaboNet-Bench, arXiv:2606.18640).
+
 Not on disk:
 - **OhioT1DM**: accessed only through MetaboNet. A direct access request was sent about Sep 8 and had no reply as of Oct 4 (Notion journal).
 - **ML-Glucose** ([arXiv:2507.14077](https://arxiv.org/html/2507.14077v1)): considered on Sep 10 and never imported.

@@ -1,0 +1,17 @@
+H65 (log RMSE ~ log glucose SD, leave-one-source-out R^2 >= 0.60): NOT SUPPORTED; R^2 0.444; slope 0.64
+H66 (AID effect after SD >= 5%, interval excludes 0): NOT SUPPORTED; +2.4% (90% source bootstrap -4.3% to +8.9%)
+H67 (child effect after SD >= 5%, interval excludes 0): SUPPORTED; +7.5% (90% source bootstrap +3.3% to +12.4%)
+patients 215, sources 11; AID 142, children 69
+per source:             n  rmse    sd
+source                   
+AZT1D      25  31.2  45.9
+BrisT1D    13  40.2  51.8
+DCLP3      20  35.1  48.5
+DCLP5      20  40.2  61.8
+Flair      20  37.9  56.7
+HUPA-UCM   25  38.7  63.5
+IOBP2      20  37.2  52.8
+Loop       20  35.7  45.3
+OhioT1DM   12  37.3  58.0
+PEDAP      20  38.9  50.9
+ReplaceBG  20  35.0  60.1
