@@ -448,3 +448,12 @@ commits: pending (this commit); pre-registrations in f134bf3 and the H64 commit
 runtime: about 5 min per run
 outcome: H61 not supported (ML R^2 9.8/3.7/19.9% vs groups 6.9/2.5/14.7%). H62 not supported (top: forecast value, patient scale; latest error weak). H63 not supported (CQR sharpest, uneven). H64 not supported (best interval score everywhere, patient-calibrated, situation excess about 2.1-2.3).
 notes: H64 is the third design for a sharp and calibrated band; tuning stopped per protocol.
+
+## 2026-10-17 | 12_10 | H68: zone D safety check of the patient-scale band
+type: experiment
+status: done
+files: work/12_10/scripts/round5_zone_d.py, work/12_10/results/verdict_h68.txt, work/12_10/results/round5_zone_d.csv, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md, work/12_10/scripts/build_metabonet_panel.py
+commits: pending (this commit); pre-registration in 06bab2a
+runtime: about 1 min
+outcome: H68 supported (3 of 3): zone D caught 29.4/44.2/51.7% vs 22.4/41.4/45.8% for situation bands; GARCH 39.1/62.1/68.9%.
+notes: panel build fixed: 10 PEDAP patients had no basal recorded at all (NaN training); basal now filled with 0 and flagged in metadata; their checkpoints were deleted and the job restarted (finished patients reused).

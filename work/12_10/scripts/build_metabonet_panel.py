@@ -9,7 +9,8 @@ Per patient (eligible: at least 45 days of CGM readings):
     as in the existing cleaning); patients whose best stretch has under 90% coverage are skipped
   - the same plain CNN-LSTM as the other datasets (30 epochs, early stopping), one seed per patient
 Patient ids become integers (source index * 10000 + MetaboNet id order); the mapping and patient
-metadata (age, sex, modality, CGM device) go to the panel's metadata file.
+metadata (age, sex, modality, CGM device) go to the panel's metadata file. Patients with no basal
+recorded at all get basal 0 (flagged basal_recorded = False in the metadata).
 
 Run:    python work/12_10/scripts/build_metabonet_panel.py
 Writes: data/processed/metabonet_panel/<source>.parquet, data/processed/metabonet_panel/metadata.csv,
@@ -91,6 +92,11 @@ def main():
                               "gender": row.gender, "modality": row.modality, "cgm_device": row.cgm_device,
                               "cgm_coverage_45d": round(cover, 3)})
         df = cleaning.clean_canonical_frame(pd.concat(parts, ignore_index=True)[["subject_id", *ref.CANONICAL_COLUMNS]])
+        no_basal = df.groupby("subject_id")[ref.BASAL].apply(lambda b: b.isna().all())
+        for m in meta_rows:
+            if m["source"] == source:
+                m["basal_recorded"] = not bool(no_basal.get(m["subject_id"], False))
+        df[ref.BASAL] = df[ref.BASAL].fillna(0.0)  # some patients (e.g. PEDAP) have no basal recorded at all
         df.to_parquet(OUT / f"{source}.parquet", index=False)
         print(f"{source}: {kept} patients from {len(el)} eligible ({time.time() - t0:.0f}s)", flush=True)
 

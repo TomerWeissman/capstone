@@ -1,0 +1,61 @@
+dataset,method,zone,n,caught
+azt1d,GARCH,A,40777,0.9598057728621527
+azt1d,GARCH,B,17773,0.5459967366229674
+azt1d,GARCH,C,30,0.03333333333333333
+azt1d,GARCH,D,1420,0.3908450704225352
+azt1d,GARCH,E,9,0.0
+azt1d,situation (Mondrian),A,40777,0.9794491993035289
+azt1d,situation (Mondrian),B,17773,0.3467619422719856
+azt1d,situation (Mondrian),C,30,0.0
+azt1d,situation (Mondrian),D,1420,0.223943661971831
+azt1d,situation (Mondrian),E,9,0.0
+azt1d,GARCH x situation,A,40777,0.9451651666380557
+azt1d,GARCH x situation,B,17773,0.4921510155854386
+azt1d,GARCH x situation,C,30,0.0
+azt1d,GARCH x situation,D,1420,0.33943661971830985
+azt1d,GARCH x situation,E,9,0.0
+azt1d,situation x patient scale (0.01),A,40777,0.9725090124334796
+azt1d,situation x patient scale (0.01),B,17773,0.43678613627412366
+azt1d,situation x patient scale (0.01),C,30,0.0
+azt1d,situation x patient scale (0.01),D,1420,0.2943661971830986
+azt1d,situation x patient scale (0.01),E,9,0.0
+ohiot1dm,GARCH,A,21836,0.9613482322769739
+ohiot1dm,GARCH,B,10039,0.5859149317661122
+ohiot1dm,GARCH,C,122,0.13934426229508196
+ohiot1dm,GARCH,D,1214,0.6210873146622735
+ohiot1dm,GARCH,E,10,0.0
+ohiot1dm,situation (Mondrian),A,21836,0.983742443671002
+ohiot1dm,situation (Mondrian),B,10039,0.43709532821994224
+ohiot1dm,situation (Mondrian),C,122,0.0
+ohiot1dm,situation (Mondrian),D,1214,0.4135090609555189
+ohiot1dm,situation (Mondrian),E,10,0.0
+ohiot1dm,GARCH x situation,A,21836,0.9407858582157904
+ohiot1dm,GARCH x situation,B,10039,0.517581432413587
+ohiot1dm,GARCH x situation,C,122,0.03278688524590164
+ohiot1dm,GARCH x situation,D,1214,0.5420098846787479
+ohiot1dm,GARCH x situation,E,10,0.0
+ohiot1dm,situation x patient scale (0.01),A,21836,0.9714691335409416
+ohiot1dm,situation x patient scale (0.01),B,10039,0.4759438191054886
+ohiot1dm,situation x patient scale (0.01),C,122,0.0
+ohiot1dm,situation x patient scale (0.01),D,1214,0.4415156507413509
+ohiot1dm,situation x patient scale (0.01),E,10,0.0
+hupa_ucm,GARCH,A,42871,0.9212288026871311
+hupa_ucm,GARCH,B,14584,0.4851206801974767
+hupa_ucm,GARCH,C,99,0.23232323232323232
+hupa_ucm,GARCH,D,4116,0.6892614188532555
+hupa_ucm,GARCH,E,32,0.0
+hupa_ucm,situation (Mondrian),A,42871,0.9701196613095099
+hupa_ucm,situation (Mondrian),B,14584,0.3311848601206802
+hupa_ucm,situation (Mondrian),C,99,0.0
+hupa_ucm,situation (Mondrian),D,4116,0.4582118561710398
+hupa_ucm,situation (Mondrian),E,32,0.0
+hupa_ucm,GARCH x situation,A,42871,0.9213920832264234
+hupa_ucm,GARCH x situation,B,14584,0.4791552386176632
+hupa_ucm,GARCH x situation,C,99,0.24242424242424243
+hupa_ucm,GARCH x situation,D,4116,0.6545189504373178
+hupa_ucm,GARCH x situation,E,32,0.15625
+hupa_ucm,situation x patient scale (0.01),A,42871,0.9579435982365702
+hupa_ucm,situation x patient scale (0.01),B,14584,0.3737657707076248
+hupa_ucm,situation x patient scale (0.01),C,99,0.0707070707070707
+hupa_ucm,situation x patient scale (0.01),D,4116,0.5174927113702624
+hupa_ucm,situation x patient scale (0.01),E,32,0.0

@@ -1,0 +1,8 @@
+H68 (patient-scale band catches zone D no worse than situation bands by > 2 points): SUPPORTED (3 of 3)
+zone D share caught (%):
+method    GARCH  GARCH x situation  situation (Mondrian)  situation x patient scale (0.01)
+dataset                                                                                   
+azt1d      39.1               33.9                  22.4                              29.4
+hupa_ucm   68.9               65.5                  45.8                              51.7
+ohiot1dm   62.1               54.2                  41.4                              44.2
+zone D windows: {'azt1d': 1420, 'hupa_ucm': 4116, 'ohiot1dm': 1214}

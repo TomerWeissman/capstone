@@ -82,7 +82,7 @@ Statuses:
 | H65 | Across all patients with forecasters (AZT1D, OhioT1DM, HUPA-UCM, MetaboNet panel; about 220), the log of a patient's test RMSE is explained mostly by the log of their glucose SD (computed on the training period): leave-one-source-out R^2 at least 0.60. | 12_10 | Testing | Pre-registered Oct 17, before the panel finished training. | none |
 | H66 | After adjusting for glucose SD, delivery modality matters: closed-loop (AID) patients' RMSE differs from non-AID patients' by at least 5%, with a 90% source-cluster bootstrap interval excluding zero. Direction not predicted. | 12_10 | Testing | Pre-registered Oct 17, before the panel finished training. | none |
 | H67 | After adjusting for glucose SD, children (under 18) have RMSE at least 5% different from adults, interval excluding zero. Direction not predicted. | 12_10 | Testing | Pre-registered Oct 17, before the panel finished training. | none |
-| H68 | Safety non-inferiority: the situation x patient-scale band (H59) catches no fewer Clarke zone D points than situation bands (no more than 2 points lower) on at least 2 of 3 datasets. GARCH reported for reference. | 12_10 | Testing | Pre-registered Oct 17, before the run. | none |
+| H68 | Safety non-inferiority: the situation x patient-scale band (H59) catches no fewer Clarke zone D points than situation bands (no more than 2 points lower) on at least 2 of 3 datasets. GARCH reported for reference. | 12_10 | Supported | Zone D caught, situation x patient scale vs situation bands: AZT1D 29.4% vs 22.4%, OhioT1DM 44.2% vs 41.4%, HUPA-UCM 51.7% vs 45.8%. GARCH still catches most (39.1%, 62.1%, 68.9%). [verdict](12_10/results/verdict_h68.txt) | none |
 
 ## Testing now
 

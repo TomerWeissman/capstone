@@ -19,6 +19,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 
 ### F3. Calibration by situation trades off dangerous-miss coverage. Tier 2.
 - Situation bands catch fewer Clarke zone D points than GARCH (41% vs 62% OhioT1DM; 22% vs 39% AZT1D). A GARCH-normalized version recovers most of the gap (54%, 34%) but not all (H38).
+- The per-patient scale-adaptive band recovers part of it (H68): 29.4%, 44.2%, 51.7% vs 22.4%, 41.4%, 45.8% for situation bands (AZT1D, OhioT1DM, HUPA-UCM); GARCH 39.1%, 62.1%, 68.9%.
 
 ### F4. Bands do not make better alarms than a tuned threshold. Tier 1.
 - At matched false-trigger rates, conformal, GARCH and analog ensemble bands catch 74 to 76.5% of danger (H10). A tuned point threshold beats band alarms (H24).
