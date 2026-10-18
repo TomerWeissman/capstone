@@ -48,6 +48,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM; OhioT1DM 1.6 above).
 - Patient-by-situation unevenness is 80-95% sampling noise (floors 6.5 to 15.3 points). Comparing methods at that level without a floor is misleading.
 - Per-patient unevenness is real: 3.5, 2.3, 9.1 points above the floor.
+- Same pattern with the CNN-Transformer forecaster (H69).
 
 ### F10. GARCH x situation bands are the most even across patients and situations. Tier 1 (post hoc, Round 1); mostly explained by F11.
 - Lowest patient-by-situation calibration error on all three datasets (8.5, 7.6, 12.3 points vs 9.7, 8.3, 16.7 for situation-only), and still lowest or tied after removing each method's overall coverage offset.
@@ -58,6 +59,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Situation bands times exp(theta), theta adapted per patient from misses known 60 minutes later (eta 0.01): per-patient excess above the noise floor goes from 3.5, 2.3, 9.1 points to -0.9, -0.9, +0.4; interval score improves (112.0 vs 113.5; 130.2 vs 130.8; 107.5 vs 110.8).
 - Cost: per-situation evenness erodes as adaptation speeds up (excess 0.9, 2.5, 1.2 at eta 0.01). Adapting the quantile level (standard ACI, H58) erodes it more.
 - Interpretation: the remaining miscalibration is a slowly drifting patient-level error scale, consistent with F6 (error tracks each patient's variability over time).
+- Holds for a second forecaster, the CNN-Transformer (H69): per-patient excess 3.5 to -0.8 (AZT1D) and 2.6 to -0.9 (OhioT1DM), interval score slightly better.
 - External test pending (H60).
 
 ### F13. The size of each forecast's error is mostly unpredictable, and errors barely cluster at the 60-minute horizon. Tier 2 (H49, H61, H62).

@@ -457,3 +457,11 @@ commits: pending (this commit); pre-registration in 06bab2a
 runtime: about 1 min
 outcome: H68 supported (3 of 3): zone D caught 29.4/44.2/51.7% vs 22.4/41.4/45.8% for situation bands; GARCH 39.1/62.1/68.9%.
 notes: panel build fixed: 10 PEDAP patients had no basal recorded at all (NaN training); basal now filled with 0 and flagged in metadata; their checkpoints were deleted and the job restarted (finished patients reused).
+
+## 2026-10-17 | 12_10 | H69: findings with a second forecaster (CNN-Transformer)
+type: experiment
+status: done
+files: work/12_10/scripts/round7_other_forecaster.py, work/12_10/results/verdict_h69.txt, work/12_10/results/round7_transformer.csv, work/12_10/scripts/round6_panel.py, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: about 2 min
+outcome: H69 supported: situation excess 0.61, 1.38; patient-scale band per-patient excess 3.50 to -0.84, 2.61 to -0.87; interval score slightly better.

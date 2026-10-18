@@ -28,6 +28,8 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 
 - **H68, supported**: the patient-scale band catches more dangerous misses than situation bands on all three datasets (still fewer than GARCH).
 
+- **H69, supported**: the noise-floor and per-patient-scale findings hold for the CNN-Transformer forecaster.
+
 ## Findings
 - **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
 - **Round 4: how predictable is error size, and can a learned band be both sharp and calibrated?** Error size is mostly unpredictable even with rich context (at most 20%), and recent errors barely help: errors do not cluster at the 60-minute horizon. Learned bands are sharper but uneven; adding situation calibration and patient scaling fixes patients but leaves about 2 points of situation unevenness. Sharpness and conditional calibration trade off.
@@ -91,6 +93,9 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [scripts/round5_zone_d.py](scripts/round5_zone_d.py) | H68: Clarke zone catch rates for four band methods | current |
 | [results/verdict_h68.txt](results/verdict_h68.txt) | H68 verdict and zone D table | current |
 | [results/round5_zone_d.csv](results/round5_zone_d.csv) | Catch rate per zone, method, dataset | current |
+| [scripts/round7_other_forecaster.py](scripts/round7_other_forecaster.py) | H69: Rounds 2-3 findings with the CNN-Transformer forecaster | current |
+| [results/verdict_h69.txt](results/verdict_h69.txt) | H69 verdict and tables | current |
+| [scripts/round6_panel.py](scripts/round6_panel.py) | Round 6: external panel tests (H54-H56, H60) and patient determinants (H65-H67) | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |

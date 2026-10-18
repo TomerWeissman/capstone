@@ -1,0 +1,13 @@
+H69 (findings hold for the CNN-Transformer): SUPPORTED (a True, b True)
+azt1d:
+                                  coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                            
+GARCH                                81.76  85.43          121.19           5.56              3.23            2.84
+situation (Mondrian)                 77.33  74.27          118.27           4.29              0.61            3.50
+situation x patient scale (0.01)     79.59  80.35          116.36           2.94              0.90           -0.84
+ohiot1dm:
+                                  coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                            
+GARCH                                81.57  98.78          140.34           6.21              3.77            2.43
+situation (Mondrian)                 79.56  90.56          134.86           4.11              1.38            2.61
+situation x patient scale (0.01)     79.84  91.79          134.45           4.78              2.38           -0.87
