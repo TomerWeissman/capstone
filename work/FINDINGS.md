@@ -72,6 +72,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Group-conditional bands are even by situation; online per-patient scaling makes them even by patient; each added adaptation costs about one point of per-situation evenness.
 - Best interval score with per-patient calibration: Mondrian CQR x patient scale (108.0, 128.1, 99.6), at a per-situation excess of about 2 points. Best balance of all three criteria: situation x patient scale (H59).
 - Three designs were tried for the patient-level fix (H58, H59, H64); all are reported.
+- Why adaptation costs situation evenness (paper Figure 1): the online scale is driven by misses in the common situations, so when it widens, the rare extreme situations (under 70, 250 and over) over-cover (84-90%).
 
 ### F15. Bands for a new patient need no calibration data of that patient's own. Tier 2 (H70).
 - Situation quantiles from other patients plus the online per-patient scale match own-data calibration: per-patient excess -0.87, -0.89, 0.49 vs -0.88, -0.91, 0.43 points; interval scores within 0.3.
