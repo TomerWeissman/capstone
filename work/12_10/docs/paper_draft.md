@@ -1,119 +1,167 @@
-# Where glucose forecast uncertainty lives: situation, patient, and noise in 60-minute CGM prediction intervals
+# Where glucose forecast uncertainty lives: situation, patient, and day in 60-minute CGM prediction intervals across 11 studies
 
-Working draft, started Oct 17, 2026. Built from `work/FINDINGS.md`; every number traces to a result file named in `work/HYPOTHESES.md`. Places marked **[PENDING Hxx]** wait on the external MetaboNet panel.
+Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number traces to a result file named in `work/HYPOTHESES.md` (H49-H76 for this paper; H1-H48 are earlier project history). Items marked **[PENDING]** are running.
 
 ## Abstract (draft)
 
-Prediction intervals for continuous glucose monitoring (CGM) forecasts are usually judged by their average coverage. We ask where the uncertainty of a 60-minute forecast actually lives, and what an interval must adapt to in order to be honest everywhere it is used. Using per-patient CNN-LSTM forecasters on three public datasets (AZT1D, OhioT1DM, HUPA-UCM; 62 patients) and an external panel of 160 patients from eight MetaboNet studies, we find:
-- **Situation.** Standard intervals (GARCH, split conformal) are right on average but miscalibrated in specific glycemic situations, defined by level and 30-minute trend. Group-conditional (Mondrian) conformal calibration by situation removes this, down to the sampling-noise limit **[PENDING H54]**.
-- **A noise floor for calibration metrics.** We introduce a circular-shift noise floor for calibration metrics on autocorrelated forecast windows. It shows that most apparent patient-by-situation miscalibration is sampling noise, while real miscalibration remains between patients.
-- **Patient.** An online per-patient scale correction, updated from errors observed 60 minutes later, removes that residual and sharpens the intervals. It holds for two forecaster architectures **[PENDING H60]**.
-- **Unpredictable size.** The size of individual forecast errors is mostly unpredictable: at most 20% of its variation is explained, even by gradient boosting with rich context. Errors barely cluster at this horizon, which undercuts the volatility-clustering premise behind GARCH-style bands.
-- **Patient difficulty.** **[PENDING H65-H67]**
+**Background.** Prediction intervals for continuous glucose monitoring (CGM) forecasts are usually evaluated by average coverage. Clinical use is conditional: an interval must be honest for this glycemic situation, this patient, and this day.
+
+**Methods.**
+- Data: per-patient CNN-LSTM forecasters (60-minute horizon) for 215 people with type 1 diabetes from 11 public studies. Three datasets were used for development (AZT1D, OhioT1DM, HUPA-UCM; 62 patients). Eight MetaboNet studies were held out for external validation (153 patients; closed-loop and sensor-augmented pump; children to adults; three CGM families: Dexcom, Medtronic, Abbott).
+- Interval methods: GARCH, split, Mondrian, normalized and quantile-regression conformal, adaptive conformal inference, and an online per-patient scale correction.
+- Evaluation: a new circular-shift noise floor that separates real conditional miscalibration from the sampling noise of autocorrelated forecast windows.
+
+**Results.**
+- **Situation.** Standard intervals were miscalibrated across 25 glycemic situations (level by 30-minute trend). Pooled coverage of nominal 80% GARCH intervals ranged from 65% (70-120 mg/dL, rising fast) to 95% (below 70, falling fast). Situation-conditional conformal calibration reduced per-situation miscalibration in all 8 external studies (2.3-4.2 vs 5.5-6.8 points), down to the noise floor.
+- **Patient.** Real miscalibration remained between patients. An online per-patient scale, updated from errors observed one horizon later, removed it in every development dataset and every external study. It also sharpened intervals, and it needed no calibration data from the new patient.
+- **Day.** Adaptive intervals halved the day-to-day spread of coverage.
+- **Error size.** It was largely unpredictable: at most 20% of its variation was explained, even by gradient boosting with rich context. Recent errors carried little information, contrary to the volatility-clustering premise of GARCH-type intervals.
+- **Patient difficulty.** Glucose variability explained 44% of between-patient forecast difficulty in new studies. Children were 7.5% harder to forecast after adjusting for variability. Closed-loop therapy made no detectable difference.
+
+**Conclusion.** Honest CGM prediction intervals need a fixed adaptation to glycemic situation and a slow online adaptation to the patient. Calibration claims on fine subgroups need a noise floor.
 
 ## 1. Introduction
 
-- CGM forecasting is mature for point accuracy, and uncertainty quantification is growing: quantile heads, evidential layers, MC dropout, and conformal methods.
-- The common evaluation is marginal: does an 80% interval cover 80% of readings overall? Clinical use is conditional. A patient falling fast from 110 mg/dL needs an interval that is honest for that situation, and for that patient.
+- CGM forecasting is mature for point accuracy, and uncertainty quantification is growing: quantile heads, evidential layers, MC dropout, conformal methods. Evaluations report marginal calibration.
+- Decisions are conditional. A 110 mg/dL reading falling fast, in a child, on a day of unusual control, is where an interval must be honest.
 - Questions:
-  1. How miscalibrated are standard intervals across glycemic situations and patients?
-  2. How much of the apparent miscalibration is real, given that forecast windows are autocorrelated and the cells are small?
-  3. What must an interval adapt to (situation, patient, recent volatility) to be honest at each level?
-  4. How predictable is the size of the next error at all?
-  5. What makes some patients harder to forecast?
+  1. Where are standard intervals miscalibrated: by situation, by patient, by day?
+  2. How much apparent conditional miscalibration is sampling noise?
+  3. What must an interval adapt to, and how fast?
+  4. How predictable is the size of the next error?
+  5. What makes a patient hard to forecast?
 
-## 2. Related work (to expand from work/12_10/docs/literature_log.md and work/5_10/docs/literature_review_uncertainty.md)
+## 2. Related work
 
-- Uncertainty for glucose forecasting: Gluformer; TFT with quantile outputs; evidential vs MC dropout on HUPA-UCM (Tan and McBeth 2026). Mostly marginal calibration.
-- Conformal prediction: split conformal; Mondrian/group-conditional conformal (Vovk 2003; Vovk 2012 conditional validity); normalized conformal; CQR (Romano et al. 2019); adaptive conformal inference under shift (Gibbs and Candes 2021).
-- Glucose-specific conformal work found so far: imputation (Matabuena et al.), conformal risk control with deferral (KTU). No study found applying group-conditional or online per-patient conformal calibration to CGM forecasting (searches logged).
-- Large-scale data: MetaboNet (Khamesian et al. 2026) and MetaboNet-Bench (accuracy only).
+- **Glucose forecast uncertainty.**
+  - Gluformer (arXiv:2209.04526).
+  - Temporal Fusion Transformer with quantiles (PMC12349322).
+  - Evidential vs MC dropout on HUPA-UCM (Tan and McBeth 2026, arXiv:2603.04955).
+  - Calibration is reported marginally; accuracy is sometimes stratified by glycemic range (GlyRAG, arXiv:2601.05353), but interval coverage is not.
+- **Conformal prediction.**
+  - Mondrian / group-conditional conformal (Vovk 2003; Vovk 2012).
+  - Conditional guarantees over subgroup classes (Gibbs, Cherian, Candes, arXiv:2305.12616).
+  - Normalized conformal; CQR (Romano et al. 2019).
+  - Time series: Xu and Xie 2021; online multi-step, arXiv:2410.13115.
+  - Adaptive conformal inference under shift (Gibbs and Candes 2021).
+- **Interval evaluation in econometrics.** Christoffersen-style tests of unconditional coverage and of the independence of misses. We found no method for a sampling-noise floor of group-level coverage dispersion under autocorrelation (searches logged in `work/12_10/docs/literature_log.md`).
+- **CGM conformal work.** Imputation (Matabuena et al., arXiv:2403.18069) and conformal risk control with deferral (KTU). No CGM forecasting study found with group-conditional or online per-patient conformal calibration.
+- **Large-scale data.** MetaboNet (arXiv:2601.11505); MetaboNet-Bench (arXiv:2606.18640, accuracy only).
 
 ## 3. Data
 
-| Dataset | Patients | Therapy | Notes |
-|---|---|---|---|
-| AZT1D | 25 | AID | Development |
-| OhioT1DM (via MetaboNet) | 12 | Pump with sensor (SAP) | Used for H28 as fresh data |
-| HUPA-UCM | 25 | SAP/MDI | Most heterogeneous |
-| MetaboNet panel | 160 (8 x 20) | AID and SAP; children to adults | Loop, DCLP3, DCLP5, PEDAP, Flair, IOBP2, ReplaceBG, BrisT1D. Never used to design any method. 45 days per patient, best-coverage stretch, gaps of 30 min or less interpolated. |
-| Simulated (simglucose) | 8 | Basal-bolus with errors | Answer key for noise; too easy to forecast (Section 5.6) |
+| Role | Dataset | Patients | Therapy | Notes |
+|---|---|---|---|---|
+| Development | AZT1D | 25 | AID | Dexcom G6 |
+| Development | OhioT1DM (via MetaboNet) | 12 | SAP | Medtronic Enlite |
+| Development | HUPA-UCM | 25 | SAP/MDI | FreeStyle Libre 2; short records (about 13 days) |
+| External | Loop, DCLP3, DCLP5, PEDAP, Flair, IOBP2, ReplaceBG, BrisT1D (MetaboNet public subset) | 153 (20 per study; BrisT1D 13) | AID and SAP; 69 children overall | Best 45-day stretch per patient, at least 90% CGM coverage, gaps of 30 min or less interpolated; patients selected at random among the eligible |
+| Answer key | simglucose (UVA/Padova) | 8 | Basal-bolus with dosing errors | Section 5.9 |
 
 ## 4. Methods
 
-- **Forecaster.** Per-patient CNN-LSTM (GLIMMER baseline architecture), 2-hour lookback, 60-minute horizon. Chronological split: 64% train, 16% validation, 20% test. One seed per patient. CNN-Transformer used as a second architecture.
-- **Situations.** 5 levels (<70, 70-120, 120-180, 180-250, >=250 mg/dL) x 5 trends (30-minute change with edges -30, -10, 10, 30 mg/dL).
-- **Interval methods** (all calibrated on validation, scored on test; 80% nominal):
-  - pooled split conformal
-  - per-patient conformal
-  - GARCH(1,1) on validation residuals with a 60-minute information lag
-  - situation Mondrian conformal
+- **Forecasters.**
+  - Per-patient CNN-LSTM, 2-hour lookback, 60-minute horizon, 30 epochs with early stopping.
+  - Chronological split: 64% train, 16% validation, 20% test.
+  - One seed per patient.
+  - Robustness checks: a CNN-Transformer, a 30-minute horizon, and a second seed for every development forecaster.
+- **Situations.** 5 levels (<70, 70-120, 120-180, 180-250, >=250 mg/dL) x 5 trends (30-minute change; edges -30, -10, 10, 30 mg/dL).
+- **Intervals.** All are calibrated on validation and scored on test.
+  - GARCH(1,1) with a one-horizon information lag
+  - pooled and per-patient split conformal
+  - situation-Mondrian conformal
   - GARCH-normalized Mondrian
   - patient-scaled Mondrian
-  - CQR with rich features
-  - Mondrian CQR
-  - ACI (quantile-level adaptation)
-  - situation x online per-patient scale: half-width = situation quantile x exp(theta), with theta updated by eta x (miss indicator 60 minutes earlier - 0.2), eta = 0.01
+  - rich-feature CQR and Mondrian CQR
+  - adaptive conformal inference (ACI)
+  - situation x online patient scale: half-width = q_situation x exp(theta_t), with theta_{t+1} = theta_t + eta (miss_{t-h} - alpha), eta = 0.01, and h equal to the horizon
+  - situation x online patient-per-level scale: one theta per glucose level
 - **Calibration metrics.**
-  - Distance from nominal coverage averaged over groups (situations, patients, patient-by-situation cells with at least 30 test windows).
+  - Mean distance from nominal over groups with at least 30 test windows.
   - Dispersion around each method's own overall coverage.
-  - Interval score.
-- **Noise floor (new).** The dispersion that sampling noise alone produces. Situation labels are circularly shifted within each patient by at least one day, preserving the autocorrelation of both series while breaking their link. Per patient, the floor comes from a moving-block bootstrap (one-day blocks) of each patient's coverage. "Excess" = observed minus floor.
+  - Interval (Winkler) score.
+  - SD of daily coverage.
+- **Noise floor.**
+  - Situation-type groups: labels circularly shifted within each patient by at least one day, 30-50 times. This keeps the autocorrelation of both series and breaks their link.
+  - Per patient: moving-block bootstrap (one-day blocks) of each patient's coverage; expected dispersion = mean of sqrt(2/pi) x SE.
+  - Excess = observed minus floor.
 - **Error-size predictability.**
-  - Group means fitted on validation (R^2 of absolute test error).
-  - Gradient boosting with rich context (level, trends, carbs, bolus, time, GARCH scale, patient scale, recently observed errors).
+  - Group means fitted on validation (R^2 on absolute test error).
+  - Gradient boosting with level, trends, carbs, bolus, time of day, forecast value, GARCH scale, patient scale, and recently observed errors.
   - Permutation importance.
-- **Statistics.** Patient as the unit, patient-cluster bootstrap intervals, source-cluster bootstrap for cross-study effects. Every hypothesis pre-registered with a threshold before running; the full register (H1-H69 so far, including nulls) is in the supplement.
+- **Patient difficulty.** Log RMSE on log glucose SD (training period) with leave-one-source-out R^2; AID and child effects with a source-cluster bootstrap.
+- **Pre-registration.** Every hypothesis had a threshold committed before running (git history). All 28 hypotheses of this paper are reported, including nulls (supplement table).
 
 ## 5. Results
 
-### 5.1 Standard intervals are miscalibrated by situation; situation calibration fixes it (F1)
-- AZT1D: coverage of 80% conformal bands ranges from 64% (70-120, fast rise) to 95% (<70, fast fall).
-- OhioT1DM (fresh data): mean distance from 80% across situations, GARCH 6.7 vs situation Mondrian 3.9 points; narrower bands (87 vs 99 mg/dL); 9 of 12 patients improved. Robust to shuffled groupings, to two other forecasters, and to the patient bootstrap.
-- **[PENDING H54: 8 external studies]**
+### 5.1 Standard intervals are miscalibrated by situation; situation calibration fixes it (F1, tier 3)
+- Pooled over the development datasets, GARCH coverage of a nominal 80% band ranged from 65% (70-120, fast rise) to 95% (<70, fast fall). Situation calibration brought every situation to 76-87% (Figure 1).
+- External: per-situation distance from 80% fell in all 8 held-out studies, from 5.5-6.8 to 2.3-4.2 points (H54).
+- Also holds at 90% nominal (H76), at a 30-minute horizon (H71), and for a CNN-Transformer (H69).
 
-### 5.2 A noise floor shows what is real (F11)
-- Situation Mondrian bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM; OhioT1DM 1.6 points above).
-- Patient-by-situation unevenness is 80-95% sampling noise: floors of 6.5-15.3 points, real excess 0.8-1.8.
-- Real miscalibration remains between patients: 3.5, 2.3, 9.1 points above the floor.
-- GARCH-based bands look more even mainly because their noise floor is lower; the cause is not shorter miss streaks (H57). Mechanism open.
-- Same pattern with the CNN-Transformer (H69).
+### 5.2 A noise floor separates real from apparent miscalibration (F11)
+- Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM; OhioT1DM 1.6 above).
+- Patient-by-situation unevenness is 80-95% sampling noise (floors 6.5-15.3 points; real excess 0.8-1.8). Method rankings at that granularity, without a floor, are misleading (H51-H52).
+- Real miscalibration remains between patients: 3.5, 2.3, 9.1 points above the floor (H53), and 1.4-4.8 in the external studies.
 
-### 5.3 Online per-patient scaling removes the between-patient residual (F12)
-- Per-patient excess 3.5, 2.3, 9.1 to -0.9, -0.9, +0.4 points. Interval score improves: 112.0 vs 113.5; 130.2 vs 130.8; 107.5 vs 110.8.
-- Cost: per-situation excess rises to 0.9, 2.5, 1.2. Quantile-level ACI fixes patients but costs more situation evenness (H58).
-- Recovers part of the dangerous-miss gap: zone D caught 29%, 44%, 52% vs 22%, 41%, 46% for situation bands; GARCH 39%, 62%, 69% (H68).
-- CNN-Transformer: same result (H69).
-- **[PENDING H60: 8 external studies]**
+### 5.3 An online per-patient scale removes the between-patient residual (F12, tier 3)
+- Development: per-patient excess 3.5, 2.3, 9.1 fell to -0.9, -0.9, +0.4 points; interval score improved (H59).
+- External: removed in all 8 studies (-0.55 to -0.84), interval score better or within 0.5% (H60).
+- Trade-off: a single scale over-covers rare extreme situations (Figure 1) and costs about one point of situation evenness. One scale per glucose level keeps both and meets all criteria in 6 of 8 external studies (H74), but needs longer records (it fails on HUPA-UCM's 2.6-day test periods, H73).
+- Standard ACI (adapting the quantile level) also fixes patients but costs more situation evenness (H58).
+- Robust to a second architecture (H69), a 30-minute horizon (H71), and 90% nominal (H76). **[PENDING H75: second seed]**
 
-### 5.4 Error size is mostly unpredictable (F9, F13)
-- Group means: R^2 at most 15%. Gradient boosting with rich context: 9.8%, 3.7%, 19.9%.
-- Top drivers: the forecast value and the patient's error scale. The latest observed error adds little, and GARCH's time-varying scale predicts error size no better than a constant.
-- Situation vs patient: neither dominates (situation wins on AZT1D and OhioT1DM, patient on HUPA-UCM). **[PENDING H55]**
+### 5.4 The new patient needs no calibration data of their own (F15)
+- With situation quantiles from other patients only, the online scale gives per-patient excess -0.87, -0.89, 0.49 vs -0.88, -0.91, 0.43 for own-data calibration (H70). The forecaster was still per patient.
 
-### 5.5 Sharpness and conditional calibration trade off (F14)
-- Rich-feature CQR is sharpest but uneven by situation (excess 2.4-4.0) and by patient (2.3-6.2).
-- Mondrian CQR with patient scaling: best interval score (108.0, 128.1, 99.6) and calibrated by patient, but about 2 points uneven by situation.
+### 5.5 Honesty by day (F16)
+- Static situation bands cover some days far less than others (SD of daily coverage 10.3, 9.3, 12.4 points). Adaptive bands halve this (patient scale 5.5, 5.9, 6.7; H72).
+- This is why adaptive bands have lower noise floors. It is not explained by shorter miss streaks (H57).
 
-### 5.6 What makes a patient hard to forecast **[PENDING H65-H67]**
+### 5.6 Error size is mostly unpredictable, and situation matters more than patient (F9, F13, tier 3)
+- Development: situation and patient group means explain at most 15%; gradient boosting with rich context explains 9.8%, 3.7%, 19.9% (H49, H61).
+- Top drivers: the forecast value and the patient's error scale. The latest known error adds little, and GARCH's scale predicts error size no better than a constant (H62).
+- External: situation explains more than patient in 7 of 8 studies; everything at most 8.8% (H55).
 
-### 5.7 Sensor noise costs more than its own variance (F8; simulation, preliminary)
-- Planted level-dependent noise raised squared 60-minute error by 1.1-3.5 times the noise variance, because noisy inputs mislead the forecaster too.
-- The simulator was too easy (median RMSE 11-16 vs 31-39 mg/dL real), so this is a lead, not a result.
+### 5.7 Sharpness and conditional calibration trade off (F14)
+- Rich-feature CQR is sharpest but uneven by situation (excess 2.4-4.0) and by patient (2.3-6.2) (H63).
+- Mondrian CQR with the patient scale has the best interval score (108.0, 128.1, 99.6) and is patient-calibrated, but is about 2 points uneven by situation (H64).
+
+### 5.8 What makes a patient hard to forecast (F17, tier 3; 215 patients, 11 studies)
+- Glucose variability explains 44% of between-patient difficulty in new studies (H65; log-log slope 0.64).
+- After variability, children are 7.5% harder (90% CI +3.3% to +12.4%, H67). Closed loop: +2.4% (-4.3% to +8.9%), not detectable (H66).
+
+### 5.9 Safety: dangerous misses (F3)
+- Situation bands catch fewer Clarke zone D points than GARCH. The patient-scale band recovers part of the gap: 29%, 44%, 52% vs 22%, 41%, 46% (GARCH 39%, 62%, 69%; H68).
+
+### 5.10 Sensor noise costs more than its own variance (F8; simulation, preliminary)
+- Planted noise raised squared error by 1.1-3.5 times its own variance, because noisy inputs also mislead the forecaster. The simulator was easier than real data, so this is a lead.
 
 ## 6. Discussion (notes)
 
-- Honest intervals need two adaptations: a fixed one by glycemic situation and a slow one by patient. Recent-error volatility, the core of GARCH, matters little at this horizon.
-- Calibration claims on small conditional cells need a noise floor; otherwise method rankings at fine granularity are noise.
-- Clinical: per-situation honesty does not equal catching dangerous misses; the patient-scale band narrows but does not close the zone D gap.
+- Two adaptations are needed and they work at different speeds: a fixed one by glycemic situation, and a slow online one by patient. Recent-error volatility, the core of GARCH, matters little at 30-60 minutes.
+- Fine-grained calibration claims need a noise floor.
+- A deployable recipe:
+  1. Calibrate situation quantiles on a population.
+  2. Apply them to a new patient.
+  3. Adapt one scale per patient (short records) or per patient and level (records of several weeks) from errors observed one horizon later.
+- Clinical caveat: per-situation honesty does not equal catching dangerous misses.
 - Limits:
-  - per-patient forecasters only
-  - one seed per patient
-  - 60-minute horizon only
-  - MetaboNet panel limited to 45-day stretches and 20 patients per study
+  - per-patient forecasters (the cold start covers only the band)
+  - one seed per patient (second-seed check pending)
+  - 45-day external records and 20 patients per study
   - modality labels as given by MetaboNet
-  - simulated noise is independent from reading to reading
+  - simulator too easy for a noise ceiling
 
-## 7. Reproducibility
+## 7. Figures
 
-Code: `src/azt1d/uq_frames.py`, `src/azt1d/group_bands.py`, `work/12_10/scripts/round*.py`. Register: `work/HYPOTHESES.md`. Protocol: `work/RESEARCH_PROTOCOL.md`.
+1. Coverage in each of 25 situations: GARCH, situation, situation x patient scale (`figures/paper_fig1_situation_coverage.png`).
+2. Three axes of honesty, by situation, by patient, by day (`figures/paper_fig2_three_axes.png`; to be extended to all 11 studies).
+3. Noise floor vs observed unevenness (`figures/h51_noise_floor.png`).
+4. External validation (`figures/h54_panel_external.png`).
+5. Error-size predictability and drivers (`figures/h61_h62_ml_error_size.png`).
+6. Patient difficulty vs variability (`figures/h65_patient_difficulty.png`).
+
+## 8. Reproducibility
+
+Code: `src/azt1d/uq_frames.py`, `src/azt1d/group_bands.py`, `work/12_10/scripts/`. Register: `work/HYPOTHESES.md`. Protocol: `work/RESEARCH_PROTOCOL.md`. Data: public sources only (`datasets/README.md`).
