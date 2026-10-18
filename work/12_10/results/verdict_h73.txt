@@ -1,0 +1,19 @@
+H73 (per-patient per-level scale): SUPPORTED (criteria met 2 of 3; situation excess below single scale 3 of 3)
+azt1d:
+                                 coverage  width  interval_score  excess_situation  excess_patient  daily_sd
+method                                                                                                      
+situation (Mondrian)                77.36  71.10          113.50             -0.17            3.45     10.31
+situation x patient scale           79.72  76.41          111.98              0.93           -0.88      5.45
+situation x patient-level scale     79.16  74.35          111.84              0.75           -0.21      6.77
+ohiot1dm:
+                                 coverage  width  interval_score  excess_situation  excess_patient  daily_sd
+method                                                                                                      
+situation (Mondrian)                79.38  86.70          130.77              1.62            2.32      9.27
+situation x patient scale           79.85  88.17          130.16              2.52           -0.91      5.92
+situation x patient-level scale     80.02  87.57          130.02              1.15           -0.42      7.70
+hupa_ucm:
+                                 coverage  width  interval_score  excess_situation  excess_patient  daily_sd
+method                                                                                                      
+situation (Mondrian)                78.29  66.85          110.81             -1.88            9.07     12.43
+situation x patient scale           78.86  68.89          107.48              1.18            0.43      6.66
+situation x patient-level scale     77.45  65.45          107.85              0.17            4.72      9.00

@@ -482,3 +482,12 @@ commits: pending (this commit)
 runtime: about 1 min
 outcome: H72 supported 3 of 3: daily coverage SD GARCH x situation 7.2/6.3/8.9 vs situation 10.3/9.3/12.4; patient-scale band 5.5/5.9/6.7. Mechanism for the lower noise floors of adaptive bands.
 notes: forecast_frames and garch_sigma now take a horizon/lag (defaults unchanged; 60-minute frames verified identical).
+
+## 2026-10-17 | 12_10 | Paper figures 1-2; H73 per-level patient scale
+type: experiment
+status: done
+files: src/azt1d/group_bands.py, work/12_10/scripts/paper_figures.py, work/12_10/figures/paper_fig1_situation_coverage.png, work/12_10/figures/paper_fig2_three_axes.png, work/12_10/results/paper_three_axes.csv, work/12_10/scripts/round11_level_scale.py, work/12_10/results/verdict_h73.txt, work/12_10/results/round11_level_scale.csv, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: about 3 min each
+outcome: H73 supported 2 of 3 (AZT1D, OhioT1DM meet all criteria; HUPA-UCM per-patient excess 4.72). Situation excess below single scale on all three. Figure 1 shows the single scale over-covers rare extreme situations.
+notes: fourth design for the patient-level fix; tuning stopped per protocol.

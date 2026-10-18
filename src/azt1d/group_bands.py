@@ -260,3 +260,23 @@ def scale_aci_situation(v, t, level, eta: float = 0.01, delay: int = 12, min_n: 
             fb = miss[j - delay] if j >= delay else target
             theta += eta * (fb - target)
     return centre, half
+
+
+def level_scale_aci_situation(v, t, level, eta: float = 0.01, delay: int = 12, min_n: int = 100):
+    """Situation band times a per-patient, per-glucose-level online scale. A miss (known `delay`
+    steps later) updates only the scale of the level band the missed window was in, so frequent
+    situations do not inflate the band in rare ones."""
+    centre, base = situation_mondrian(v, t, level)
+    target = 1 - level
+    y, lv = t.actual.to_numpy(), (t.cell.to_numpy() // 5)
+    half = np.zeros(len(t))
+    for idx in t.groupby("subject_id").indices.values():
+        theta = np.zeros(5)
+        miss = np.zeros(len(idx))
+        for j, r in enumerate(idx):
+            half[r] = base[r] * np.exp(theta[lv[r]])
+            miss[j] = abs(y[r] - centre[r]) > half[r]
+            if j >= delay:
+                r0 = idx[j - delay]
+                theta[lv[r0]] += eta * (miss[j - delay] - target)
+    return centre, half
