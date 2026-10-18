@@ -6,6 +6,10 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - **H44, not supported**: on simulated patients with planted, level-dependent sensor noise, situation bands were further from 80% per situation than GARCH (7.0 vs 4.6 points). Preliminary: the simulated patients were too easy to forecast.
 - **H45, not supported**: the situation band's widening matched the planted noise variance (within a factor of 2) in 3 of 5 level bands, not 4. The rule was wrong-footed: noise raised the actual error by 1.1x to 3.5x its own variance.
 
+- **H46, testing**: level and trend explain less than 70% of the encoder summary (HUPA-UCM, 7 inputs).
+- **H47, testing**: one recorded variable explains at least 20% of the leftover.
+- **H48, testing**: the leftover improves prediction of the CNN-LSTM's error size by at least 10% over level and trend.
+
 ## Findings
 - **Noise costs more than its own size.** Planting sensor noise raised the 60-minute forecast's squared error by 1.1x to 3.5x the noise variance, depending on level. The noise hits twice: once in the reading being forecast, and again in the past readings the model uses as inputs. So an error-based noise estimate (like H23's) would overstate the sensor's noise.
 - **The situation band follows the real change in error; GARCH does not.** From clean to noisy data, the situation band widened by 0.6x to 1.3x the actual rise in error in every level band. GARCH's width rose too much in 70-120 and fell above 180, where the noise was largest. Post hoc, not the pre-registered rule.
