@@ -52,3 +52,9 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Lowest patient-by-situation calibration error on all three datasets (8.5, 7.6, 12.3 points vs 9.7, 8.3, 16.7 for situation-only), and still lowest or tied after removing each method's overall coverage offset.
 - Patient-scaled situation bands (H50) help only on HUPA-UCM.
 - Puzzle: GARCH's scale does not predict error size (F9), yet normalizing by it evens out coverage. Round 2 answer: GARCH-based bands have lower sampling-noise floors (6.5-6.8 vs 8.5 AZT1D), so their raw unevenness is lower mostly because of noise, not calibration; by real excess, situation bands are equal or better. Hypothesis: GARCH spreads misses out in time (H57).
+
+### F12. An online per-patient scale correction removes the real between-patient miscalibration and sharpens the bands. Tier 1 to 2 (H58, H59; second try, recorded as such).
+- Situation bands times exp(theta), theta adapted per patient from misses known 60 minutes later (eta 0.01): per-patient excess above the noise floor goes from 3.5, 2.3, 9.1 points to -0.9, -0.9, +0.4; interval score improves (112.0 vs 113.5; 130.2 vs 130.8; 107.5 vs 110.8).
+- Cost: per-situation evenness erodes as adaptation speeds up (excess 0.9, 2.5, 1.2 at eta 0.01). Adapting the quantile level (standard ACI, H58) erodes it more.
+- Interpretation: the remaining miscalibration is a slowly drifting patient-level error scale, consistent with F6 (error tracks each patient's variability over time).
+- External test pending (H60).

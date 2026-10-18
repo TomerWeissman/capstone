@@ -195,3 +195,68 @@ def dispersion_null_patient(inside, subjects, block: int = 288, n_boot: int = 20
         means = [np.concatenate([x[s:s + b] for s in rng.choice(starts, k)])[:n].mean() for _ in range(n_boot)]
         out.append(np.sqrt(2 / np.pi) * np.std(means))
     return float(np.mean(out))
+
+
+# ---- adaptive conformal inference (Gibbs and Candes 2021) on top of a group-conditional band ----
+
+def aci_situation(v, t, level, gamma: float = 0.005, delay: int = 12, min_n: int = 100):
+    """Situation (Mondrian) band whose miss-rate target is adapted online, per patient.
+
+    At each test window the band uses the (1 - alpha_t) quantile of the validation scores of its
+    situation. alpha is updated with the miss indicator of the window issued `delay` steps earlier
+    (its outcome is only known after the 60-minute horizon). Rows must be in time order per patient."""
+    scores = np.abs(v.resid.to_numpy())
+    pooled = np.sort(scores)
+    by_cell = {c: np.sort(scores[idx]) for c, idx in v.groupby("cell").indices.items() if len(idx) >= min_n}
+    target = 1 - level
+    half = np.zeros(len(t))
+    y, pred, cells = t.actual.to_numpy(), t.pred.to_numpy(), t.cell.to_numpy()
+    for idx in t.groupby("subject_id").indices.values():
+        alpha = np.full(len(idx) + 1, target)
+        miss = np.zeros(len(idx))
+        for j, r in enumerate(idx):
+            s = by_cell.get(cells[r], pooled)
+            lvl = 1 - alpha[j]
+            if lvl >= 1:
+                h = SENSOR_MAX
+            elif lvl <= 0:
+                h = 0.0
+            else:
+                h = s[min(math.ceil(lvl * (len(s) + 1)), len(s)) - 1]
+            half[r] = h
+            miss[j] = abs(y[r] - pred[r]) > h
+            fb = miss[j - delay] if j >= delay else target  # outcome known only after the horizon
+            alpha[j + 1] = alpha[j] + gamma * (target - fb)
+    return pred, half
+
+
+def miss_run_length(inside, subjects) -> float:
+    """Mean length of runs of consecutive misses, within patients (rows in time order)."""
+    ins = np.asarray(inside, bool)
+    runs = []
+    for idx in pd.Series(np.arange(len(ins))).groupby(np.asarray(subjects)).indices.values():
+        m = ~ins[idx]
+        if not m.any():
+            continue
+        d = np.diff(np.concatenate([[0], m.astype(int), [0]]))
+        runs.extend(np.flatnonzero(d == -1) - np.flatnonzero(d == 1))
+    return float(np.mean(runs)) if runs else 0.0
+
+
+def scale_aci_situation(v, t, level, eta: float = 0.01, delay: int = 12, min_n: int = 100):
+    """Situation (Mondrian) band times a per-patient multiplicative scale exp(theta), adapted online:
+    theta += eta * (miss indicator from `delay` steps earlier - (1 - level)). Keeps the situation
+    shape of the band and corrects only the patient's overall error scale."""
+    centre, base = situation_mondrian(v, t, level)
+    target = 1 - level
+    y = t.actual.to_numpy()
+    half = np.zeros(len(t))
+    for idx in t.groupby("subject_id").indices.values():
+        theta = 0.0
+        miss = np.zeros(len(idx))
+        for j, r in enumerate(idx):
+            half[r] = base[r] * np.exp(theta)
+            miss[j] = abs(y[r] - centre[r]) > half[r]
+            fb = miss[j - delay] if j >= delay else target
+            theta += eta * (fb - target)
+    return centre, half

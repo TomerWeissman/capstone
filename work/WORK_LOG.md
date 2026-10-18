@@ -430,3 +430,12 @@ files: src/azt1d/group_bands.py, work/12_10/scripts/round2_noise_floor.py, work/
 commits: pending (this commit); pre-registration in cb1e9df
 runtime: about 3 min
 outcome: H51 supported (2 of 3). H52 not supported (0 of 3; patient-by-situation unevenness 80-95% noise). H53 supported (3 of 3; per-patient excess 3.5, 2.3, 9.1 points for situation bands). GARCH-based bands have lower noise floors, which explains most of F10. H57 and H58 pre-registered.
+
+## 2026-10-17 | 12_10 | Round 3: miss streaks and online per-patient correction (H57-H59)
+type: experiment
+status: done
+files: src/azt1d/group_bands.py, work/12_10/scripts/round3_aci_and_streaks.py, work/12_10/results/verdict_h57_h59.txt, work/12_10/results/round3_aci.csv, work/12_10/figures/h57_h59_aci.png, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit); H59 pre-registration in the commit before
+runtime: about 6 min
+outcome: H57 not supported (miss runs 1-12% shorter). H58 not supported (ACI fixes patients, erodes situations on 2 datasets). H59 supported 2 of 3 (scale-adaptive: per-patient excess -0.9, -0.9, +0.4; situation excess 0.9, 2.5, 1.2; interval score better on all three). H60 pre-registered for the panel.
+notes: H59 is the second try at the patient-level fix; both tries are reported.
