@@ -83,6 +83,7 @@ Statuses:
 | H66 | After adjusting for glucose SD, delivery modality matters: closed-loop (AID) patients' RMSE differs from non-AID patients' by at least 5%, with a 90% source-cluster bootstrap interval excluding zero. Direction not predicted. | 12_10 | Testing | Pre-registered Oct 17, before the panel finished training. | none |
 | H67 | After adjusting for glucose SD, children (under 18) have RMSE at least 5% different from adults, interval excluding zero. Direction not predicted. | 12_10 | Testing | Pre-registered Oct 17, before the panel finished training. | none |
 | H68 | Safety non-inferiority: the situation x patient-scale band (H59) catches no fewer Clarke zone D points than situation bands (no more than 2 points lower) on at least 2 of 3 datasets. GARCH reported for reference. | 12_10 | Supported | Zone D caught, situation x patient scale vs situation bands: AZT1D 29.4% vs 22.4%, OhioT1DM 44.2% vs 41.4%, HUPA-UCM 51.7% vs 45.8%. GARCH still catches most (39.1%, 62.1%, 68.9%). [verdict](12_10/results/verdict_h68.txt) | none |
+| H69 | The Round 2-3 findings do not depend on the forecaster: with the CNN-Transformer (cnn_transformer_v0) on AZT1D and OhioT1DM, (a) situation bands' per-situation unevenness is within 1.5 points of its noise floor on both, and (b) the per-patient scale-adaptive band cuts per-patient excess above the floor by at least half on both, with interval score no worse than situation bands by more than 3%. | 12_10 | Testing | Pre-registered Oct 17, before the run. | none |
 
 ## Testing now
 
