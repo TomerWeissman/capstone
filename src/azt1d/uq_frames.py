@@ -60,12 +60,13 @@ def situation(g_now, g_prev):
     return level, trend, level * 5 + trend
 
 
-def subject_frames(dfs: pd.DataFrame, result) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Frames for one patient from its checkpoint. GARCH is fitted on validation residuals only."""
+def subject_frames(dfs: pd.DataFrame, result, horizon: int = 12) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Frames for one patient from its checkpoint. GARCH is fitted on validation residuals only,
+    with an information lag equal to the horizon (an error is known only once its target arrives)."""
     sid = dfs.subject_id.iloc[0]
-    val, test = unc.forecast_frames(result, dfs)
-    p, s_test = unc.garch_sigma(val, test)
-    s_val = np.sqrt(unc.garch_h_step_variance(val.resid, p, float(np.var(val.resid - p.mu)), unc.LAG))
+    val, test = unc.forecast_frames(result, dfs, horizon=horizon)
+    p, s_test = unc.garch_sigma(val, test, lag=horizon)
+    s_val = np.sqrt(unc.garch_h_step_variance(val.resid, p, float(np.var(val.resid - p.mu)), horizon))
     times = pd.to_datetime(dfs[ref.EVENT_DATETIME]).to_numpy()
     g = dfs[ref.CGM].to_numpy(float)
     carbs = dfs[ref.CARB_SIZE].fillna(0).to_numpy(float)
@@ -87,10 +88,12 @@ def subject_frames(dfs: pd.DataFrame, result) -> tuple[pd.DataFrame, pd.DataFram
     return out[0], out[1]
 
 
-def frames(name: str, run: str, refresh: bool = False) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """(validation, test) frames for every patient with a checkpoint under checkpoints/<run>."""
+def frames(name: str, run: str, refresh: bool = False, horizon: int = 12) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """(validation, test) frames for every patient with a checkpoint under checkpoints/<run>.
+    horizon (in 5-minute steps) must match the horizon the run was trained with."""
     root = project_root()
-    cache = root / "data" / "processed" / "frames" / f"{name.replace(':', '_')}__{run}.parquet"
+    tag = "" if horizon == 12 else f"__h{horizon}"
+    cache = root / "data" / "processed" / "frames" / f"{name.replace(':', '_')}__{run}{tag}.parquet"
     if cache.exists() and not refresh:
         f = pd.read_parquet(cache)
     else:
@@ -102,7 +105,7 @@ def frames(name: str, run: str, refresh: bool = False) -> tuple[pd.DataFrame, pd
             if res is None:
                 continue
             dfs = df[df.subject_id == sid].reset_index(drop=True)
-            v, t = subject_frames(dfs, res)
+            v, t = subject_frames(dfs, res, horizon)
             parts += [v, t]
         f = pd.concat(parts, ignore_index=True)
         f["subject_id"] = f.subject_id.astype(str)

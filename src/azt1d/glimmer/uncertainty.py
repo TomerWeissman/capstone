@@ -65,7 +65,8 @@ def _minute_of_day(times: np.ndarray) -> np.ndarray:
     return (ts.hour * 60 + ts.minute).to_numpy()
 
 
-def forecast_frames(result, df_subject: pd.DataFrame, device: torch.device | None = None) -> tuple[Frame, Frame]:
+def forecast_frames(result, df_subject: pd.DataFrame, device: torch.device | None = None,
+                    horizon: int = seq.HORIZON) -> tuple[Frame, Frame]:
     """Rebuild validation and test forecasts from a checkpointed SubjectResult.
 
     Windows are consecutive 5-minute steps, so window i has its last input row at
@@ -73,7 +74,7 @@ def forecast_frames(result, df_subject: pd.DataFrame, device: torch.device | Non
     windows come first, then test windows, with no gap between them.
     """
     device = device or get_device()
-    data = prepare_subject_data(df_subject)
+    data = prepare_subject_data(df_subject, horizon=horizon)
     n_train, n_val = len(data.X_train), len(data.X_val)
     times = pd.to_datetime(df_subject[ref.EVENT_DATETIME]).to_numpy()
 
@@ -93,7 +94,7 @@ def forecast_frames(result, df_subject: pd.DataFrame, device: torch.device | Non
             resid=y.astype(float) - pred.astype(float),
             X=X,
             issue_time=times[idx + seq.LOOKBACK - 1],
-            target_time=times[idx + seq.LOOKBACK + seq.HORIZON - 1],
+            target_time=times[idx + seq.LOOKBACK + horizon - 1],
         )
 
     val = make(data.X_val, data.y_val, n_train)
@@ -175,13 +176,13 @@ def garch_h_step_variance(resid: np.ndarray, params: GarchParams, init_var: floa
     return out
 
 
-def garch_sigma(cal: Frame, test: Frame) -> tuple[GarchParams, np.ndarray]:
+def garch_sigma(cal: Frame, test: Frame, lag: int = LAG) -> tuple[GarchParams, np.ndarray]:
     """GARCH fitted on calibration residuals, then filtered through the test period with the
     60-minute lag. Returns the parameters and the 12-step-ahead sigma for each test window."""
     params = fit_garch(cal.resid)
     all_resid = np.concatenate([cal.resid, test.resid])
     init_var = float(np.var(cal.resid - params.mu))  # calibration data only
-    var = garch_h_step_variance(all_resid, params, init_var, LAG)[len(cal.resid):]
+    var = garch_h_step_variance(all_resid, params, init_var, lag)[len(cal.resid):]
     return params, np.sqrt(var)
 
 
