@@ -524,3 +524,11 @@ files: work/12_10/scripts/train_seed2.py, work/12_10/scripts/round14_seed2.py, w
 commits: pending (this commit)
 runtime: training 494 s; analysis about 2 min
 outcome: H75 not supported on part (a): OhioT1DM situation excess 1.87 (seed 1: 1.62); part (b) holds. RMSE across seeds correlates 0.97/0.94.
+
+## 2026-10-17 | 12_10 | H77/H78: rate-of-change variability explains patient difficulty
+type: experiment
+status: done
+files: work/12_10/scripts/round15_rate_variability.py, work/12_10/results/verdict_h77_h78.txt, work/12_10/results/round15_patients.csv, work/12_10/docs/paper_draft.md, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: about 1 min
+outcome: H77 supported (child effect +0.4%, CI -4.5% to +5.0% after rate SD). H78 supported (LOSO R^2 0.634 with glucose SD + rate SD; 0.588 rate alone; 0.444 glucose SD alone).

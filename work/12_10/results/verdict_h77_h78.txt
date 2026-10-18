@@ -1,0 +1,5 @@
+H77 (child effect gone after rate-of-change SD): SUPPORTED; child +0.4% (90% -4.5% to +5.0%); AID -3.7% (90% -9.4% to +2.9%)
+H78 (glucose SD + rate SD, leave-one-source-out R^2 >= 0.60): SUPPORTED; R^2 0.634 (glucose SD alone 0.444; rate SD alone 0.588)
+coefficients (log-log): glucose SD 0.22, rate SD 0.63; corr(log glucose SD, log rate SD) 0.67
+median rate SD children 30.7 vs adults 25.4 mg/dL per 30 min; median glucose SD 58.9 vs 51.4
+patients 215

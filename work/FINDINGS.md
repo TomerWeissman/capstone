@@ -91,7 +91,9 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Bands that adapt to recent errors even this out: GARCH x situation 7.2, 6.3, 8.9. The online per-patient scale band does best: 5.5, 5.9, 6.7.
 - This is what lowers the noise floors of adaptive bands (F11).
 
-### F17. What makes a patient hard to forecast: variability explains less than half; children are harder; closed loop does not matter. Tier 3 (H65-H67; 215 patients, 11 studies).
+### F17. What makes a patient hard to forecast is how fast their glucose moves. Tier 3 (H65-H67, H77, H78; 215 patients, 11 studies).
 - Log RMSE vs log glucose SD (training period): leave-one-source-out R^2 0.44, slope 0.64.
 - After glucose SD, children (under 18) have 7.5% higher RMSE (90% interval +3.3% to +12.4%). Closed-loop (AID) vs not: +2.4% (-4.3% to +8.9%), no detectable effect.
 - Median RMSE by study ranges from 31.2 (AZT1D) to 40.2 mg/dL (BrisT1D, DCLP5).
+- The SD of 30-minute glucose changes explains it far better: leave-one-source-out R^2 0.59 alone, 0.63 with glucose SD (H78); with both in the model the glucose-SD slope falls to 0.22 and the rate slope is 0.63.
+- The child effect vanishes once rate variability is included (+0.4%, -4.5% to +5.0%; H77): children are harder because their glucose moves faster (median 30.7 vs 25.4 mg/dL per 30 minutes).
