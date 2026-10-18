@@ -1,6 +1,6 @@
 # Where glucose forecast uncertainty lives: situation, patient, and day in 60-minute CGM prediction intervals across 11 studies
 
-Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number traces to a result file named in `work/HYPOTHESES.md` (H49-H76 for this paper; H1-H48 are earlier project history). Items marked **[PENDING]** are running.
+Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number traces to a result file named in `work/HYPOTHESES.md` (H49-H78 for this paper; H1-H48 are earlier project history). Items marked **[PENDING]** are running.
 
 ## Abstract (draft)
 
@@ -90,7 +90,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
   - Gradient boosting with level, trends, carbs, bolus, time of day, forecast value, GARCH scale, patient scale, and recently observed errors.
   - Permutation importance.
 - **Patient difficulty.** Log RMSE on log glucose SD (training period) with leave-one-source-out R^2; AID and child effects with a source-cluster bootstrap.
-- **Pre-registration.** Every hypothesis had a threshold committed before running (git history). All 28 hypotheses of this paper are reported, including nulls (supplement table).
+- **Pre-registration.** Every hypothesis had a threshold committed before running (git history). All 30 hypotheses of this paper (H49-H78) are reported, including the 14 not supported (`paper_supplement_register.md`).
 
 ## 5. Results
 
@@ -171,7 +171,7 @@ Source: `work/12_10/results/paper_three_axes.csv`.
 3. Noise floor vs observed unevenness (`figures/h51_noise_floor.png`).
 4. External validation (`figures/h54_panel_external.png`).
 5. Error-size predictability and drivers (`figures/h61_h62_ml_error_size.png`).
-6. Patient difficulty vs variability (`figures/h65_patient_difficulty.png`); to add: difficulty vs rate-of-change SD.
+6. Patient difficulty vs glucose SD and vs rate-of-change SD (`figures/paper_fig_difficulty.png`).
 
 ## 8. Reproducibility
 

@@ -532,3 +532,10 @@ files: work/12_10/scripts/round15_rate_variability.py, work/12_10/results/verdic
 commits: pending (this commit)
 runtime: about 1 min
 outcome: H77 supported (child effect +0.4%, CI -4.5% to +5.0% after rate SD). H78 supported (LOSO R^2 0.634 with glucose SD + rate SD; 0.588 rate alone; 0.444 glucose SD alone).
+
+## 2026-10-17 | 12_10 | Wrap-up: supplement register, overview, difficulty figure
+type: docs
+status: done
+files: work/12_10/docs/paper_supplement_register.md, work/12_10/docs/paper_draft.md, work/12_10/scripts/paper_fig_difficulty.py, work/12_10/figures/paper_fig_difficulty.png, work/OVERVIEW.md, work/README.md, work/12_10/README.md
+commits: pending (this commit)
+outcome: 30 paper hypotheses (H49-H78): 1 confirmed, 15 supported, 14 not supported. Overview rewritten for the new stage (unconfirmed by the user).

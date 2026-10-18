@@ -5,6 +5,8 @@ Start here. One folder per week, named by the Monday that starts it (`28_9` is t
 - [OVERVIEW.md](OVERVIEW.md): where the capstone stands now, and why. Rewritten at the end of each week.
 - [HYPOTHESES.md](HYPOTHESES.md): every claim tested so far, with status and evidence. Read this for what is confirmed, what was invalidated, and what is being tested now.
 - [WORK_LOG.md](WORK_LOG.md): one entry per unit of work, machine-readable. Read this for exact commits and file paths.
+- [RESEARCH_PROTOCOL.md](RESEARCH_PROTOCOL.md): how questions become findings (pre-registration, evidence tiers, statistics).
+- [FINDINGS.md](FINDINGS.md): the paper's findings, each with its evidence tier.
 
 | Week | Dates | Headline | Folder |
 |---|---|---|---|
@@ -13,7 +15,7 @@ Start here. One folder per week, named by the Monday that starts it (`28_9` is t
 | 21_9 | Sep 21 to 27 | Uncertainty bands cry wolf; methods indistinguishable at matched alarms | [21_9/](21_9/README.md) |
 | 28_9 | Sep 28 to Oct 4 | Plain model wins on interval quality; fine-tuning shows no clear gain | [28_9/](28_9/README.md) |
 | 5_10 | Oct 5 to 11 | Situation-aware bands confirmed on fresh data; autoencoder line closed | [5_10/](5_10/README.md) |
-| 12_10 | Oct 12 to 18 | Simulation answer-key test; paper structure | [12_10/](12_10/README.md) |
+| 12_10 | Oct 12 to 18 | Research program: 30 pre-registered tests, 11 studies, paper draft | [12_10/](12_10/README.md) |
 
 ## How to read a week folder
 

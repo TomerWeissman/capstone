@@ -151,6 +151,9 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [scripts/round15_rate_variability.py](scripts/round15_rate_variability.py) | H77/H78: rate-of-change variability and patient difficulty | current |
 | [results/verdict_h77_h78.txt](results/verdict_h77_h78.txt) | H77/H78 verdicts | current |
 | [results/round15_patients.csv](results/round15_patients.csv) | 215 patients with rate-of-change SD | current |
+| [scripts/paper_fig_difficulty.py](scripts/paper_fig_difficulty.py) | Paper figure: patient difficulty vs glucose SD and rate-of-change SD | current |
+| [figures/paper_fig_difficulty.png](figures/paper_fig_difficulty.png) | Patient RMSE vs glucose SD and vs rate-of-change SD, 215 patients | current |
+| [docs/paper_supplement_register.md](docs/paper_supplement_register.md) | All 30 paper hypotheses with rules and outcomes | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |
@@ -178,6 +181,9 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - Week-start questions are still unanswered: corrections to the overview, Volkan's feedback, and the second goal.
 
 ## Open
+- Turn `docs/paper_draft.md` into the Oct 30 midterm draft. Supplement register: `docs/paper_supplement_register.md`.
+- Future work noted in the draft: a hierarchical patient + level scale; a pooled forecaster for a full cold start; a harder simulator for the noise ceiling; why OhioT1DM keeps a small situation residual.
+- Week-start questions still unanswered: overview corrections, Volkan's feedback, the second goal, the Second Reader Meeting date (Oct 8 or Oct 16).
 - Goal: start the paper structure for the Oct 30 midterm draft.
 - Goal: simulation answer-key test (H44, H45). From the Oct 12 journal entry.
 - Second goal (the user picked "Other"): to be asked.
