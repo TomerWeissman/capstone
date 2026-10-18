@@ -80,11 +80,12 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - A per-patient, per-level scale (H73, fourth design) restores situation evenness (excess 0.75, 1.15, 0.17) and meets all criteria on AZT1D and OhioT1DM, but learns too slowly on HUPA-UCM's short records (per-patient excess 4.7) and evens days less well. Choice depends on record length.
 - Why adaptation costs situation evenness (paper Figure 1): the online scale is driven by misses in the common situations, so when it widens, the rare extreme situations (under 70, 250 and over) over-cover (84-90%).
 
-### F15. Bands for a new patient need no calibration data of that patient's own. Tier 2 (H70).
+### F15. Bands for a new patient need no calibration data of that patient's own. Tier 2 (H70, H79).
 - Situation quantiles from other patients plus the online per-patient scale match own-data calibration: per-patient excess -0.87, -0.89, 0.49 vs -0.88, -0.91, 0.43 points; interval scores within 0.3.
 - Without the online scale, cold bands are uneven across patients (3.6, 2.5, 11.5 points above the noise floor).
 - The situation shape of uncertainty transfers between patients; the patient-specific part is a scale that can be learned while the band is in use.
-- Caveat: the forecaster itself was still trained per patient.
+- Caveat in H70: the forecaster itself was still trained per patient.
+- Full cold start (H79): a pooled forecaster trained only on the 8 MetaboNet studies forecasts the development patients as well as their own models or better (median patient RMSE 31.5 vs 31.2, 32.7 vs 37.3, 35.8 vs 38.7). With it, situation bands still beat GARCH everywhere, and cold bands with the online patient scale fix per-patient calibration everywhere (excess -0.65, -0.76, 0.50). Situation evenness is weaker with this forecaster on OhioT1DM and HUPA-UCM (excess about 3 points); neither the single nor the per-level scale (H81) brings it under 1.5 there.
 
 ### F16. Honesty has a third axis: the day. Tier 2 (H72).
 - A static band covers some days far less than others: the SD of daily coverage for situation bands is 10.3, 9.3, 12.4 points.

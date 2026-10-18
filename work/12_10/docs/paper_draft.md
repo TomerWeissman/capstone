@@ -112,7 +112,11 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 - Robust to a second architecture (H69), a 30-minute horizon (H71), 90% nominal (H76), and a second training seed (H75b).
 
 ### 5.4 The new patient needs no calibration data of their own (F15)
-- With situation quantiles from other patients only, the online scale gives per-patient excess -0.87, -0.89, 0.49 vs -0.88, -0.91, 0.43 for own-data calibration (H70). The forecaster was still per patient.
+- With situation quantiles from other patients only, the online scale gives per-patient excess -0.87, -0.89, 0.49 vs -0.88, -0.91, 0.43 for own-data calibration (H70).
+- Full cold start (H79): one pooled forecaster trained only on the 8 external studies forecasts the 62 development patients, never seen, as well as their own models or better (median patient RMSE 31.5 vs 31.2; 32.7 vs 37.3; 35.8 vs 38.7). With it:
+  - situation bands still beat GARCH per situation on all three datasets
+  - cold bands with the online patient scale fix per-patient calibration everywhere (excess -0.65, -0.76, 0.50)
+  - situation evenness is weaker on OhioT1DM and HUPA-UCM (about 3 points above the floor), whichever patient scale is used (H81)
 
 ### 5.4b Summary over all 11 studies (Figure 2; medians, points)
 | Method | Situation excess above floor | Patient excess above floor | SD of daily coverage |
@@ -158,7 +162,7 @@ Source: `work/12_10/results/paper_three_axes.csv`.
   3. Adapt one scale per patient (short records) or per patient and level (records of several weeks) from errors observed one horizon later.
 - Clinical caveat: per-situation honesty does not equal catching dangerous misses.
 - Limits:
-  - per-patient forecasters (the cold start covers only the band)
+  - situation evenness at the noise floor is not guaranteed for every forecaster and dataset (OhioT1DM is consistently hardest; pooled forecaster on OhioT1DM and HUPA-UCM about 3 points above the floor)
   - one seed per patient in the main analysis (a second seed for the 37 development patients changes patient RMSE by a median 0.8-1.5 mg/dL and leaves the conclusions intact)
   - 45-day external records and 20 patients per study
   - modality labels as given by MetaboNet (missing for most BrisT1D patients; results shown with BrisT1D excluded and recoded); the public subset contains only the closed-loop arms of DCLP3, IOBP2 and Flair

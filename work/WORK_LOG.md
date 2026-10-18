@@ -547,3 +547,11 @@ files: work/12_10/scripts/round15b_modality_labels.py, work/12_10/results/verdic
 commits: pending (this commit)
 outcome: corrects the 2026-10-17 external validation entry (H66). 12 of 13 BrisT1D panel patients had no MetaboNet modality and were coded non-AID. With BrisT1D excluded or recoded from device, AID patients are 5.6-6.5% harder after glucose SD (intervals exclude zero), so H66 is supported after correction. The AID effect, like the child effect (H77, robust), vanishes after rate-of-change SD.
 notes: also found that the MetaboNet public subset contains only the closed-loop arms of DCLP3 (Control-IQ), IOBP2 (bionic pancreas) and Flair (670G/780G).
+
+## 2026-10-18 | 12_10 | Pooled forecaster and full cold start (H79, H81)
+type: experiment
+status: done
+files: work/12_10/scripts/train_pooled.py, work/12_10/scripts/round16_pooled.py, work/12_10/scripts/round16b_pooled_level.py, work/12_10/results/verdict_h79.txt, work/12_10/results/verdict_h81.txt, work/12_10/results/round16_pooled.csv, work/12_10/results/round16b_pooled_level.csv, work/12_10/results/pooled_training_log.txt, data/processed/checkpoints/pooled_panel_cnn_lstm/, src/azt1d/uq_frames.py, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/docs/paper_draft.md
+commits: pending (this commit); H79 commit before
+runtime: training 347 s (about 600,000 windows, 14 epochs); analyses about 3 min each
+outcome: pooled model matches or beats per-patient models on unseen patients. H79 not supported (part b): patient fix holds everywhere in a full cold start; situation excess 1.46, 3.13, 3.04. H81 not supported: per-level scale does not fix the situation residual with the pooled forecaster. Tuning stopped after five designs.
