@@ -16,7 +16,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 - **Patient.** Real miscalibration remained between patients. An online per-patient scale, updated from errors observed one horizon later, removed it in every development dataset and every external study. It also sharpened intervals, and it needed no calibration data from the new patient.
 - **Day.** Adaptive intervals halved the day-to-day spread of coverage.
 - **Error size.** It was largely unpredictable: at most 20% of its variation was explained, even by gradient boosting with rich context. Recent errors carried little information, contrary to the volatility-clustering premise of GARCH-type intervals.
-- **Patient difficulty.** What made a patient hard to forecast was how fast their glucose moved. The spread of 30-minute changes explained 59-63% of between-patient forecast difficulty in new studies, against 44% for overall glucose variability. It fully accounted for children being 7.5% harder to forecast. Closed-loop therapy made no detectable difference.
+- **Patient difficulty.** What made a patient hard to forecast was how fast their glucose moved. The spread of 30-minute changes explained 59-63% of between-patient forecast difficulty in new studies, against 44% for overall glucose variability. It fully accounted for children being 7.5% harder to forecast and for closed-loop users being about 6% harder.
 
 **Conclusion.** Honest CGM prediction intervals need a fixed adaptation to glycemic situation and a slow online adaptation to the patient. Calibration claims on fine subgroups need a noise floor.
 
@@ -138,9 +138,9 @@ Source: `work/12_10/results/paper_three_axes.csv`.
 
 ### 5.8 What makes a patient hard to forecast (F17, tier 3; 215 patients, 11 studies)
 - Glucose variability (SD) explains 44% of between-patient difficulty in new studies (H65; log-log slope 0.64).
-- After glucose SD, children are 7.5% harder (90% CI +3.3% to +12.4%, H67). Closed loop: +2.4% (-4.3% to +8.9%), not detectable (H66).
+- After glucose SD, children are 7.5% harder (90% CI +3.3% to +12.4%, H67), and closed-loop users about 6% harder (+5.6%, +1.7% to +10.5% with the BrisT1D patients whose modality is missing excluded; H66 after a label correction).
 - How fast glucose moves explains much more: the SD of 30-minute changes gives leave-one-source-out R^2 0.59 alone and 0.63 with glucose SD. In the joint model the glucose-SD slope falls to 0.22 and the rate slope is 0.63 (H78).
-- With rate variability in the model, the child effect vanishes (+0.4%, -4.5% to +5.0%; H77). Children's glucose moves faster (median 30.7 vs 25.4 mg/dL per 30 min).
+- With rate variability in the model, both effects vanish (child +0.4%, -4.5% to +5.0%, H77; closed loop -3.6%, -10.9% to +4.1%). Children's glucose moves faster (median 30.7 vs 25.4 mg/dL per 30 min).
 
 ### 5.9 Safety: dangerous misses (F3)
 - Situation bands catch fewer Clarke zone D points than GARCH. The patient-scale band recovers part of the gap: 29%, 44%, 52% vs 22%, 41%, 46% (GARCH 39%, 62%, 69%; H68).
@@ -161,7 +161,7 @@ Source: `work/12_10/results/paper_three_axes.csv`.
   - per-patient forecasters (the cold start covers only the band)
   - one seed per patient in the main analysis (a second seed for the 37 development patients changes patient RMSE by a median 0.8-1.5 mg/dL and leaves the conclusions intact)
   - 45-day external records and 20 patients per study
-  - modality labels as given by MetaboNet
+  - modality labels as given by MetaboNet (missing for most BrisT1D patients; results shown with BrisT1D excluded and recoded); the public subset contains only the closed-loop arms of DCLP3, IOBP2 and Flair
   - simulator too easy for a noise ceiling
 
 ## 7. Figures

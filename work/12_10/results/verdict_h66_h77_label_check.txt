@@ -1,0 +1,7 @@
+Label check for H66 (AID) and H77 (child), source-cluster bootstrap 90% intervals:
+  original coding (round6), without rate SD (n=215, AID 142): AID +2.4% (-4.3% to +8.9%); child +7.5% (+3.3% to +12.4%)
+  original coding (round6), with rate SD (n=215, AID 142): AID -3.7% (-9.4% to +2.9%); child +0.4% (-4.5% to +5.0%)
+  A: BrisT1D excluded, without rate SD (n=202, AID 142): AID +5.6% (+1.7% to +10.5%); child +7.2% (+3.1% to +12.0%)
+  A: BrisT1D excluded, with rate SD (n=202, AID 142): AID -3.6% (-10.9% to +4.1%); child +0.8% (-4.2% to +5.6%)
+  B: BrisT1D recoded, without rate SD (n=214, AID 152): AID +6.5% (+1.7% to +11.6%); child +5.8% (+0.8% to +10.8%)
+  B: BrisT1D recoded, with rate SD (n=214, AID 152): AID -2.9% (-9.9% to +4.3%); child -0.3% (-5.1% to +4.5%)

@@ -60,11 +60,12 @@ def situation(g_now, g_prev):
     return level, trend, level * 5 + trend
 
 
-def subject_frames(dfs: pd.DataFrame, result, horizon: int = 12) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Frames for one patient from its checkpoint. GARCH is fitted on validation residuals only,
-    with an information lag equal to the horizon (an error is known only once its target arrives)."""
+def subject_frames(dfs: pd.DataFrame, result, horizon: int = 12, forecasts=None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Frames for one patient from its checkpoint (or from precomputed (val, test) Frames, e.g. a
+    pooled model's). GARCH is fitted on validation residuals only, with an information lag equal to
+    the horizon (an error is known only once its target arrives)."""
     sid = dfs.subject_id.iloc[0]
-    val, test = unc.forecast_frames(result, dfs, horizon=horizon)
+    val, test = forecasts if forecasts is not None else unc.forecast_frames(result, dfs, horizon=horizon)
     p, s_test = unc.garch_sigma(val, test, lag=horizon)
     s_val = np.sqrt(unc.garch_h_step_variance(val.resid, p, float(np.var(val.resid - p.mu)), horizon))
     times = pd.to_datetime(dfs[ref.EVENT_DATETIME]).to_numpy()
@@ -86,6 +87,11 @@ def subject_frames(dfs: pd.DataFrame, result, horizon: int = 12) -> tuple[pd.Dat
         d["level"], d["trend"], d["cell"] = situation(d.g_now.to_numpy(), d.g_prev.to_numpy())
         out.append(d[(i >= TREND_STEPS) & np.isfinite(sig)].reset_index(drop=True))
     return out[0], out[1]
+
+
+def cache_path(name: str, run: str, horizon: int = 12) -> Path:
+    tag = "" if horizon == 12 else f"__h{horizon}"
+    return project_root() / "data" / "processed" / "frames" / f"{name.replace(':', '_')}__{run}{tag}.parquet"
 
 
 def frames(name: str, run: str, refresh: bool = False, horizon: int = 12) -> tuple[pd.DataFrame, pd.DataFrame]:

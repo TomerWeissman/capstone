@@ -539,3 +539,11 @@ status: done
 files: work/12_10/docs/paper_supplement_register.md, work/12_10/docs/paper_draft.md, work/12_10/scripts/paper_fig_difficulty.py, work/12_10/figures/paper_fig_difficulty.png, work/OVERVIEW.md, work/README.md, work/12_10/README.md
 commits: pending (this commit)
 outcome: 30 paper hypotheses (H49-H78): 1 confirmed, 15 supported, 14 not supported. Overview rewritten for the new stage (unconfirmed by the user).
+
+## 2026-10-18 | 12_10 | Correction: BrisT1D modality labels (H66, H77)
+type: correction
+status: done
+files: work/12_10/scripts/round15b_modality_labels.py, work/12_10/results/verdict_h66_h77_label_check.txt, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/docs/paper_draft.md
+commits: pending (this commit)
+outcome: corrects the 2026-10-17 external validation entry (H66). 12 of 13 BrisT1D panel patients had no MetaboNet modality and were coded non-AID. With BrisT1D excluded or recoded from device, AID patients are 5.6-6.5% harder after glucose SD (intervals exclude zero), so H66 is supported after correction. The AID effect, like the child effect (H77, robust), vanishes after rate-of-change SD.
+notes: also found that the MetaboNet public subset contains only the closed-loop arms of DCLP3 (Control-IQ), IOBP2 (bionic pancreas) and Flair (670G/780G).

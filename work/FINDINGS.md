@@ -93,7 +93,8 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 
 ### F17. What makes a patient hard to forecast is how fast their glucose moves. Tier 3 (H65-H67, H77, H78; 215 patients, 11 studies).
 - Log RMSE vs log glucose SD (training period): leave-one-source-out R^2 0.44, slope 0.64.
-- After glucose SD, children (under 18) have 7.5% higher RMSE (90% interval +3.3% to +12.4%). Closed-loop (AID) vs not: +2.4% (-4.3% to +8.9%), no detectable effect.
+- After glucose SD, children (under 18) have 7.5% higher RMSE (90% interval +3.3% to +12.4%).
+- Closed loop (AID): +2.4% (-4.3% to +8.9%) as first coded, but 12 BrisT1D patients had missing modality labels coded as non-AID. Corrected (BrisT1D excluded or recoded from device): AID patients are 5.6-6.5% harder (intervals exclude zero).
 - Median RMSE by study ranges from 31.2 (AZT1D) to 40.2 mg/dL (BrisT1D, DCLP5).
 - The SD of 30-minute glucose changes explains it far better: leave-one-source-out R^2 0.59 alone, 0.63 with glucose SD (H78); with both in the model the glucose-SD slope falls to 0.22 and the rate slope is 0.63.
-- The child effect vanishes once rate variability is included (+0.4%, -4.5% to +5.0%; H77): children are harder because their glucose moves faster (median 30.7 vs 25.4 mg/dL per 30 minutes).
+- Both the child effect and the closed-loop effect vanish once rate variability is included (child +0.4%, -4.5% to +5.0%, H77; AID -2.9% to -3.6%, intervals include zero, label check). Children and closed-loop users are harder to forecast because their glucose moves faster relative to its range (children: median 30.7 vs 25.4 mg/dL per 30 minutes).
