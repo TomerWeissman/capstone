@@ -47,6 +47,8 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 - **H66, not supported**: closed loop makes no detectable difference.
 - **H67, supported**: children are 7.5% harder to forecast after variability.
 
+- **H76, supported**: the findings hold for 90% bands.
+
 ## Findings
 - **Research program started (Oct 17).** Protocol in [../RESEARCH_PROTOCOL.md](../RESEARCH_PROTOCOL.md), findings ledger in [../FINDINGS.md](../FINDINGS.md). Shared code: `src/azt1d/uq_frames.py` (frames for any dataset, cached) and `src/azt1d/group_bands.py` (band methods and metrics); the frames reproduce the H28/H31 numbers exactly.
 - **External validation (MetaboNet panel, 153 patients, 8 studies never used for design).** Situation calibration replicates everywhere (tier 3). The per-patient scale fixes between-patient miscalibration everywhere; with one scale per glucose level it also keeps situation calibration in 6 of 8 studies. Across 215 patients from 11 studies, glucose variability explains 44% of how hard a patient is to forecast; children are 7.5% harder; closed loop makes no difference.
@@ -136,6 +138,9 @@ Started Oct 12. The user asked to start now and answer the week-start questions 
 | [scripts/round12_panel_level_scale.py](scripts/round12_panel_level_scale.py) | H74: per-level patient scale on the panel | current |
 | [results/verdict_h74.txt](results/verdict_h74.txt) | H74 verdict and per-study tables | current |
 | results/metabonet_panel_log*.txt | Panel build and training logs | current |
+| [scripts/round13_level90.py](scripts/round13_level90.py) | H76: 90% bands | current |
+| [results/verdict_h76.txt](results/verdict_h76.txt) | H76 verdict and tables | current |
+| [scripts/train_seed2.py](scripts/train_seed2.py) | Second-seed forecasters for H75 | current |
 | [scripts/build_metabonet_panel.py](scripts/build_metabonet_panel.py) | 160-patient external panel from 8 MetaboNet sources (45 days each, one seed per patient) | current |
 | [docs/literature_log.md](docs/literature_log.md) | Literature searches for the research program | current |
 | [scripts/encoder_leftover.py](scripts/encoder_leftover.py) | H46-H48: removes level and trend from the 7-input encoder summary and tests what the leftover tracks and whether it predicts forecast error | current |

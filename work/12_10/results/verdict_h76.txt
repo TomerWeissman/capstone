@@ -1,0 +1,22 @@
+H76 (90% bands): SUPPORTED (a 3 of 3, b 3 of 3)
+azt1d:
+                                        coverage   width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                                   
+GARCH                                      89.44  105.76          146.57           4.20              2.67            1.62
+situation (Mondrian)                       88.00   95.88          139.29           3.34              0.76            2.60
+situation x patient scale (0.01)           89.82  101.51          136.38           2.18              0.63           -0.57
+situation x patient-level scale (0.01)     89.38   99.55          136.66           2.60              0.93            0.09
+ohiot1dm:
+                                        coverage   width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                                   
+GARCH                                      89.79  125.57          170.77           4.60              2.77            0.94
+situation (Mondrian)                       90.39  119.00          160.90           3.02              1.08            1.21
+situation x patient scale (0.01)           89.97  117.57          159.99           3.22              1.47           -0.46
+situation x patient-level scale (0.01)     90.30  117.68          159.78           3.12              1.26           -0.07
+hupa_ucm:
+                                        coverage  width  interval_score  err_situation  excess_situation  excess_patient
+method                                                                                                                  
+GARCH                                      86.91  94.32          147.52           6.57              2.76            5.62
+situation (Mondrian)                       88.23  91.04          139.34           3.06             -0.87            8.04
+situation x patient scale (0.01)           89.01  93.21          133.11           2.59              0.81            1.00
+situation x patient-level scale (0.01)     88.02  88.87          134.14           2.92              0.26            4.06

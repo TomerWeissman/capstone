@@ -508,3 +508,11 @@ commits: pending (this commit)
 runtime: panel training 1331 s after restart (plus about 25 min before); analysis about 10 min
 outcome: H54 confirmed 8/8. H55 supported 7/8. H56 supported 7/8. H60 not supported 2/8 (patient fix 8/8, situation cost 6/8). H74 supported 6/8. H65 not supported (R^2 0.44). H66 not supported (AID +2.4%, CI crosses 0). H67 supported (children +7.5%, CI +3.3 to +12.4).
 notes: 153 panel patients (BrisT1D 13 of 19 eligible passed coverage). Pushes now go over HTTPS with the gh credential helper (the SSH agent lost its key).
+
+## 2026-10-17 | 12_10 | H76: 90% bands
+type: experiment
+status: done
+files: work/12_10/scripts/round13_level90.py, work/12_10/results/verdict_h76.txt, work/12_10/results/round13_level90.csv, work/12_10/scripts/train_seed2.py, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/README.md
+commits: pending (this commit)
+runtime: about 3 min
+outcome: H76 supported 3 of 3 (situation beats GARCH per situation; patient scale removes per-patient excess; single scale within situation rule at 90%).
