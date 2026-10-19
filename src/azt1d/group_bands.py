@@ -243,7 +243,7 @@ def miss_run_length(inside, subjects) -> float:
     return float(np.mean(runs)) if runs else 0.0
 
 
-def scale_aci_situation(v, t, level, eta: float = 0.01, delay: int = 12, min_n: int = 100):
+def scale_aci_situation(v, t, level, eta: float = 0.01, delay: int = 12, min_n: int = 100, theta0=None):
     """Situation (Mondrian) band times a per-patient multiplicative scale exp(theta), adapted online:
     theta += eta * (miss indicator from `delay` steps earlier - (1 - level)). Keeps the situation
     shape of the band and corrects only the patient's overall error scale."""
@@ -251,8 +251,8 @@ def scale_aci_situation(v, t, level, eta: float = 0.01, delay: int = 12, min_n: 
     target = 1 - level
     y = t.actual.to_numpy()
     half = np.zeros(len(t))
-    for idx in t.groupby("subject_id").indices.values():
-        theta = 0.0
+    for sid, idx in t.groupby("subject_id").indices.items():
+        theta = 0.0 if theta0 is None else float(theta0.get(sid, 0.0))  # optional per-patient starting scale (log)
         miss = np.zeros(len(idx))
         for j, r in enumerate(idx):
             half[r] = base[r] * np.exp(theta)

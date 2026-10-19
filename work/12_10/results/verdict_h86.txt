@@ -1,0 +1,14 @@
+H86 (rate prior >= 15% better first-two-day per-patient calibration in >= 7 of 11 studies): NOT SUPPORTED (5 of 11)
+        dataset  neutral  prior  n   gain
+          azt1d    3.588  3.418 25  0.047
+       ohiot1dm    2.836  3.241 12 -0.143
+       hupa_ucm    5.677  3.233 25  0.430
+     panel:Loop    2.661  1.840 20  0.309
+    panel:DCLP3    2.512  1.609 20  0.359
+    panel:DCLP5    2.938  2.422 20  0.176
+    panel:PEDAP    1.819  2.050 20 -0.127
+    panel:Flair    2.481  2.703 20 -0.090
+    panel:IOBP2    3.177  2.771 20  0.128
+panel:ReplaceBG    3.125  2.559 20  0.181
+  panel:BrisT1D    2.620  2.289 13  0.126
+median gain +13%

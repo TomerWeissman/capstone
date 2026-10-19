@@ -588,3 +588,12 @@ commits: pending (this commit)
 runtime: about 5 min
 outcome: H85 supported: Spearman 0.44 (0.63 within studies); learned scales 0.79-1.33.
 notes: baselines (H80) and the expanded panel (H84) are queued in a background chain.
+
+## 2026-10-18 | 12_10 | H86: rate-informed start for the patient scale
+type: experiment
+status: done
+files: src/azt1d/group_bands.py, work/12_10/scripts/round22_scale_prior.py, work/12_10/results/verdict_h86.txt, work/12_10/results/round22_scale_prior.csv, work/HYPOTHESES.md, work/FINDINGS.md
+commits: pending (this commit)
+runtime: about 6 min
+outcome: H86 not supported (5 of 11 at >= 15%; median gain +13%; 8 of 11 positive).
+notes: scale_aci_situation gained an optional theta0 (default unchanged).
