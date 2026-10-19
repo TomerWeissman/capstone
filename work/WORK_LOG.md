@@ -563,3 +563,11 @@ files: work/12_10/scripts/round17_sensor_floor.py, work/12_10/results/verdict_h8
 commits: pending (this commit)
 runtime: about 2 min
 outcome: H82 supported (29.3% at MARD 10%; 18.7-57.4% across 8-14%). By situation 39-45% flat above 120, 11-15% low or moving fast. Literature: ICU range-stratified coverage (PMC8324237) and horizon control under volatility (MAKE 8:145) must be cited; no prior joint level-by-trend calibration or online per-patient interval correction found.
+
+## 2026-10-18 | 12_10 | Portfolio page: situation-aware uncertainty (rewrite for non-experts)
+type: docs
+status: done
+files: work/12_10/scripts/site_external_figure.py, work/12_10/figures/site_external_validation.png
+commits: pending (this commit); site repo TomerWeissman.github.io b668ba6
+runtime: under 1 min
+outcome: public page at tomerweissman.github.io/projects/situation-aware-uncertainty/ rewritten for lay readers, academics, and hiring managers. Three review rounds (lay reader, academic, hiring manager, fact-check, then two cold reads). Added H54 external validation, replaced the outdated patient-vs-situation claim with F17, reported failed targets (H27, H32, H38, H44, H60, H75a), dropped the width headline (GARCH over-covers; F2).
