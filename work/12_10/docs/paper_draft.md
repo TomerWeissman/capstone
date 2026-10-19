@@ -101,6 +101,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 - Pooled over all 11 studies, GARCH coverage of a nominal 80% band ranged from 62% (70-120, fast rise) to 91% (>=250, fast rise). Situation calibration held every situation between 72% and 82%, and 23 of 24 between 78% and 82% (Figure 1). (Development datasets only: GARCH 65-95%, situation 76-87%.)
 - External: per-situation distance from 80% fell in all 8 held-out studies, from 5.5-6.8 to 2.3-4.2 points (H54).
 - Also holds at 90% nominal (H76), at a 30-minute horizon (H71), and for a CNN-Transformer (H69).
+- Grid granularity matters (H83): a coarse 3x3 grid barely beats GARCH (6.6 vs 6.0 AZT1D); a finer 7x7 grid is best on OhioT1DM (2.8) but weaker where cells get sparse. The 5x5 grid is a reasonable balance, not a unique optimum.
 
 ### 5.2 A noise floor separates real from apparent miscalibration (F11)
 - Situation bands sit at the floor by situation (2.7 vs 2.9 AZT1D; 2.1 vs 4.0 HUPA-UCM). OhioT1DM keeps a small real residual (1.6 above; 1.9 with a second seed, H75).

@@ -11,6 +11,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Sizing the band separately for each of 25 situations (level by 30-minute trend) cuts the mean distance from 80% from 6.7 to 3.9 points on OhioT1DM, data not used to design the method, with narrower bands (87 vs 99 mg/dL). 9 of 12 patients closer.
 - Holds against shuffled groupings (H33), across models (H34), and under patient bootstrap (H35; gain interval 0.3 to 3.6 points). Beats tuned CQR on AZT1D clearly; on OhioT1DM 19% better but the interval crosses zero (H36).
 - Hypotheses: H27, H28, H32 to H36.
+- Grid choice matters (H83): a 3x3 grid barely beats GARCH; 7x7 is best on OhioT1DM but weaker on AZT1D and HUPA-UCM; 5x5 is the best balance on 2 of 3 (scored on 5x5 situations, which favors it). The claim is that a moderately fine level-by-trend grid is needed, not that 5x5 is uniquely right.
 - External validation (H54): in all 8 MetaboNet studies never used for design (153 patients; AID and SAP; children to adults; Dexcom, Medtronic, Libre), per-situation distance from 80% is 2.25-4.19 points vs 5.48-6.76 for GARCH.
 
 ### F2. Per-situation honesty is not overall efficiency. Tier 2.

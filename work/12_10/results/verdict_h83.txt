@@ -1,0 +1,4 @@
+H83 (3x3 and 7x7 both >= 20% better than GARCH; 5x5 within 1 point of best): NOT SUPPORTED (0 of 3)
+azt1d: GARCH 6.03; 3x3 6.57, 5x5 3.84, 7x7 5.72 points
+ohiot1dm: GARCH 6.70; 3x3 5.03, 5x5 4.00, 7x7 2.80 points
+hupa_ucm: GARCH 7.19; 3x3 6.50, 5x5 2.77, 7x7 4.04 points

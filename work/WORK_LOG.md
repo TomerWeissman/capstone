@@ -571,3 +571,11 @@ files: work/12_10/scripts/site_external_figure.py, work/12_10/figures/site_exter
 commits: pending (this commit); site repo TomerWeissman.github.io b668ba6
 runtime: under 1 min
 outcome: public page at tomerweissman.github.io/projects/situation-aware-uncertainty/ rewritten for lay readers, academics, and hiring managers. Three review rounds (lay reader, academic, hiring manager, fact-check, then two cold reads). Added H54 external validation, replaced the outdated patient-vs-situation claim with F17, reported failed targets (H27, H32, H38, H44, H60, H75a), dropped the width headline (GARCH over-covers; F2).
+
+## 2026-10-18 | 12_10 | H83: situation grid sensitivity
+type: experiment
+status: done
+files: work/12_10/scripts/round19_grid_sensitivity.py, work/12_10/results/verdict_h83.txt, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/docs/paper_draft.md
+commits: pending (this commit)
+runtime: under 1 min
+outcome: H83 not supported (0 of 3): 3x3 barely helps; 7x7 mixed; 5x5 best on 2 of 3 (evaluation on 5x5 favors it).
