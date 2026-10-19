@@ -83,11 +83,16 @@ def train_quantile(dfs, seed, device, epochs=30, patience=5, batch=64):
     return pd.concat(rows, ignore_index=True)
 
 
-def main():
+def main(names=None):
     t0 = time.time()
     device = get_device()
     qparts = []
+    out = WEEK / "results" / "quantile_net_preds.parquet"
+    if out.exists():  # keep predictions from earlier (partial) runs
+        qparts.append(pd.read_parquet(out))
     for name, prefix in PREFIX.items():
+        if names and name not in names:
+            continue
         df = uq_frames.load_dataset(name)
         for sid in df.subject_id.unique():
             dfs = df[df.subject_id == sid].reset_index(drop=True)
@@ -96,13 +101,15 @@ def main():
                 if ckpt.load_result(run_dir, sid) is None:
                     seed = zlib.crc32(f"{name}-ens{k}-{sid}".encode()) % 2**31
                     ckpt.save_result(run_dir, train_subject_model(dfs, epochs=30, seed=seed))
-            qp = train_quantile(dfs, zlib.crc32(f"{name}-quant-{sid}".encode()) % 2**31, device)
-            qp.insert(0, "subject_id", str(sid)); qp.insert(0, "dataset", name)
-            qparts.append(qp)
+            done = any(((q.dataset == name) & (q.subject_id == str(sid))).any() for q in qparts)
+            if not done:
+                qp = train_quantile(dfs, zlib.crc32(f"{name}-quant-{sid}".encode()) % 2**31, device)
+                qp.insert(0, "subject_id", str(sid)); qp.insert(0, "dataset", name)
+                qparts.append(qp)
+                pd.concat(qparts, ignore_index=True).to_parquet(out, index=False)  # save as we go
             print(f"{name} {sid} done ({time.time() - t0:.0f}s)", flush=True)
-    pd.concat(qparts, ignore_index=True).to_parquet(WEEK / "results" / "quantile_net_preds.parquet", index=False)
     print(f"runtime {time.time() - t0:.0f}s")
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:] or None)

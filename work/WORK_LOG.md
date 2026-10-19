@@ -597,3 +597,11 @@ commits: pending (this commit)
 runtime: about 6 min
 outcome: H86 not supported (5 of 11 at >= 15%; median gain +13%; 8 of 11 positive).
 notes: scale_aci_situation gained an optional theta0 (default unchanged).
+
+## 2026-10-18 | 12_10 | Baseline training interrupted: MetaboNet file missing
+type: fix
+status: open
+files: work/12_10/scripts/train_baselines.py, work/12_10/results/train_baselines_log.txt, work/12_10/results/train_baselines_log2.txt
+commits: pending (this commit)
+outcome: train_baselines.py stopped after the 25 AZT1D patients when it reached OhioT1DM: ~/Downloads/metabonet_public.parquet no longer exists (the datasets/metabonet symlink is broken; not found by Spotlight). AZT1D ensemble checkpoints survived; quantile-network predictions (saved only at the end) were lost. The script now saves predictions as it goes and skips finished work; restarted for AZT1D and HUPA-UCM. The queued chain (H80 analysis, panel expansion) was stopped.
+notes: blocked until the file is restored: OhioT1DM baselines (H80), the expanded panel (H84). The 153-patient panel and all cached frames are unaffected.
