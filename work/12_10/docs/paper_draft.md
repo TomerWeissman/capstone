@@ -152,8 +152,12 @@ Source: `work/12_10/results/paper_three_axes.csv`.
 ### 5.9 Safety: dangerous misses (F3)
 - Situation bands catch fewer Clarke zone D points than GARCH. The patient-scale band recovers part of the gap: 29%, 44%, 52% vs 22%, 41%, 46% (GARCH 39%, 62%, 69%; H68).
 
-### 5.10 Sensor noise costs more than its own variance (F8; simulation, preliminary)
-- Planted noise raised squared error by 1.1-3.5 times its own variance, because noisy inputs also mislead the forecaster. The simulator was easier than real data, so this is a lead.
+### 5.10 How much of the error is the sensor's own? (F18; estimate)
+- Published accuracy for current CGMs is roughly 9-14% MARD, worse in relative terms at low glucose, with about 9 minutes of lag.
+- Assuming relative, independent sensor error at MARD 10%, sensor error at the forecast target accounts for about 29% of 60-minute forecast error variance across 11 studies (19% at MARD 8%, 57% at 14%; H82).
+- By situation: 39-45% for flat glucose above 120 mg/dL, 11-15% below 70 or when glucose moves fast.
+- So in calm, high situations a large part of the error, and of the band, is unavoidable with current sensors; in moving situations the forecaster is the bottleneck.
+- (A simulation with planted noise suggested noisy inputs add more on top; the simulator was too easy to quantify this, so it is left to the supplement.)
 
 ## 6. Discussion (notes)
 
@@ -169,7 +173,7 @@ Source: `work/12_10/results/paper_three_axes.csv`.
   - one seed per patient in the main analysis (a second seed for the 37 development patients changes patient RMSE by a median 0.8-1.5 mg/dL and leaves the conclusions intact)
   - 45-day external records and 20 patients per study
   - modality labels as given by MetaboNet (missing for most BrisT1D patients; results shown with BrisT1D excluded and recoded); the public subset contains only the closed-loop arms of DCLP3, IOBP2 and Flair
-  - simulator too easy for a noise ceiling
+  - the sensor floor is an estimate under stated assumptions (published MARD, independence, no lag or bias split)
 
 ## 7. Figures
 

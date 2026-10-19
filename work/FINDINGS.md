@@ -99,3 +99,8 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Median RMSE by study ranges from 31.2 (AZT1D) to 40.2 mg/dL (BrisT1D, DCLP5).
 - The SD of 30-minute glucose changes explains it far better: leave-one-source-out R^2 0.59 alone, 0.63 with glucose SD (H78); with both in the model the glucose-SD slope falls to 0.22 and the rate slope is 0.63.
 - Both the child effect and the closed-loop effect vanish once rate variability is included (child +0.4%, -4.5% to +5.0%, H77; AID -2.9% to -3.6%, intervals include zero, label check). Children and closed-loop users are harder to forecast because their glucose moves faster relative to its range (children: median 30.7 vs 25.4 mg/dL per 30 minutes).
+
+### F18. A large share of the 60-minute error may be the sensor's own error, most of all when glucose is high and steady. Tier 1 (H82; estimate under stated assumptions).
+- If CGM error is about 10% of glucose on average (published MARD for current sensors is roughly 9-14%) and independent of forecast error, the sensor's error at the target accounts for about 29% of forecast error variance across 11 studies (19% at MARD 8%, 57% at 14%).
+- By situation: 39-45% when glucose is flat above 120 mg/dL; 11-15% below 70 or when glucose moves fast, where the dynamics dominate.
+- Replaces the simulation lead (F8) as the paper's statement about irreducible error. Lag (about 9 minutes) and calibration bias are not separated here.

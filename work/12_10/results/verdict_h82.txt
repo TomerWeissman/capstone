@@ -1,0 +1,12 @@
+H82 (sensor error at the target >= 20% of forecast error variance at MARD 10%): SUPPORTED; 29.3%
+sensitivity:
+   mard  low_floor share_pooled
+   0.08      False        18.7%
+   0.08       True        19.1%
+   0.10      False        29.3%
+   0.10       True        29.4%
+   0.14      False        57.4%
+   0.14       True        57.4%
+forecast RMSE pooled 37.7 mg/dL; windows 543,814; studies 11
+by situation (MARD 10%; share of forecast error variance):
+  under 70/fast fall 11%, under 70/slow fall 11%, under 70/flat 11%, under 70/slow rise 12%, 70 to 120/fast fall 15%, 70 to 120/slow fall 19%, 70 to 120/flat 25%, 70 to 120/slow rise 21%, 70 to 120/fast rise 15%, 120 to 180/fast fall 18%, 120 to 180/slow fall 29%, 120 to 180/flat 39%, 120 to 180/slow rise 31%, 120 to 180/fast rise 22%, 180 to 250/fast fall 21%, 180 to 250/slow fall 35%, 180 to 250/flat 45%, 180 to 250/slow rise 37%, 180 to 250/fast rise 28%, 250 and over/fast fall 25%, 250 and over/slow fall 39%, 250 and over/flat 45%, 250 and over/slow rise 42%, 250 and over/fast rise 32%

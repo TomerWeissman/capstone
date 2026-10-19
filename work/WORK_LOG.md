@@ -555,3 +555,11 @@ files: work/12_10/scripts/train_pooled.py, work/12_10/scripts/round16_pooled.py,
 commits: pending (this commit); H79 commit before
 runtime: training 347 s (about 600,000 windows, 14 epochs); analyses about 3 min each
 outcome: pooled model matches or beats per-patient models on unseen patients. H79 not supported (part b): patient fix holds everywhere in a full cold start; situation excess 1.46, 3.13, 3.04. H81 not supported: per-level scale does not fix the situation residual with the pooled forecaster. Tuning stopped after five designs.
+
+## 2026-10-18 | 12_10 | H82: sensor floor; literature check for overlapping work
+type: analysis
+status: done
+files: work/12_10/scripts/round17_sensor_floor.py, work/12_10/results/verdict_h82.txt, work/12_10/results/round17_sensor_floor.csv, work/12_10/figures/h82_sensor_floor.png, work/12_10/docs/literature_log.md, work/12_10/docs/paper_draft.md, work/HYPOTHESES.md, work/FINDINGS.md
+commits: pending (this commit)
+runtime: about 2 min
+outcome: H82 supported (29.3% at MARD 10%; 18.7-57.4% across 8-14%). By situation 39-45% flat above 120, 11-15% low or moving fast. Literature: ICU range-stratified coverage (PMC8324237) and horizon control under volatility (MAKE 8:145) must be cited; no prior joint level-by-trend calibration or online per-patient interval correction found.
