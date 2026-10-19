@@ -113,6 +113,7 @@ Working draft, updated Oct 17, 2026. Built from `work/FINDINGS.md`; every number
 - External: removed in all 8 studies (-0.55 to -0.84), interval score better or within 0.5% (H60).
 - Trade-off: a single scale over-covers rare extreme situations (Figure 1) and costs about one point of situation evenness. One scale per glucose level keeps both and meets all criteria in 6 of 8 external studies (H74), but needs longer records (it fails on HUPA-UCM's 2.6-day test periods, H73).
 - Standard ACI (adapting the quantile level) also fixes patients but costs more situation evenness (H58).
+- What the scale learns: each patient's glucose dynamics. Its value correlates with the patient's rate-of-change SD (Spearman 0.44 overall, 0.63 within studies; learned scales 0.79-1.33 times the population width; H85). This links the band to Section 5.8 and suggests initializing it from a new patient's first days of CGM.
 - Robust to a second architecture (H69), a 30-minute horizon (H71), 90% nominal (H76), and a second training seed (H75b).
 
 ### 5.4 The new patient needs no calibration data of their own (F15)

@@ -62,6 +62,7 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - Situation bands times exp(theta), theta adapted per patient from misses known 60 minutes later (eta 0.01): per-patient excess above the noise floor goes from 3.5, 2.3, 9.1 points to -0.9, -0.9, +0.4; interval score improves (112.0 vs 113.5; 130.2 vs 130.8; 107.5 vs 110.8).
 - Cost: per-situation evenness erodes as adaptation speeds up (excess 0.9, 2.5, 1.2 at eta 0.01). Adapting the quantile level (standard ACI, H58) erodes it more.
 - Interpretation: the remaining miscalibration is a slowly drifting patient-level error scale, consistent with F6 (error tracks each patient's variability over time).
+- The learned scale tracks the patient's glucose dynamics (H85): Spearman 0.44 with rate-of-change SD across 215 patients, 0.63 within studies; learned scales span 0.79-1.33 times the population width. Links F12 to F17.
 - Holds for a second forecaster, the CNN-Transformer (H69): per-patient excess 3.5 to -0.8 (AZT1D) and 2.6 to -0.9 (OhioT1DM), interval score slightly better.
 - Holds at a 30-minute horizon (H71b): per-patient excess 3.7 to -0.5 (AZT1D), 1.8 to -0.9 (OhioT1DM), interval score better. Situation bands sit at 1.56 and 1.25 points above the floor at 30 minutes (H71a missed its 1.5 rule narrowly).
 - External (H60): the per-patient fix replicates in all 8 MetaboNet studies (per-patient excess -0.55 to -0.84; interval score better or within 0.5%), but the single scale costs per-situation evenness (excess over 1.5 in 6 of 8).

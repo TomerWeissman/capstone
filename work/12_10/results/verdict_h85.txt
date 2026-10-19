@@ -1,0 +1,3 @@
+H85 (learned scale vs rate-of-change SD, Spearman >= 0.4): SUPPORTED; rho 0.44
+  vs glucose SD: rho 0.45; mean within-study rho (rate SD) 0.63; patients 215
+  learned scale: median 1.01, 10th-90th percentile 0.79 to 1.33

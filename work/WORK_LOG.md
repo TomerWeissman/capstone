@@ -579,3 +579,12 @@ files: work/12_10/scripts/round19_grid_sensitivity.py, work/12_10/results/verdic
 commits: pending (this commit)
 runtime: under 1 min
 outcome: H83 not supported (0 of 3): 3x3 barely helps; 7x7 mixed; 5x5 best on 2 of 3 (evaluation on 5x5 favors it).
+
+## 2026-10-18 | 12_10 | H85: learned patient scale vs glucose dynamics
+type: experiment
+status: done
+files: work/12_10/scripts/round21_scale_vs_dynamics.py, work/12_10/results/verdict_h85.txt, work/12_10/results/round21_scales.csv, work/12_10/figures/h85_scale_vs_dynamics.png, work/12_10/scripts/round20_panel60.py, work/HYPOTHESES.md, work/FINDINGS.md, work/12_10/docs/paper_draft.md
+commits: pending (this commit)
+runtime: about 5 min
+outcome: H85 supported: Spearman 0.44 (0.63 within studies); learned scales 0.79-1.33.
+notes: baselines (H80) and the expanded panel (H84) are queued in a background chain.
