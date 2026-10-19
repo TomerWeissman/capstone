@@ -35,9 +35,12 @@ from azt1d.glimmer import checkpoint as ckpt  # noqa: E402
 from azt1d.glimmer.train import train_subject_model  # noqa: E402
 
 SOURCES = ["Loop", "DCLP3", "DCLP5", "PEDAP", "Flair", "IOBP2", "ReplaceBG", "BrisT1D"]
-PER_SOURCE, DAYS, MIN_COVER, MAX_GAP = 20, 45, 0.90, 6
+# PER_SOURCE patients per study; a larger panel ("panel60") is built with: python ... 60
+PER_SOURCE = int(sys.argv[1]) if len(sys.argv) > 1 else 20
+TAG = "" if PER_SOURCE == 20 else str(PER_SOURCE)
+DAYS, MIN_COVER, MAX_GAP = 45, 0.90, 6
 STEPS = DAYS * 288
-OUT = ROOT / "data" / "processed" / "metabonet_panel"
+OUT = ROOT / "data" / "processed" / f"metabonet_panel{TAG}"
 PARQUET = str(metabonet.DEFAULT_METABONET_PATH)
 
 
@@ -74,10 +77,10 @@ def main():
         el = eligible(source)
         rng = np.random.default_rng(100 + si)
         order = rng.permutation(len(el))  # random order; take the first PER_SOURCE that pass coverage
-        raw = metabonet.load_source(source, subject_ids=[str(i) for i in el.id[order[:PER_SOURCE * 2]]], clean=False)
+        raw = metabonet.load_source(source, subject_ids=[str(i) for i in el.id[order[:PER_SOURCE * 3]]], clean=False)
         raw["subject_id"] = raw.subject_id.astype(str)
         parts, kept = [], 0
-        for k in order[:PER_SOURCE * 2]:
+        for k in order[:PER_SOURCE * 3]:
             if kept == PER_SOURCE:
                 break
             row = el.iloc[k]
@@ -100,7 +103,7 @@ def main():
         df.to_parquet(OUT / f"{source}.parquet", index=False)
         print(f"{source}: {kept} patients from {len(el)} eligible ({time.time() - t0:.0f}s)", flush=True)
 
-        run_dir = ROOT / "data" / "processed" / "checkpoints" / f"panel_{source}_cnn_lstm_v0"
+        run_dir = ROOT / "data" / "processed" / "checkpoints" / f"panel{TAG}_{source}_cnn_lstm_v0"
         for sid in df.subject_id.unique():
             if ckpt.load_result(run_dir, sid) is not None:
                 continue

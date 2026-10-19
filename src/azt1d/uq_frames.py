@@ -45,6 +45,8 @@ def load_dataset(name: str, subject_ids=None) -> pd.DataFrame:
         df = metabonet.load_source("OhioT1DM")
     elif name.startswith("panel:"):
         df = pd.read_parquet(root / "data" / "processed" / "metabonet_panel" / f"{name[6:]}.parquet")
+    elif name.startswith("panel60:"):
+        df = pd.read_parquet(root / "data" / "processed" / "metabonet_panel60" / f"{name[8:]}.parquet")
     elif name.startswith("mb:"):
         df = metabonet.load_source(name[3:], subject_ids=subject_ids)
     else:

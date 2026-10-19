@@ -35,7 +35,8 @@ OUT, FIGS = WEEK / "results", WEEK / "figures"
 def run_for(name):
     if name in RUNS:
         return RUNS[name]
-    return f"panel_{name.split(':')[1]}_cnn_lstm_v0"
+    tag, src = name.split(":")
+    return f"{tag}_{src}_cnn_lstm_v0"  # panel_<src>_... or panel60_<src>_...
 
 
 def r2(y, p):
