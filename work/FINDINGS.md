@@ -107,3 +107,9 @@ Datasets: AZT1D (25 patients), OhioT1DM (12, via MetaboNet), HUPA-UCM (25), simu
 - If CGM error is about 10% of glucose on average (published MARD for current sensors is roughly 9-14%) and independent of forecast error, the sensor's error at the target accounts for about 29% of forecast error variance across 11 studies (19% at MARD 8%, 57% at 14%).
 - By situation: 39-45% when glucose is flat above 120 mg/dL; 11-15% below 70 or when glucose moves fast, where the dynamics dominate.
 - Replaces the simulation lead (F8) as the paper's statement about irreducible error. Lag (about 9 minutes) and calibration bias are not separated here.
+
+### F19. Our band is more honest than deep ensembles and a quantile network. Tier 2 (H80; AZT1D and HUPA-UCM, OhioT1DM pending).
+- Raw deep-ensemble bands (5 models per patient) cover only 20-22% of outcomes at nominal 80%: member disagreement vastly understates the real error.
+- Using the ensemble spread as the scale in conformal calibration fixes average coverage but gives wide, uneven bands (interval score 125.7 and 120.0; patient excess 3.5 and 6.7).
+- A conformalized quantile network is sharp (113.9, 105.9) but uneven by situation (2.9, 2.0) and patient (2.5, 3.1).
+- Situation x patient scale: situation excess 0.93 and 1.18, patient excess -0.88 and 0.43, interval score 112.0 and 107.5; on the ensemble mean, 110.1 and 106.0.

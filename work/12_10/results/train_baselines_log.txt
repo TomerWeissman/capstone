@@ -1,0 +1,47 @@
+azt1d 1 done (86s)
+azt1d 2 done (181s)
+azt1d 3 done (241s)
+azt1d 4 done (444s)
+azt1d 5 done (855s)
+azt1d 6 done (1118s)
+azt1d 7 done (1208s)
+azt1d 8 done (1277s)
+azt1d 9 done (1361s)
+azt1d 10 done (1440s)
+azt1d 11 done (1513s)
+azt1d 12 done (1569s)
+azt1d 13 done (1680s)
+azt1d 14 done (1749s)
+azt1d 15 done (1824s)
+azt1d 16 done (1915s)
+azt1d 17 done (1988s)
+azt1d 18 done (2066s)
+azt1d 19 done (2117s)
+azt1d 20 done (2204s)
+azt1d 21 done (2294s)
+azt1d 22 done (2371s)
+azt1d 23 done (2462s)
+azt1d 24 done (2538s)
+azt1d 25 done (2631s)
+Traceback (most recent call last):
+  File "/Users/tomerweissman/Projects/AZT1D Analysis/work/12_10/scripts/train_baselines.py", line 108, in <module>
+    main()
+    ~~~~^^
+  File "/Users/tomerweissman/Projects/AZT1D Analysis/work/12_10/scripts/train_baselines.py", line 91, in main
+    df = uq_frames.load_dataset(name)
+  File "/Users/tomerweissman/Projects/AZT1D Analysis/src/azt1d/uq_frames.py", line 45, in load_dataset
+    df = metabonet.load_source("OhioT1DM")
+  File "/Users/tomerweissman/Projects/AZT1D Analysis/src/azt1d/metabonet.py", line 100, in load_source
+    raw = con.execute(
+          ~~~~~~~~~~~^
+        f"""
+        ^^^^
+    ...<4 lines>...
+        """
+        ^^^
+    ).fetchdf()
+    ^
+_duckdb.IOException: IO Error: No files found that match the pattern "/Users/tomerweissman/Downloads/metabonet_public.parquet"
+
+LINE 3:         FROM read_parquet('/Users/tomerweissman/Downloads/metabonet_public...
+                     ^

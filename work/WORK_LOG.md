@@ -605,3 +605,11 @@ files: work/12_10/scripts/train_baselines.py, work/12_10/results/train_baselines
 commits: pending (this commit)
 outcome: train_baselines.py stopped after the 25 AZT1D patients when it reached OhioT1DM: ~/Downloads/metabonet_public.parquet no longer exists (the datasets/metabonet symlink is broken; not found by Spotlight). AZT1D ensemble checkpoints survived; quantile-network predictions (saved only at the end) were lost. The script now saves predictions as it goes and skips finished work; restarted for AZT1D and HUPA-UCM. The queued chain (H80 analysis, panel expansion) was stopped.
 notes: blocked until the file is restored: OhioT1DM baselines (H80), the expanded panel (H84). The 153-patient panel and all cached frames are unaffected.
+
+## 2026-10-20 | 12_10 | H80: deep ensembles and quantile network baselines (AZT1D, HUPA-UCM)
+type: experiment
+status: done
+files: work/12_10/scripts/train_baselines.py, work/12_10/scripts/round18_baselines.py, work/12_10/results/verdict_h80.txt, work/12_10/results/round18_baselines.csv, work/12_10/results/quantile_net_preds.parquet, work/12_10/results/train_baselines_log2.txt, work/12_10/figures/h80_baselines.png, data/processed/checkpoints/cnn_lstm_ens1-5/, data/processed/checkpoints/hupa_ucm_cnn_lstm_ens1-5/, work/HYPOTHESES.md, work/FINDINGS.md
+commits: pending (this commit)
+runtime: training 2809 s (50 patients x 5 ensemble members + quantile network)
+outcome: H80 supported on both available datasets (rule 2 of 3; OhioT1DM blocked by the missing MetaboNet file). Raw ensemble bands cover 20-22%.

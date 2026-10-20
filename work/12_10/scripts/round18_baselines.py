@@ -99,10 +99,13 @@ def evaluate(name, label, v, t, methods):
     return rows
 
 
-def main():
+def main(names=None):
     plotting.apply_style()
     rows = []
     ours = partial(gb.scale_aci_situation, eta=0.01)
+    global PREFIX
+    if names:  # e.g. only the datasets whose baselines finished
+        PREFIX = {k: v for k, v in PREFIX.items() if k in names}
     for name in PREFIX:
         v0, t0 = uq_frames.frames(name, run_for(name))
         rows += evaluate(name, "plain CNN-LSTM", v0, t0, {"situation x patient scale (ours)": ours, "quantile CNN-LSTM (CQR)": quantile_cqr(name)})
@@ -122,7 +125,8 @@ def main():
                and o.excess_patient < min(b1.excess_patient, b2.excess_patient)
                and o.interval_score <= 1.03 * better_is)
     cols = ["coverage", "width", "interval_score", "err_situation", "excess_situation", "excess_patient"]
-    text = f"H80 (ours beats ensemble-normalized conformal and conformalized quantile network on both excesses, interval score within 3%): {'SUPPORTED' if ok >= 2 else 'NOT SUPPORTED'} ({ok} of 3)\n"
+    n = len(PREFIX)
+    text = f"H80 (ours beats ensemble-normalized conformal and conformalized quantile network on both excesses, interval score within 3%): {'SUPPORTED' if ok >= 2 else 'NOT SUPPORTED'} ({ok} of {n}; rule: at least 2 of 3 datasets)\n"
     for d in PREFIX:
         sub = R[R.dataset == d].set_index(["forecaster", "method"])[cols].copy()
         sub[["coverage", "err_situation", "excess_situation", "excess_patient"]] *= 100
@@ -134,7 +138,7 @@ def main():
             ("ensemble mean", "ensemble, normalized conformal", "#4c78a8"), ("plain CNN-LSTM", "quantile CNN-LSTM (CQR)", "#f58518"),
             ("ensemble mean", "ensemble, mean +/- z SD", "#bbbbbb")]
     fig, axes = plt.subplots(1, 4, figsize=(20, 4.8))
-    x = np.arange(3)
+    x = np.arange(len(PREFIX))
     for k, (fc, m, c) in enumerate(show):
         d_ = R[(R.forecaster == fc) & (R.method == m)].set_index("dataset").loc[list(PREFIX)]
         lab = m if "ours" not in m else f"ours ({fc})"
@@ -150,4 +154,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:] or None)
