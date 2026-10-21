@@ -613,3 +613,12 @@ files: work/12_10/scripts/train_baselines.py, work/12_10/scripts/round18_baselin
 commits: pending (this commit)
 runtime: training 2809 s (50 patients x 5 ensemble members + quantile network)
 outcome: H80 supported on both available datasets (rule 2 of 3; OhioT1DM blocked by the missing MetaboNet file). Raw ensemble bands cover 20-22%.
+
+## 2026-10-21 | 12_10 | Quick look: forecast error by glucose level, in mg/dL and percent
+type: analysis
+status: done
+files: work/12_10/scripts/fig_error_by_level.py, work/12_10/figures/error_by_glucose_level.png, work/12_10/results/error_by_glucose_level.csv
+commits: pending (this commit)
+runtime: under 1 min
+outcome: 11 studies, 543,728 test forecasts, binned by actual glucose. Mean absolute error lowest at 120-140 (17.8 mg/dL), 49.0 at 40-60, 104.5 at 380-400. As a percentage: 92% at 40-60, 56% at 60-80, 13.5-14% at 120-180 (close to sensor MARD 9-14%), 15-27% above 180.
+notes: binned by the outcome, which exaggerates the extremes (forecasts are pulled toward the middle). Done in 12_10 although week 19_10 has started; week setup still pending.
