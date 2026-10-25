@@ -1,4 +1,4 @@
-# Midterm Deliverable: structure draft (v1, for your review)
+# Midterm Deliverable: structure draft (v2, for your review)
 
 Barebones skeleton only. Mark it up: cut, move, rename. Once you approve it, I write the actual draft.
 
@@ -37,42 +37,13 @@ Barebones skeleton only. Mark it up: cut, move, rename. Once you approve it, I w
 11. Interdisciplinary minor: *N/A? you confirm*
 12. **AI statement (required; penalties if thin)**
 
-## Part B. Work product: manuscript core (target 3,500-5,000 words + 4-5 figures)
+## Part B. Work product: placeholder for now
 
-1. **Title, abstract** (250 words max)
-2. **Introduction:** the problem (average calibration vs conditional use); the gap; the four questions; contributions (about 600 words)
-3. **Related work:** glucose uncertainty methods; conformal prediction (Mondrian, adaptive); the gap and its closest precedents (about 400 words)
-4. **Data:**
-   - 3 development datasets, 8 external MetaboNet studies, 215 patients
-   - Table 1 (studies, patients, therapy, sensor)
-   - about 300 words
-5. **Methods** (about 900 words):
-   - 5.1 Forecaster (CNN-LSTM, splits, seeds)
-   - 5.2 Glycemic situations (5x5 grid)
-   - 5.3 Interval methods (baselines; situation-conditional conformal; online per-patient scale)
-   - 5.4 Calibration metrics and the noise floor
-   - 5.5 Pre-registration and statistics
-6. **Results** (about 1,500 words):
-   - 6.1 Standard intervals are miscalibrated by situation; situation calibration fixes it (Fig 1; external, 8/8)
-   - 6.2 The noise floor: what's real (Fig 2)
-   - 6.3 The per-patient scale removes between-patient miscalibration (Fig 3; external; cold start; second forecaster)
-   - 6.4 Honest by day as well (in Fig 3, or a panel of it)
-   - 6.5 Comparison with strong baselines (ensembles, quantile network) (Fig 4 or a table)
-7. **Discussion** (about 600 words):
-   - What honest intervals need
-   - Safety caveat (dangerous misses)
-   - Limitations
-   - Planned for the full draft: patient difficulty, sensor floor, error-size predictability
-8. **References**
+Left mostly empty on purpose (Oct 25 decision): the paper will change, so it is written after the process documentation. For now:
+- working title and a 2-3 sentence summary of the planned manuscript
+- a link to the current structured draft (`work/12_10/docs/paper_draft.md`)
 
-**Figures (proposed)**
-- Fig 1: situation coverage maps (`paper_fig1_situation_coverage.png`)
-- Fig 2: noise floor (`h51_noise_floor.png`)
-- Fig 3: three axes of honesty, 11 studies (`paper_fig2_three_axes.png`)
-- Fig 4: external validation (`h54_panel_external.png`) or baselines (`h80_baselines.png`)
-- Table 1: data; Table 2: pre-registered hypotheses behind the core claims (short)
-
-## Part C. Process documentation for this piece (target 1,500-2,500 words)
+## Part C. Process documentation (the main focus now; written in the Google Doc, built on continuously)
 
 1. **Overview:** what this deliverable is and how it fits the year
 2. **Navigation: how this piece got made**
