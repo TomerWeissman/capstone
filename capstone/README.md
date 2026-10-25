@@ -17,14 +17,8 @@ Deliverables are built in this folder (`capstone/`). The weekly working files st
 
 ## Feedback received so far
 
-- **Project Brief (Sep 26), Watson.** Scores: #outcomeanalysis 3, #qualitydeliverables 3, #navigation 4, #curation 3.
-  - "Especially strong about checking in with me and making a plan for communication."
-  - Suggested approximate entropy (ApEn) and autoencoders to model major shifts, and filtering out shifts driven by eating and insulin. He said the interesting part may be "subtler features ... that aren't externally predictable."
-- **Implemented since:**
-  - Sample entropy and compressibility were tested (H41, H42).
-  - Teacher-forcing autoencoders were tested (H39, H40, H43, H46-H48).
-  - The finding that error size is mostly unpredictable (H49, H61), and that difficulty comes from how fast glucose moves (H77, H78), answers his question about features that aren't externally predictable.
-- **Volkan (second reader), Oct 8 meeting:** feedback not yet recorded. *To fill in.*
+- Project Brief feedback and scores are on Forum (kept out of this public repo). Its research suggestions (approximate entropy, autoencoders, separating meal and insulin effects from shifts that aren't externally predictable) were tested since: sample entropy and compressibility (H41, H42), teacher-forcing autoencoders (H39, H40, H43, H46-H48), and error-size predictability and patient difficulty (H49, H61, H77, H78).
+- Volkan (second reader), Oct 8 meeting: feedback not yet recorded. *To fill in.*
 
 ## The work, in order
 
