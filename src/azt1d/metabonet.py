@@ -1,5 +1,5 @@
 """
-Loader for MetaboNet (Khamesian et al., 2026, arXiv:2601.11505), a 154.8M-row
+Loader for MetaboNet (Wolff et al., 2026, arXiv:2601.11505), a 154.8M-row
 consolidation of 14 public T1D datasets (including AZT1D and OhioT1DM) into
 one harmonized schema, shipped as a single parquet file.
 

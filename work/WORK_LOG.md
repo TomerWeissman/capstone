@@ -638,3 +638,12 @@ files: Google Doc "Tomer Weissman - Capstone Research Paper Draft", new tab "Pro
 commits: pending (this commit)
 outcome: added a new tab with the skeleton: Overview; Navigation (6 subsections, Sep 7 to Oct 25, setbacks, timeline, habits); Outcome analysis (success criteria, pre-registration, self-assessment); Modeling professional process; Use of generative AI (roles, checks, annotated examples); Feedback; HCs and LOs; Next steps. Each section has a gray italic note on what goes there and its sources. Existing tabs untouched. Work product left as a placeholder (user's decision).
 notes: awaiting the user's approval of the skeleton before writing text.
+
+## 2026-10-25 | 12_10 | Process documentation first draft (APA LaTeX)
+type: docs
+status: done
+files: capstone/process_doc/main.tex, capstone/process_doc/body.tex, capstone/process_doc/abstract.tex, capstone/process_doc/references.bib, capstone/process_doc/main.pdf, capstone/process_doc/figures/, capstone/process_doc/.gitignore, capstone/README.md, datasets/sources.csv, src/azt1d/metabonet.py
+commits: pending (this commit)
+runtime: drafting workflow 13 min (10 agents: 4 writers, 4 fact-and-voice reviewers, 1 editor, 1 reference verifier); compile under a minute
+outcome: 25-page APA 7 student paper (about 4,900 words), in Tomer's voice, following the approved skeleton; 17 visible placeholders for what only Tomer can write; references verified online (6 with notes). Includes the two hand-drawn Oct 4 iPad planning pages (downloaded from Notion with the user's OK) and a plan-versus-actual table.
+notes: installed apa7, biblatex-apa and dependencies in user-mode TeX Live and biber via Homebrew (user's OK). The reference check found MetaboNet's authors are Wolff et al., not Khamesian et al.; fixed in datasets/sources.csv and the loader docstring. Volkan's Oct 8 feedback recorded in capstone/README.md.
