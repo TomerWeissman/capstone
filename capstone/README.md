@@ -18,7 +18,7 @@ Deliverables are built in this folder (`capstone/`). The weekly working files st
 ## Feedback received so far
 
 - Project Brief feedback and scores are on Forum (kept out of this public repo). Its research suggestions (approximate entropy, autoencoders, separating meal and insulin effects from shifts that aren't externally predictable) were tested since: sample entropy and compressibility (H41, H42), teacher-forcing autoencoders (H39, H40, H43, H46-H48), and error-size predictability and patient difficulty (H49, H61, H77, H78).
-- Volkan (second reader), Oct 8 meeting: feedback not yet recorded. *To fill in.*
+- Volkan (second reader), Oct 8 meeting: the path is good, and it is critical that the findings have real value. This matched the doubt in the Oct 6 slides ("this may not be a valuable avenue"), which the research program since then was built to answer.
 
 ## The work, in order
 
@@ -67,6 +67,5 @@ Deliverables are built in this folder (`capstone/`). The weekly working files st
 
 ## Open items
 
-- Volkan's feedback from Oct 8: to be written down.
 - The MetaboNet data file is missing from Downloads. It blocks two optional checks (OhioT1DM baselines, the 480-patient replication); the paper doesn't depend on them.
 - No week folder for Oct 19-25 (the work is in 12_10). Decide whether to start week 26_10 tomorrow.
