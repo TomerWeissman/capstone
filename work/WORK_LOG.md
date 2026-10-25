@@ -630,3 +630,11 @@ files: capstone/README.md, capstone/midterm/STRUCTURE.md, work/README.md
 commits: pending (this commit)
 outcome: read the 2026-27 Capstone Handbook (four parts; Midterm requirements), the General Capstone Cover Sheet template, the Forum Midterm page (25%, due Oct 31 4:00 PM, graded on navigation, outcome analysis, quality deliverables), the Project Brief and its feedback (research suggestions: ApEn and autoencoders), and the HC/LO plan spreadsheet. Wrote an organization map of all work and a barebones Midterm structure (cover sheet, manuscript core, process documentation, HC/LO list) for the user's review.
 notes: the user will iterate on the structure before any drafting.
+
+## 2026-10-25 | 12_10 | Process documentation skeleton in the Google Doc
+type: docs
+status: done
+files: Google Doc "Tomer Weissman - Capstone Research Paper Draft", new tab "Process Documentation: Midterm" (t.r5re2ihame7h); capstone/midterm/STRUCTURE.md
+commits: pending (this commit)
+outcome: added a new tab with the skeleton: Overview; Navigation (6 subsections, Sep 7 to Oct 25, setbacks, timeline, habits); Outcome analysis (success criteria, pre-registration, self-assessment); Modeling professional process; Use of generative AI (roles, checks, annotated examples); Feedback; HCs and LOs; Next steps. Each section has a gray italic note on what goes there and its sources. Existing tabs untouched. Work product left as a placeholder (user's decision).
+notes: awaiting the user's approval of the skeleton before writing text.
