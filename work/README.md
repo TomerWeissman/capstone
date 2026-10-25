@@ -1,5 +1,7 @@
 # Work index
 
+Capstone deliverables (organization map, Midterm structure) live in [../capstone/](../capstone/README.md).
+
 Start here. One folder per week, named by the Monday that starts it (`28_9` is the week of Sep 28, 2026).
 
 - [OVERVIEW.md](OVERVIEW.md): where the capstone stands now, and why. Rewritten at the end of each week.

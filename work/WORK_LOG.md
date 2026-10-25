@@ -622,3 +622,11 @@ commits: pending (this commit)
 runtime: under 1 min
 outcome: 11 studies, 543,728 test forecasts, binned by actual glucose. Mean absolute error lowest at 120-140 (17.8 mg/dL), 49.0 at 40-60, 104.5 at 380-400. As a percentage: 92% at 40-60, 56% at 60-80, 13.5-14% at 120-180 (close to sensor MARD 9-14%), 15-27% above 180.
 notes: binned by the outcome, which exaggerates the extremes (forecasts are pulled toward the middle). Done in 12_10 although week 19_10 has started; week setup still pending.
+
+## 2026-10-25 | 12_10 | Capstone organization map and Midterm structure draft
+type: docs
+status: done
+files: capstone/README.md, capstone/midterm/STRUCTURE.md, work/README.md
+commits: pending (this commit)
+outcome: read the 2026-27 Capstone Handbook (four parts; Midterm requirements), the General Capstone Cover Sheet template, the Forum Midterm page (25%, due Oct 31 4:00 PM, graded on navigation, outcome analysis, quality deliverables), the Project Brief and its feedback (scores 3/3/4/3; Watson suggested ApEn and autoencoders), and the HC/LO plan spreadsheet. Wrote an organization map of all work and a barebones Midterm structure (cover sheet, manuscript core, process documentation, HC/LO list) for the user's review.
+notes: the user will iterate on the structure before any drafting.
