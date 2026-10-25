@@ -647,3 +647,12 @@ commits: pending (this commit)
 runtime: drafting workflow 13 min (10 agents: 4 writers, 4 fact-and-voice reviewers, 1 editor, 1 reference verifier); compile under a minute
 outcome: 25-page APA 7 student paper (about 4,900 words), in Tomer's voice, following the approved skeleton; 17 visible placeholders for what only Tomer can write; references verified online (6 with notes). Includes the two hand-drawn Oct 4 iPad planning pages (downloaded from Notion with the user's OK) and a plan-versus-actual table.
 notes: installed apa7, biblatex-apa and dependencies in user-mode TeX Live and biber via Homebrew (user's OK). The reference check found MetaboNet's authors are Wolff et al., not Khamesian et al.; fixed in datasets/sources.csv and the loader docstring. Volkan's Oct 8 feedback recorded in capstone/README.md.
+
+## 2026-10-25 | 12_10 | Process documentation revision per Tomer's feedback
+type: docs
+status: done
+files: capstone/process_doc/body.tex, capstone/process_doc/abstract.tex, capstone/process_doc/references.bib, capstone/process_doc/main.pdf, capstone/process_doc/figures/ (clarke_explainer, situation_vs_garch, alarm_garch_patient, garch_band_zones, methods_tradeoff_21_9, tsne_level_trend_azt1d), work/12_10/scripts/process_doc_figures.py
+commits: pending (this commit)
+runtime: revision workflow 8 min (10 agents: 4 rewriters, 4 checklist and fact checkers, 1 editor, 1 reference verifier); compile under a minute
+outcome: 30-page draft. Removed: Project Brief mention, external-validation sentence, three-axes figure, Setbacks, Modeling Professional Process, pre-registration/evidence tiers, annotated AI examples, Volkan's feedback, slides paragraph. Added: hypo/hyperglycemia definitions, band-edge warning and Clarke grid explanations with figures, methods-alike figure, situation-aware result as the chosen direction with a heat-map figure, planning progression (Notion checklists, iPad, Gantt), research protocol as the centrepiece of the AI section, longer HC and LO entries (#biasidentification about personal bias), rewritten Outcome Analysis and Next Steps. Clarke 1987 reference added and verified.
+notes: 5 placeholders remain for Tomer (rebalancing plan, confirming success criteria, how he reads the AI's code, AAAI direction, Nov 20 goals). Journal quotes taken from Notion should be confirmed by Tomer.

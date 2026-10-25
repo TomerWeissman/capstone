@@ -1,184 +1,188 @@
 \section{Overview}
 
-My capstone is now a study of how honest the uncertainty around a glucose forecast is. A forecaster predicts glucose 60 minutes ahead, and a band around the forecast tells the person how far to trust it. An 80\% band is honest if the true value falls inside it 80\% of the time. The question I am answering is whether the band stays honest where it matters: in each situation (the current glucose level plus the direction it has moved over the last 30 minutes), for each patient, and on each day (Figure~\ref{fig:axes}). I tested this on 215 patients from 11 public studies. Three studies were used to design the methods. The other eight (153 patients) were held out and used only to check them.
+My capstone is now a study of how honest the uncertainty around a glucose forecast is. People with type 1 diabetes try to keep their glucose between two lines. Below 70 mg/dL is hypoglycemia, glucose that is too low, which can turn dangerous quickly. Above 180 mg/dL is hyperglycemia, glucose that is too high, which harms the body when it lasts. A forecast that looks 60 minutes ahead matters because an hour is enough time to act, for example by eating or by adjusting insulin, before the reading crosses either line.
 
-This is not where my Project Brief pointed. On September 26 I proposed continuing GLIMMER \parencite{glimmer2026}, a study that weights a forecaster's mistakes in dangerous glucose ranges more heavily. The following sections explain how I got from there to here: the turns and dead ends (Navigation), how I defined success before each test (Outcome Analysis), how the work compares with professional practice, how I used generative AI, how I used feedback, and what remains before the Full Draft. The work product reports the results; this document is about how I reached them.
+A forecaster predicts glucose 60 minutes ahead, and a band around the forecast tells the person how far to trust it. An 80\% band is honest if the true value falls inside it 80\% of the time. The question I am answering is whether the band stays honest where it matters: in each situation (the current glucose level plus the direction it has moved over the last 30 minutes), for each patient, and on each day. I tested this on 215 patients from 11 public studies. Three studies were used to design the methods. The other eight (153 patients) were held out and used only to check them.
 
-Three parts of the process are the ones I am proudest of. The first is a written research protocol (October 17, 2026). Before any test runs, I record the claim, the measure and the threshold for success in the hypothesis register, which is kept in the project repository, and the threshold cannot move afterwards. The register now holds 85 hypotheses. Of these, 36 were not supported and five more were invalidated, and I kept every one. The second is external validation. A result counts as a main finding only if it holds on studies never used to design the method. Those studies cover closed-loop systems (a pump that adjusts insulin automatically from the sensor) and other pumps, children and adults, and three sensor brands \parencite{metabonet2026}. The third is catching my own errors. I found a seed bug in September, test data in an alarm threshold in early October, and mislabeled patients in mid-October. Each was found because I re-checked results before relying on them, and each is described below.
+The project started as a replication of GLIMMER \parencite{glimmer2026}, a published study that weights a forecaster's mistakes in dangerous glucose ranges more heavily. The following sections explain how I got from there to here: the turns and dead ends, how I defined success, how I used generative AI, how I used feedback, and what remains before the Full Draft. The work product reports the results; this document is about how I reached them.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\linewidth]{figures/paper_fig2_three_axes.png}
-\caption{The three ways a forecast band can be honest or not: by situation, by patient, and by day.}
-\label{fig:axes}
-\end{figure}
+Two parts of the process are the ones I am proudest of. The first is a written research protocol, which I adopted in mid-October. Before any test runs, I write down the claim, how I will measure it, and what result counts as success. I record this in a hypothesis register kept in the project repository, and the bar for success cannot move after the test. The register now holds 85 hypotheses. Of these, 36 were not supported and five more were invalidated, and I kept every one, because a result that failed tells me as much about where to go next as one that worked.
+
+The second is catching my own errors. A shared random seed in my replication, test data leaking into an alarm threshold, and a group of patients whose treatment type had been coded wrong were all found because I re-checked results before relying on them, and each was corrected openly in the work log.
 
 \section{Navigation: How the Work Moved}
 
-This section follows the project from my choice of topic in early September to the research program I run now. It records the turns, the dead ends and the mistakes, because each one changed what I did next.
+This section follows the project from my choice of topic in early September to the research program I run now. It records the turns and the dead ends, because each one changed what I did next.
 
 \subsection{Starting Point and the GLIMMER Replication}
 
-In early September I sent Prof.\ Watson an idea document with two options. The first was to extend a study on predicting blood glucose for people with diabetes, which fit my Data Science with Machine Learning track. The second was a Zillow-like software product for the Israeli commercial real estate market, which was closer to my career goals but would have meant switching to the software track. I chose the first. Several of my friends have type 1 diabetes, and a model that forecasts glucose an hour ahead gives a person time to act before a high or a low.
+At the start of the semester I was debating between projects that would support my career path and projects I found interesting. I chose this one because I have a passion for it. Several of my friends have type 1 diabetes, and a model that forecasts glucose an hour ahead gives a person time to act before a high or a low.
 
-The first step was finding data. The standard dataset, OhioT1DM \parencite{marling2020ohio}, requires an access request, and mine went unanswered. Rather than wait, I switched on September 13 to AZT1D \parencite{azt1d2025}, a newer dataset of 25 patients. I later reached OhioT1DM through MetaboNet \parencite{metabonet2026}, a public collection of 14 diabetes datasets, and checked it row by row against AZT1D's own files before relying on it.
+The first step was finding data. The standard dataset, OhioT1DM \parencite{marling2020ohio}, requires an access request. I requested access, and the dataset's maintainer granted it about five days later, in mid-September. In the meantime I had started with AZT1D \parencite{azt1d2025}, a newer dataset of 25 patients. I also found OhioT1DM inside MetaboNet \parencite{metabonet2026}, a public collection of diabetes datasets, and I checked MetaboNet row by row against AZT1D's own files before relying on it.
 
-I began by replicating GLIMMER, a 2026 study from the group that built AZT1D. It trains forecasters to weight mistakes in dangerous glucose ranges more heavily, and it tunes that weighting for each patient. In my replication, the weighted models caught more dangerous events (the share caught rose from 0.507 to 0.722), but overall accuracy was worse.
+I began by replicating GLIMMER \parencite{glimmer2026}, a 2026 study from the group that built AZT1D. It trains forecasters to weight mistakes in dangerous glucose ranges more heavily, and it tunes that weighting for each patient. In my replication, the weighted models caught more dangerous events (the share caught rose from 0.507 to 0.722), but overall accuracy was worse.
 
-On September 15 I found a bug: each patient's weight search had started from the same random seed, so every search was identical. After the fix, the gain from per-patient tuning disappeared (a typical error of 41.12 mg/dL for the tuned model against 41.18 mg/dL for fixed weights). Since then I re-check results before relying on them. After my September 16 presentation, my professor suggested forecasting the whole glucose curve step by step. The curve came out nearly flat, because the model could not predict meals, so on September 19 I set this approach aside. I wrote that day that my next steps were unclear to me.
+Then I found a bug: each patient's weight search had started from the same random seed, so every search was identical. After the fix, the gain from per-patient tuning disappeared (a typical error of 41.12 mg/dL for the tuned model against 41.18 mg/dL for fixed weights). This taught me to dive deeper into whatever I analyze, rather than trusting a result at first sight. Since then I re-check results before relying on them.
+
+After my first presentation, Prof.\ Watson suggested forecasting the whole glucose curve step by step, which is called recursive forecasting. The model predicted the next 5 minutes, fed its own prediction back in as if it were real data, and repeated this to build the curve over the next several hours. To keep going on its own, the model had to predict every input together: insulin, meals and glucose. The curve came out as a nearly straight line, because the model always guessed that no meal was coming. Adding the time of day as a fixed input, since meals cluster at certain hours, did not help. When I gave the model the real logged meals instead of asking it to guess them, the curve improved and rose with the meal, but this was on one patient and only because the model was told the meals in advance. The approach could not predict meals, which is the part a person would need, so I set it aside. I wrote at the time that my next steps were unclear to me.
 
 \subsection{From Forecasting to Uncertainty}
 
-After submitting my Project Brief on September 26, I moved from improving the forecast to estimating how uncertain it is. I borrowed methods from other fields: GARCH \parencite{bollerslev1986garch} and EWMA, which track changing volatility in financial markets; the analog ensemble \parencite{dellemonache2013analog}, which builds a weather forecast from similar past situations; and conformal prediction \parencite{vovk2005alrw}, a statistical method that sizes the band from past errors. Each puts a band around the forecast, and a band that reaches a dangerous level acts as a warning.
+Building a better prediction model is a crowded space, with many groups competing on accuracy. I decided to expand into something more niche: the uncertainty around a forecast. I thought I had a better chance of finding a gap in the research there. So in late September I moved from improving the forecast to estimating how far to trust it.
 
-The bands failed my first test. Ordinary 80\% and 95\% bands raised alarms on 68\% to 100\% of safe readings. At the same false-alarm rate, the methods caught between 74\% and 76.5\% of dangerous readings, so none was clearly better. On September 28 I wrote in my journal that I did not think I could create meaningful insights without driving the false alarm rate up drastically.
-
-Instead of testing more methods, I looked at where the error comes from. More data would barely help (unlimited data of this kind would cut the error by about 2\%), the model did not degrade over time, and a simple alarm threshold did better than the bands. One map was more useful: the typical error was about 26 mg/dL when glucose was steady between 70 and 180 mg/dL, but 61 mg/dL during a fast rise above 250, and band coverage swung from 64\% to 95\% across these situations. The band was honest on average and dishonest in the situations that mattered. By my October 6 slides, these results had narrowed the work to two avenues.
-
-\subsection{Choosing One Direction}
-
-The first avenue gives each situation its own band. On October 4 I tested it on OhioT1DM, data it was never designed on, with the rule for success written down first. It held: the distance from the 80\% target fell by 41\%, 9 of 12 patients were closer, and the bands were 12\% narrower. A literature check the same day showed that this method already has a name, Mondrian conformal prediction \parencite{vovk2005alrw}, so I reframed the contribution as what the method reveals about glucose forecasts, not the method itself. Other checks that day showed the overall gain was small: the bands became more even across situations, but they did not catch more of the large errors.
-
-The second avenue followed Prof.\ Watson's feedback on my Project Brief and asked what makes a patient hard to predict. I tried an autoencoder (a network that compresses two hours of readings into a few numbers) and a measure of how irregular a glucose record is. Neither showed much beyond the glucose level itself, and on October 6 I closed this line. The details are in the section on feedback. On October 7, at Prof.\ Watson's suggestion, I drew the autoencoder's output with t-SNE, a method that draws many-dimensional data in two dimensions. It showed that the autoencoder had learned level and trend (Figure~\ref{fig:tsne}). This matched the grouping behind the first avenue, but it felt obvious.
+The idea was to put a band around each forecast and use it as a warning. If the band's edge crossed into the dangerous range, meaning its lower edge fell below 70 mg/dL or its upper edge rose above 180 mg/dL, it triggered a warning (Figure~\ref{fig:alarm}). A wide band warns often, and a narrow band warns rarely.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\linewidth]{figures/tsne_situation.png}
-\caption{The autoencoder's summary of each two-hour window, drawn in two dimensions and colored by current glucose level, 30-minute trend, and both together. Windows sort by level and then by trend, the same structure as the situation grid.}
-\label{fig:tsne}
+\includegraphics[width=\linewidth]{figures/alarm_garch_patient.png}
+\caption{One patient's day: the actual glucose, the GARCH band, and the warnings it raised. Black ticks are correct warnings and grey ticks are false alarms.}
+\label{fig:alarm}
 \end{figure}
 
-My October 6 slides for my second reader, Volkan, put the doubt plainly: ``My concern is that this may not be a valuable avenue. The average stays about the same, and it does not catch more of the large errors.'' At our October 8 meeting, Volkan said the path was good and that it was critical for the findings to have value. That comment framed the next two weeks, as I describe under Feedback.
+To judge the forecasts and their warnings I used the Clarke error grid \parencite{clarke1987}, a standard chart that sorts glucose estimates by how much harm an error could cause (Figure~\ref{fig:clarke}). Each forecast is one point, with the actual glucose on one axis and the forecast on the other. Zone A is clinically accurate. Zone B is off but harmless. Zone C would lead to unnecessary treatment. Zone D is a dangerous miss: the person is actually low or high, but the forecast says normal. Zone E points the wrong way, calling a low a high or the reverse. Throughout this document, dangerous readings means real lows and highs, and zone D is what a warning system must avoid.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/clarke_explainer.png}
+\caption{The Clarke error grid, with zones A to E labelled. Each dot is one 60-minute forecast for one AZT1D patient, placed by the actual glucose and the forecast.}
+\label{fig:clarke}
+\end{figure}
+
+I borrowed band methods from other fields: GARCH \parencite{bollerslev1986garch}, which tracks changing volatility in financial markets; the analog ensemble \parencite{dellemonache2013analog}, which builds a weather forecast from similar past situations; and conformal prediction \parencite{vovk2005alrw}, a statistical method that sizes the band from past errors.
+
+The bands failed my first test. Ordinary 80\% and 95\% bands raised alarms on 68\% to 100\% of safe readings. When I compared the methods at the same false-alarm rate, they caught between 74\% and 76.5\% of dangerous readings, so none was clearly better (Figure~\ref{fig:tradeoff}). I then added three more methods: EWMA, another volatility tracker from finance; locally weighted conformal prediction, which sizes the band from errors on similar windows; and time-of-day bands, which use past errors at the same hour. This did not change the picture: all six alarm curves were nearly identical.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/methods_tradeoff_21_9.png}
+\caption{The share of real dangerous readings that set off the alarm against the share of safe readings that set it off, for all danger, lows and highs. Every method lands on nearly the same curve.}
+\label{fig:tradeoff}
+\end{figure}
+
+In late September I looked at what widening the band actually did on the Clarke grid (Figure~\ref{fig:garchzones}). Making the GARCH band wider pushed more forecasts into zone C, the false alarms, from about 0.1\% to 2.5\%, while zone D, the dangerous misses, barely dropped. A wider band mostly added alarms. I wrote in my journal: ``I don't think that I would be able to actually create meaningful insights without increasing the false hyper/hypoglycemic rates drastically.''
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/garch_band_zones.png}
+\caption{Widening the GARCH band from 55\% to 90\% coverage. Left: the share of forecasts in Clarke zones A and B. Right: the share in zones C, D and E. Zone C rises from about 0.1\% to 2.5\% while zone D falls only slightly. Dotted lines are the plain forecast with no band.}
+\label{fig:garchzones}
+\end{figure}
+
+Instead of testing more methods, I then looked at where the error came from. More data would barely help, and the model did not degrade over time. What did stand out was that the band was honest on average but not in every situation, which pointed to the direction I took next.
+
+\subsection{Choosing One Direction}
+
+The direction I am pursuing is a situation-aware band. A situation is the current glucose level plus the direction it has moved over the last 30 minutes, for example ``between 70 and 180 mg/dL and falling fast.'' Each situation gets its own band width, learned from past errors in that situation. Statisticians call this kind of grouped calibration Mondrian conformal prediction \parencite{vovk2005alrw}.
+
+It made the bands far more consistent across situations (Figure~\ref{fig:situation}). Pooled over 11 studies, the standard GARCH band's coverage ranged from 62\% to 91\% across the 25 situations, while the situation-aware band ranged from 72\% to 82\%, and mostly from 78\% to 82\%. It also held on data it was never designed on. On OhioT1DM, with the rule for success written down first, the distance from the 80\% target fell by 41\%, 9 of 12 patients were closer, and the bands were 12\% narrower. It did not catch more of the large errors, so the gain is in honesty, not in catching more danger.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/situation_vs_garch.png}
+\caption{The share of real values inside the 80\% band in each situation, for a standard GARCH band and the situation-aware band, pooled over 11 studies. A value of 80 is right.}
+\label{fig:situation}
+\end{figure}
+
+A second avenue came from Prof.\ Watson's written feedback on my early proposal, which suggested approximate entropy, autoencoders, and separating changes driven by meals and insulin from subtler ones. In early October I tested the first two. Sample entropy added little, and the autoencoder mostly found glucose level and trend again, the same structure as the situations I was already using. Neither showed anything new, so I closed this line. The section on feedback describes each test.
 
 \subsection{From Exploration to a Research Program}
 
-By mid-October I had many small results and no clear way to know which were real. On October 12 I tried a simulation as an answer key: simulated patients with sensor noise I planted myself, so the true answer was known. The situation bands did worse than GARCH there, but the simulated patients were too easy to forecast (a typical error of 11 to 16 mg/dL, against 31 to 39 mg/dL on real patients), so the test could not settle the question. I left a harder simulator for future work.
+By mid-October I had many small results and no clear way to know which were real. I tried a simulation as an answer key, with simulated patients whose true answer I knew. The simulator produced patients that were too easy to forecast (a typical error of 11 to 16 mg/dL, against 31 to 39 mg/dL on real patients), so it could not answer my question, and I decided to drop the simulated patients.
 
-On October 17 I wrote the research protocol (work/RESEARCH\_PROTOCOL.md). Its rules are set out in the next section. The same day I let Claude Code run pre-registered tests without checking in with me for each one, since the rules were now written down.
-
-In plain words, the program turned the first avenue into the core of a paper and answered my doubt about its value. The situation bands stayed better calibrated than GARCH in all eight outside studies. I then checked how uneven coverage looks from chance alone, and found that most of the real problem left over was between patients. A per-patient scale, learned from errors seen an hour later while the band is in use, removed it. What makes a patient hard to forecast turned out to be mostly how fast their glucose moves. The protocol also forced cuts. After the fifth design of a band meant to be honest for each patient and each situation at once, I stopped tuning and reported all five.
-
-\subsection{Setbacks and How I Handled Them}
-
-\subsubsection{The Shared Seed}
-The seed bug of September 15 surfaced while I was checking results that Claude Code had produced, and it erased the personalization gain. Since then every patient and every ensemble member gets its own seed, and this rule is written into the project instructions the AI reads.
-
-\subsubsection{Test Data in the Alarm Thresholds}
-On October 4 the first run of an alarm test tuned its thresholds on the test period, the data meant only for scoring. I retuned on the validation period, and the band alarm still lost. The protocol now lists threshold choice beside fitting and calibration as places test data may never enter.
-
-\subsubsection{A Missing Label That Flipped a Conclusion}
-On October 17 I concluded that closed-loop systems made no difference to forecast difficulty. On October 18 a check of the labels behind that result found that 12 of 13 BrisT1D patients had no device label in MetaboNet and had been coded as not closed loop, although several use closed-loop pumps. After correcting them, closed-loop patients were 5.6\% to 6.5\% harder to forecast once glucose variability was accounted for, and the verdict changed. The difference disappeared once I accounted for how fast each patient's glucose moves. I logged this as a correction entry rather than editing the old one, so both versions stay visible.
-
-\subsubsection{An Unfair Baseline}
-On October 17 a first comparison used a GARCH band whose scale was off by a constant, and a combined GARCH band that became unstable on HUPA-UCM \parencite{hupa2024}. Beating a broken baseline would have proved nothing, so I fixed both baselines on the validation period and left the tested methods untouched. The log records this as a fix to the baseline, not to the method being tested.
-
-\subsubsection{The Missing Data File}
-Around October 18 the 1.3 GB MetaboNet file disappeared from my Downloads folder. A training run stopped after the 25 AZT1D patients, and predictions saved only at the end were lost. I changed the script to save as it goes and skip finished work, and the AZT1D and HUPA-UCM runs finished on October 20. Two optional checks stay blocked until I restore the file (see Next Steps). \todo{TO FILL: whether the MetaboNet file has been restored, and where raw data will live from now on}
+Instead, I moved from exploration to structured testing on far more data: eight more public studies from MetaboNet, held out from design and used only to check the methods, with a rule for success written before each test. The section on the use of generative AI describes the protocol behind that testing.
 
 \subsection{Planning: The Timeline I Set and What Happened}
 
-On October 4 I sat down to map the fixed points of the course. I drew a square for each remaining week on my iPad, with its deadlines and the deliverables I set for myself, and filled in the first four (Figure~\ref{fig:ipadplan}). I also drew a task list for that day (Figure~\ref{fig:ipadtasks}). The handwriting was too slow and could not be read by AI, so I rebuilt it as a Notion Gantt. The course deadlines on it are the Second Reader meeting (October 8), the Midterm (October 31), the Second Presentation, a go or no-go decision (November 20), and the Full Draft (December 11). Table~\ref{tab:planactual} compares the October 4 plan with what happened.
+At first I kept checklists in Notion. They worked for single tasks, but they were not good enough to see the whole semester at once. In early October I drew a week-by-week plan by hand on my iPad: a square for each remaining week, with its course deadlines and the deliverables I set for myself (Figure~\ref{fig:ipadplan}), and a task list for that day (Figure~\ref{fig:ipadtasks}). I then realized that handwriting was slow and could not be searched or read by AI, so I moved the plan into a Gantt chart in Notion. Its fixed points are my second-reader meeting, the Midterm at the end of October, the Second Presentation with a go or no-go decision in late November, and the Full Draft in mid-December. Table~\ref{tab:planactual} compares the plan with what happened.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/ipad_week_plan_oct4.png}
-\caption{My hand-drawn plan from October 4, 2026: one square per remaining week, with course deadlines and my own deliverables for the first four weeks.}
+\caption{My hand-drawn plan from early October: one square per remaining week, with course deadlines and my own deliverables for the first four weeks.}
 \label{fig:ipadplan}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\linewidth]{figures/ipad_task_list_oct4.png}
-\caption{My hand-drawn task list for October 4, 2026, the day I reorganized the project.}
+\caption{My hand-drawn task list from the same day in early October, when I reorganized the project.}
 \label{fig:ipadtasks}
 \end{figure}
 
 \begin{table}[htbp]
-\caption{Deliverables I Planned on October 4 Compared With What Happened}
+\caption{Deliverables I Planned in Early October Compared With What Happened}
 \label{tab:planactual}
 \small
 \begin{tabular}{p{0.12\linewidth}p{0.38\linewidth}p{0.42\linewidth}}
 \hline
 Week of & Planned & What happened \\
 \hline
-Oct 5 & Autoencoder and one more theory tested; slides; structured work process; documentation plan; first document of synthesized materials & Autoencoder and entropy tested, then closed on October 6; slides ready for the October 8 meeting \\
-Oct 12 & Process documentation pieces organized; a clear direction (``what's the name of the paper?''); minimum validation & Direction and validation went beyond the plan: the research protocol and tests on 11 studies; process pieces not yet organized \\
-Oct 17 & Finished process documentation; academic pieces organized & A paper draft built from the findings on October 17; research and corrections continued; the data file loss stopped one run; process documentation slipped \\
-Oct 24 & First write-up with clear findings; organized process documentation & Organization map and Midterm structure on October 25; this document in progress \\
+Oct 5 & Autoencoder and one more theory tested; slides; structured work process; documentation plan; first document of synthesized materials & Autoencoder and entropy tested, then closed; slides ready for my second-reader meeting \\
+Oct 12 & Process documentation pieces organized; a clear direction (``what's the name of the paper?''); minimum validation & Direction and validation went beyond the plan: a written research protocol and tests on 11 studies; process pieces not yet organized \\
+Oct 17 & Finished process documentation; academic pieces organized & A paper draft built from the findings; research and corrections continued; a lost data file stopped one run; process documentation slipped \\
+Oct 24 & First write-up with clear findings; organized process documentation & Organization map and Midterm structure set; this process documentation drafted in LaTeX \\
 \hline
 \end{tabular}
 \end{table}
 
-The pattern is clear. The research ran ahead of the plan, and the documentation fell behind it. \todo{TO FILL: how I plan to rebalance research and writing between now and the December 11 Full Draft}
+The pattern is clear. The research ran ahead of the plan, and the documentation fell behind it. \todo{TO FILL: how I plan to rebalance research and writing between now and the Full Draft}
 
 \subsection{Working Habits and Tools}
 
-I block 7:30 to 9:30am for the capstone. On October 3 I noticed that I skipped this window on certain days, and I listed three options: accept three days a week, wake up earlier on Wednesdays, or move those sessions to the evening. I chose the earlier wake-up, with the evening as a fallback and three days as a last resort. On October 12 I wrote that the morning block had let me push forward at a consistent rate. On September 22 I realized that Prof.\ Watson had wanted something different from what I had done, so I decided to follow Slack more closely, with a daily reminder.
+In late September I realized that Prof.\ Watson had wanted something different from what I had done, because I had missed it on Slack. I decided to follow Slack more closely, with a daily reminder.
 
-On October 4 I reorganized my files into one folder per week, each with a short summary of its hypotheses, findings and open items. My Notion journal holds dated reflections from September 10 onward, and the Gantt holds the plan. Code, results and figures are backed up to a public GitHub repository, with every unit of work in a work log. On October 3 I wrote that my failed experiments would be as much a part of the capstone as the results that work, and these records exist so that the failures stay visible.
+I block 7:30 to 9:30am for the capstone. In early October I noticed that I skipped this block on some days, and I listed three options: accept three days a week, wake up earlier on those days, or move those sessions to the evening. I chose waking earlier, with the evening as a fallback and three days as a last resort. Around the same time I reorganized my files into one folder per week, each with a short summary of its hypotheses, findings and open items, and I wrote that my failed experiments would be as much a part of the capstone as the results that work. By mid-October I wrote that the morning block had let me push forward at a consistent rate.
 
-\section{Outcome Analysis: Defining Success Before Running}
+My Notion journal holds dated reflections from early September onward, and the Gantt chart holds the plan. Code, results and figures are backed up to a public GitHub repository, with every unit of work recorded in a work log. These records exist so that the failures stay visible, not only the results that worked.
 
-From early October I wrote down a rule for success before each test. The seed bug had shown me how easily a result can look like a finding when it is not one. On October 17 I made this stricter with the research protocol, so that every test for the paper had a numeric rule saved before it ran. This section sets out the success criteria for this deliverable, the rules I used to decide whether a test passed, and an honest count of how the tests turned out.
+\section{Outcome Analysis}
 
-\subsection{Success Criteria for This Deliverable}
+When I started in September, I thought success would mean a better forecast, or better warnings before a low or a high. By late September, as described above, I doubted that was possible, and the doubt held up. At a matched rate of false alarms, every band I tried caught about the same share of dangerous readings (Figure~\ref{fig:tradeoff}). So I changed what I meant by success. For this stage of the capstone, success means analyzing the data in depth, coming away with a clearer understanding of it, and producing findings that can be compiled into a scientific paper and submitted to a conference.
 
-I propose four criteria for judging the work so far. Each is something an outside reader can check. \todo{TO CONFIRM: these four success criteria}
+\subsection{What Success Means for This Stage}
+
+I judge the work so far against four criteria. \todo{TO CONFIRM: these four success criteria}
 
 \begin{enumerate}
-\item \textbf{The main claim holds on data never used to design it.} Met. The main claim is that sizing the band separately for each situation keeps it close to its stated coverage in each situation, not just on average. I tested it on eight MetaboNet studies that I had not used while building the method, and it held in all eight (see the worked example below).
-\item \textbf{Every number traces to a saved result file.} Mostly met. The project rules I wrote for the AI say to report numbers only from outputs shown in a session or from saved result files, and most rows of the hypothesis register link to the result file behind them. A few rows do not, and I have not yet checked every number in the paper draft by hand, so this needs a final audit before the Full Draft.
-\item \textbf{Failed tests are reported, not hidden.} Met. Every test stays in the hypothesis register whatever its outcome. The paper supplement copies these rows, but it was made on October 17 and does not yet include the tests added after that, so I need to update it.
-\item \textbf{The method beats strong standard baselines, not weak ones.} Partly met. I compared my band with two standard methods. The first uses deep ensembles \parencite{lakshminarayanan2017ensembles}, several networks trained with different random seeds whose disagreement sets the band. The second is a network that predicts its own band and is then corrected with conformal prediction \parencite{romano2019cqr}. My band was more even across situations and across patients on the two datasets where the comparison could run; the third was blocked by the missing data file. On one dataset the second method gave a slightly better combined score of width and misses, and a richer version of it produced sharper bands than mine, though less even ones. So my method does not win on every measure.
+\item \textbf{Understand the data and where forecast error comes from.} I should be able to say, in plain terms, when and for whom the forecast is wrong, and why.
+\item \textbf{Find a result that holds beyond the data it was designed on.} A pattern found on three studies is only a lead until it holds on studies I never used to build the method.
+\item \textbf{Have findings strong and clear enough to anchor a conference paper.} At least one result should be clear enough to state in one sentence and strong enough to defend in front of reviewers.
+\item \textbf{Keep failed ideas on record.} The ideas that did not work shape the paper as much as the ones that did, because they show where the limits are and how many things I tried.
 \end{enumerate}
 
-\subsection{Pre-Registration and Evidence Tiers}
+\subsection{How the Work Measures Up}
 
-Pre-registration means writing down the rule for success before running the test. For every test in the paper, I added a row to the hypothesis register with the claim, the measure, the threshold that counts as success and the data it would run on. I then committed that row to version control (git), which records the time of every change. Because the rule is time-stamped before the result, anyone can check that I did not choose the threshold after seeing the answer.
+\textit{Understanding the data.} This criterion is mostly met. I now know that a standard band is honest on average but wrong in specific situations. On AZT1D, an 80\% GARCH band covered as little as 64\% of readings when glucose was between 70 and 120 mg/dL and rising fast, and as much as 95\% when it was under 70 and falling fast. I also learned what makes a patient hard to forecast. It is mostly how fast their glucose moves: across 215 patients, the spread of 30-minute changes explains 59\% of the differences between patients when each study is left out of the fit and predicted. Children and closed-loop users are harder to forecast mainly because their glucose moves faster. Finally, I learned what cannot be predicted. Grouping by situation and patient explains at most 15\% of how large any single error will be, so most of the error size looks like noise at this horizon.
 
-The rules never moved after a run. If a test failed and I thought of a better design, I wrote it up as a new hypothesis and labelled it as a second, third, fourth or fifth try. A line of work stops after two pre-registered failures in a row with no new mechanism to test, and I do not keep tuning a method until it wins. One verdict did change, for a different reason: the closed-loop test described under Setbacks failed, then passed after the labels were corrected. The register keeps both versions and the reason.
+\textit{A result that holds beyond its design data.} This criterion is met for two results. The first is the situation-aware band, sized separately for each of 25 situations. It was more even across situations than GARCH in every study I tested: the three studies used to design it and all eight outside studies, which cover 153 patients, children and adults, closed-loop and other pumps, and three sensor brands \parencite{metabonet2026}. In the outside studies, its average distance from 80\% within a situation was 2.25 to 4.19 percentage points, against 5.48 to 6.76 for GARCH (the pooled picture is in Figure~\ref{fig:situation}). The second result is a per-patient adjustment. After the situation fix, most of the unevenness left over was between patients. A single scale for each patient, learned while the band is in use from errors that become known an hour later, removed that unevenness in all eight outside studies, and the combined score of band width and misses stayed as good or within half a percent. On the three design studies it also works for a new patient with no calibration data of their own.
 
-The protocol sorts results into four evidence tiers, which decide where a result can appear in the paper:
+\textit{Findings strong enough for a paper.} This criterion is partly met. I have one clear claim: forecast bands should be judged by situation, by patient and by day, and two simple fixes make them honest on all three. The claim holds on outside data and for a second forecaster. But several questions are still open. On OhioT1DM a small amount of unevenness across situations remains even with a second training seed, so it is probably real. The per-patient scale costs some evenness across situations, and the better version, one scale per patient per glucose level, needs records of several weeks. When the forecaster itself is trained on other patients, the situation results weaken on two of the three design studies. The comparison with standard methods, deep ensembles \parencite{lakshminarayanan2017ensembles} and a network that predicts its own band \parencite{romano2019cqr}, ran on only two datasets. My band was more even on both, but on one of them the second method had a slightly better combined score of width and misses. Most forecasters were trained with one seed per patient, so some of these results are preliminary. A conference paper may need more: the missing comparison, more seeds on the outside studies, and a clearer argument for why honest bands matter to a patient, since nothing here measures a clinical outcome.
 
-\begin{itemize}
-\item \textbf{Look:} a picture or a number with no rule set beforehand. At most a motivating figure.
-\item \textbf{Preliminary:} pre-registered, but on one dataset or one random seed. Discussion only, as a lead.
-\item \textbf{Replicated:} holds on at least two independent datasets, and a confidence interval built by resampling patients excludes no effect. Results section.
-\item \textbf{Paper-grade:} replicated, and also holds on outside data never used to design the method, and survives changes to the main analysis choices. Only these results go in the abstract.
-\end{itemize}
-
-A worked example shows how this played out. On October 17 at 9:01pm I committed the rule for the external test: across eight outside studies of about 20 patients each, the situation bands had to be at least 20\% more even across situations than GARCH in at least six of the eight. Here ``even across situations'' means how far, on average, the share of readings inside an 80\% band is from 80\% within each situation. The result was committed at 9:38pm. The situation bands passed in all eight studies, covering 153 patients. Their average gap was 2.25 to 4.19 percentage points, against 5.48 to 6.76 for GARCH (Figure~\ref{fig:external}). This moved the main finding to the paper-grade tier.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\linewidth]{figures/h54_panel_external.png}
-\caption{External test on eight MetaboNet studies that were never used to design the methods. Left: how far each method's 80\% band is from 80\% within each situation (lower is better). Middle: how uneven the band is across patients beyond what chance alone would produce. Right: a combined score of band width and misses (lower is better).}
-\label{fig:external}
-\end{figure}
-
-\subsection{Self-Assessment}
-
-On October 17 and 18 I pre-registered 38 tests for the paper. One was confirmed, 19 were supported, 17 were not supported, and one is still being tested. Several of the supported results carry a qualification: two passed on two of three datasets, one passed only on the two datasets that were available, one depends on an assumption about sensor error, and one passed only after the label correction. I count the 17 failures as part of the work. They showed me that some fixes for one kind of unevenness make another kind worse.
-
-The evidence is still weak in three places. First, on OhioT1DM the situation bands keep a small amount of unevenness across situations beyond chance. A second training seed gave the same result, so this is likely real. Second, most forecasters were trained with one seed per patient, and the outside studies were not retrained with a second seed. Third, the missing MetaboNet file blocks two optional checks.
-
-There is also a question about pace. I pre-registered 38 tests in two days, and ran most of them in that time, because Claude Code carried out each round against the protocol. \todo{TO FILL: how I reviewed these rounds and what I checked myself before accepting a verdict}
-
-\section{Modeling Professional Process}
-
-Good practice in machine learning for health has a few common parts. Studies pre-register their analysis so that thresholds are not chosen after the fact \parencite{nosek2018preregistration}. They test a model on outside data, since a model that works on the patients it was built on often does worse on new ones \parencite{collins2024tripodai}. They compare against strong, standard baselines rather than weak ones. They report null results and share code.
-
-This project followed most of these. Rules were committed before each run, and the main claim was tested on eight outside studies. The methods were called by their standard names, such as Mondrian conformal prediction \parencite{vovk2005alrw} and adaptive conformal inference, which adjusts the band as new errors come in \parencite{gibbs2021aci}. Every null result stays in the register, and the code, results and figures are in a public repository.
-
-The project departed from usual practice in four ways. First, pre-registration lived in my own repository, not in a public registry. Git time stamps give a weaker but checkable version. Second, Claude Code wrote most of the code, which the next section addresses. Third, I trained one forecaster per patient, following GLIMMER, while a deployed product would more likely use one shared model. I tested a shared model on patients it had never seen. The patient-level fix still held, but the situation results weakened on two of three datasets. Fourth, there is no clinical outcome: the work measures whether bands are honest, not whether they help patients make better decisions. That would need a clinical study, which is beyond a capstone.
+\textit{Failed ideas on record.} This criterion is met. Of the 85 ideas in the register, 41 failed or were later shown to be wrong. They stay in the register, and several shape the paper directly: bands do not make better alarms than a tuned threshold, the autoencoder learned little beyond level and trend, and five designs for a band that is honest by patient and by situation at once were all reported, not only the best one.
 
 \section{Use of Generative AI}
 
-Claude Code, an AI coding assistant made by Anthropic, writes most of my code. I decide what to test and check what comes back. That split has held since my first week, when I wrote in my journal that I was working ``more as a validator than anything else'' while I replicated GLIMMER. What changed over the semester is how much the assistant does on its own. Until October 17, it asked me before any run longer than 10 minutes. On October 17 I let it work on its own under the research protocol, with no check-ins and no limit on run time, and it has since tested 38 hypotheses this way. The checks below matter more now than they did in September.
+Claude Code, an AI coding assistant made by Anthropic, writes most of my code. I decide what to test and check what comes back. That split has held since my first week, when I wrote in my journal that I was working ``more as a validator than anything else'' while I replicated GLIMMER. What changed over the semester is how much the assistant does on its own. Until mid-October, it asked me before any run longer than 10 minutes. Then I wrote a research protocol and let the assistant work under it with no check-ins. The protocol is what makes that safe, so I describe it first.
+
+\subsection{The Research Protocol}
+
+The protocol, saved in the project repository, turns every idea into a test with the same steps.
+
+\begin{enumerate}
+\item \textbf{Every idea becomes a hypothesis.} It is written as one sentence about something that can be measured. ``Does the patient explain more of the forecast error than the situation?'' qualifies. ``What drives uncertainty?'' does not.
+\item \textbf{The rule for success is written down and saved before any test runs.} The hypothesis goes into the register with the measure, the threshold that counts as success and the data it will use. The entry is saved in version control (git), which time-stamps every change, so anyone can check that the rule came before the result. The rule cannot move after the run. If I think of a better design after a failure, it becomes a new hypothesis, labelled as a second or third try.
+\item \textbf{The AI runs the smallest test that can answer it.} It reuses saved models and results wherever it can and trains only what the question needs.
+\item \textbf{The result is judged only against the saved rule.} The verdict is supported, not supported or inconclusive. Anything noticed afterwards is labelled as noticed afterwards.
+\item \textbf{Failed ideas stay in the register.} Nothing is deleted. A line of work stops after two failures in a row that suggest nothing new to test, and a method is never tuned until it wins. If it takes many tries, the number of tries is reported.
+\item \textbf{A finding must hold on studies never used to build the method before it counts.} A result on one dataset is a lead. A result that holds on two or more datasets, and still holds when patients are resampled, is a finding. Only a result that also holds on the eight outside studies can be a main result of the paper.
+\item \textbf{Everything is logged.} Each unit of work gets an entry in a work log with links to the code and result files behind it, and each week has a short summary of what was found and what is still open.
+\end{enumerate}
+
+The protocol also carries the statistical rules I had learned the hard way: the patient, not the reading, is the unit of analysis; test data stays out of fitting and calibration; every model and patient gets its own random seed; and methods are compared at a matched width or a matched false-alarm rate, never by which one is wider. Since then the assistant has run dozens of tests this way. Writing the rules down is what made it safe to let it work without asking me each time.
 
 \subsection{What the AI Did and What I Decided}
 
-The assistant wrote the data loaders, the forecasting models, the uncertainty methods and the scripts that score them. It ran the training jobs, saved the results to files and wrote a first reading of each result. I chose the topic, the datasets and the questions, I set what counts as success, and I made the calls to change direction, such as closing the autoencoder line on October 6. Table~\ref{tab:ai-roles} summarizes the split.
+The assistant wrote the data loaders, the forecasting models, the uncertainty methods and the scripts that score them. It ran the training jobs, saved the results to files and wrote a first reading of each result. I chose the topic, the datasets and the questions, I set what counts as success, and I made the calls to change direction, such as closing the autoencoder line in early October. Table~\ref{tab:ai-roles} summarizes the split.
 
 \begin{table}[htbp]
 \caption{Who Did What in the Project}
@@ -187,10 +191,10 @@ The assistant wrote the data loaders, the forecasting models, the uncertainty me
 \hline
 Task & Claude Code & Me \\
 \hline
-Choosing questions & Proposes next questions under the protocol (since October 17) & Chose the topic, the datasets and every change of direction \\
-Defining success & Writes the rule into the register before a run & Set the protocol that requires a rule before every run \\
-Writing code & Wrote most of the code & Reviewed it and asked for checks \\
-Running analyses & Ran training jobs and saved results & Approved long runs until October 17 \\
+Choosing questions & Proposes next questions under the protocol (since mid-October) & Chose the topic, the datasets and every change of direction \\
+Defining success & Writes the rule into the register before a run & Wrote the protocol that requires a rule before every run \\
+Writing code & Wrote most of the code & Read through all of it and asked for checks \\
+Running analyses & Ran training jobs and saved results & Approved long runs until mid-October \\
 Judging results & Gives a first verdict against the rule & Read the figures and made the final call \\
 Keeping records & Writes work log entries & Daily summaries and the Notion journal \\
 \hline
@@ -199,80 +203,96 @@ Keeping records & Writes work log entries & Daily summaries and the Notion journ
 
 \subsection{How I Checked the AI's Work}
 
-An assistant that writes code quickly can also produce wrong results quickly, and a wrong result can look convincing. I relied on four safeguards beyond the pre-registration described above. First, I wrote the rules the assistant works under into a file called \texttt{CLAUDE.md}, which it reads at the start of every session. Second, every number in my writing must come from an output shown in a session or from a saved result file. Third, the work log records every unit of work, and a mistake is fixed with a new correction entry that names the entry it corrects, rather than by rewriting the old one. Fourth, \texttt{CLAUDE.md} holds a list of traps already hit: a shared random seed, test data leaking into fitting, and one patient making up 53\% of the readings in a pooled dataset. It also requires that results from one seed or five patients be called preliminary. These rules apply to baselines too, which is why the unfair GARCH baseline was fixed rather than beaten.
-
-\subsection{Annotated Examples}
-
-\subsubsection{The Seed Bug}
-
-\textit{What happened.} Before the September 15 fix, per-patient tuning seemed to lower the typical error from 41.18 to 37.44 mg/dL. After each patient got its own seed, the error was 41.12, and the gain was gone.
-
-\textit{Commentary.} The code ran without errors and the result looked like a success. It was simply wrong. This is why ``each patient needs its own seed'' is the first item on the traps list. \todo{TO FILL: how I noticed the seed bug, and how it felt to lose the result}
-
-\subsubsection{The BrisT1D Label Correction}
-
-\textit{What happened.} The closed-loop result described under Setbacks flipped because of 12 missing device labels, not because of a coding error.
-
-\textit{Commentary.} The error was in the data labels, which had been taken as given. The check ran during the assistant's autonomous work. \todo{TO FILL: who spotted the missing labels, and what it taught me about trusting dataset labels}
-
-\subsubsection{Stopping After Five Designs}
-
-\textit{What happened.} In mid-October I wanted a band that is honest for each patient and for each situation at the same time. The assistant tried one design, then another, and each try was recorded in the register as the second, third, fourth or fifth design. On October 18 the fifth design failed its rule, and tuning stopped there, as the protocol requires.
-
-\textit{Commentary.} With an assistant, a sixth and seventh try cost almost nothing, and that is the risk: with enough tries, a method will beat a baseline by chance. Reporting the number of tries keeps the claim honest. \todo{TO FILL: whether I was tempted to continue, and why stopping felt right or wrong}
+An assistant that writes code quickly can also produce wrong results quickly, and a wrong result can look convincing. My first check is simple: I read through all the code the assistant writes. I do not accept a result from code I have not read. Beyond that, I relied on four safeguards on top of the protocol. First, I wrote the rules the assistant works under into a file called \texttt{CLAUDE.md}, which it reads at the start of every session. Second, every number in my writing must come from an output shown in a session or from a saved result file. Third, the work log records every unit of work, and a mistake is fixed with a new correction entry that names the entry it corrects, rather than by rewriting the old one. Fourth, \texttt{CLAUDE.md} holds a list of traps already hit: a shared random seed, test data leaking into fitting, and one patient making up 53\% of the readings in a pooled dataset. It also requires that results from one seed or five patients be called preliminary. These rules apply to baselines too. In mid-October a first run showed that the GARCH band's scale was off by a constant, which made GARCH look worse than it is, so it was rescaled on validation data before any comparison, rather than beaten in its weak form. \todo{TO FILL: how I read the code in practice, for example what I look for first and one thing reading it caught}
 
 \section{Feedback and How I Used It}
 
-Prof.\ Watson's feedback on the Project Brief made three research suggestions, and I tested each one. He suggested approximate entropy \parencite{pincus1991apen} to capture major shifts. I tested sample entropy, a close relative that measures how irregular a glucose record is \parencite{richman2000sampen}. It improved the prediction of a patient's forecast error by 9\% beyond how variable their glucose is, short of the 15\% I had set in advance. He also suggested autoencoders. Mine did not reveal anything beyond glucose level, trend and variability, which is why I closed that line on October 6. When I returned to it on October 17, glucose level and trend explained 87\% of what the autoencoder kept, and the small remainder did not help predict how wrong a forecast would be. Finally, he noted that most major changes come from eating and insulin, and that subtler drivers would be worth knowing about. For new patients, meals and insulin explained almost none of that remainder. The subtler driver turned out to be how fast a patient's glucose moves, which explains more than half of why some patients are harder to forecast than others.
+Prof.\ Watson's written feedback on my early proposal made three research suggestions. I treated each one as a question to test, with a rule for success written down first. Below, each suggestion is followed by what I did and what it showed.
 
-Volkan's comment on October 8, that the findings must have value, matched the doubt I had written on my own slide (quoted in the Navigation section). In the weeks after, I wrote the protocol so that no finding counts as a main result until it holds on studies never used to design it. \todo{TO FILL: how Volkan's comment on value changed what I chose to test in the week of October 12, in my own words}
+\subsection{Approximate Entropy to Model Major Shifts}
 
+\textit{The suggestion.} Prof.\ Watson suggested exploring approximate entropy \parencite{pincus1991apen}, a measure of how irregular a series is, to model the major shifts in a patient's glucose.
+
+\textit{What I did.} In early October I tested sample entropy \parencite{richman2000sampen}, a close relative of approximate entropy that is less sensitive to the length of the record. I asked whether a patient's sample entropy, measured on the first part of their data, could predict how large their forecast errors would be later, beyond what the plain spread of their glucose already predicts. Before running, I set the rule that the measure had to cut the prediction error by at least 15\%.
+
+\textit{What it showed.} Sample entropy added only a little: 9\% beyond how variable a patient's glucose is, short of the 15\% I had set. This was on the 25 AZT1D patients with one training seed, so it is preliminary. I recorded it as a hint, not a finding, and did not build on it.
+
+\subsection{Autoencoders}
+
+\textit{The suggestion.} Prof.\ Watson also suggested autoencoders, networks that compress an input into a few numbers and then rebuild it, so that the few numbers act as a summary.
+
+\textit{What I did.} I trained an autoencoder that compresses two hours of readings into a short summary, first on AZT1D and then on HUPA-UCM \parencite{hupa2024}. I first drew the summaries with PCA, a method that keeps the directions along which the data varies most. Then, at Prof.\ Watson's suggestion, I drew them with t-SNE instead, a method that places similar points close together on a flat map and so shows groups that PCA can hide. I also tried sizing the bands by groups learned from the summaries instead of by my hand-drawn situation grid.
+
+\textit{What it showed.} The autoencoders mostly captured glucose level and direction. With PCA, the main direction of the summary tracked current glucose almost exactly. The t-SNE maps sorted the windows by current level and then by trend, the same structure as the situation grid I was already using (Figure~\ref{fig:tsne}). Bands built from the learned groups did no better than the hand-drawn grid. Because the autoencoder showed nothing beyond level and trend, I closed this line in early October. When I returned to it in mid-October with a stricter test, level and trend explained 87\% of what the autoencoder kept, which confirmed that decision.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/tsne_level_trend_azt1d.png}
+\caption{The autoencoder learned glucose level and direction. Each dot is one two-hour AZT1D window on a t-SNE map, coloured by its current glucose level (left) and by its 30-minute trend (right).}
+\label{fig:tsne}
+\end{figure}
+
+\subsection{Separating Meals and Insulin From Changes That Are Not Externally Predictable}
+
+\textit{The suggestion.} Prof.\ Watson noted that most major glucose changes come from outside factors such as eating and insulin, which should be filtered out, and that subtler features producing major changes, ones that are not externally predictable, would be really good to know about.
+
+\textit{What I did.} I took the part of the autoencoder summary that level and trend did not explain and asked which recorded variables explained it for patients the model had not seen. The candidates included carbohydrates, insulin doses, insulin still active in the body, basal insulin, heart rate, steps and time of day. Later, across all 215 patients from 11 studies, I asked what makes some patients harder to forecast than others.
+
+\textit{What it showed.} Meals and insulin explained almost none of what was left. The leftover tracked mainly the patient and their basal insulin setting, and it did not help predict how wrong a forecast would be. The subtler driver turned out to be how fast a patient's glucose moves. The spread of each patient's 30-minute glucose changes explained 59\% of the differences in forecast difficulty in studies left out of the fit, against 44\% for the overall spread of their glucose. It also accounted for children and closed-loop users being harder to forecast: once it was included, neither group differed clearly from the others. This answer came from following his third suggestion, and it is now one of the findings in the paper.
 
 \section{Habits of Mind and Learning Outcomes}
 
-This section lists the learning outcomes and habits of mind (HCs) used in this deliverable, each tied to a moment described above.
+This section lists the learning outcomes and habits of mind (HCs) used in this deliverable. Each entry points to the moments described in the sections above.
 
 \subsection{Capstone Learning Outcomes}
 
 \begin{description}
-\item[\#navigation] I closed the autoencoder line on October 6 when it gave no insight, and I reorganized my files and planning in early October.
-\item[\#outcomeanalysis] Every hypothesis had a success rule before its run; 36 of 85 were not supported and stay on record.
-\item[\#qualitydeliverables] I wrote this document in LaTeX in APA style, with every number checked against saved files.
-\item[\#curation] Each dataset is cataloged with its source, license and import date, and the work is filed in one folder per week.
+\item[\#navigation] The Navigation section is the main evidence for this outcome. It shows the project changing direction several times for stated reasons. After the seed bug erased the personalization gain and the whole-curve forecast came out nearly flat, I moved from forecasting to uncertainty, because accuracy is a crowded field and uncertainty looked more likely to hold a gap. After the bands raised too many false alarms, I stopped comparing band methods and looked at where the error came from, which led to the situation-aware band. I also closed lines of work when they stopped paying off: the autoencoder line in early October and the simulated patients in mid-October. When I had many small results and no clear way to tell which were real, I wrote the research protocol described in Use of Generative AI. The Planning subsection and its table compare my early October plan with what happened, and they show honestly that the research ran ahead of the plan while the documentation fell behind it.
+\item[\#outcomeanalysis] The Outcome Analysis section is built around this outcome. It explains how my idea of success changed once better warnings proved out of reach, states four success criteria for this stage, and marks each as met, mostly met or partly met, with the reason. Every test now has a rule for success saved in version control before it runs, so the verdict is judged against a bar set in advance. The outcomes are counted plainly: of 85 hypotheses in the register, 36 were not supported and five were invalidated, and all of them are kept. When the treatment labels of one group of patients turned out to be wrong, I recorded the corrected verdict in a new entry rather than quietly changing the old one.
+\item[\#qualitydeliverables] This document is written in LaTeX in APA 7 style, and I took its numbers from saved result files and the hypothesis register. The paper draft behind it already has its research methods and an explanation of the approach and the bands, and its main result was tested on eight studies never used to design it, as described in Outcome Analysis. I chose figures that each answer one question, such as the Clarke grid figure that shows what a wider band really does (Figure~\ref{fig:garchzones}), and I used a table to set the plan against what happened. Quality also meant comparing against strong baselines, deep ensembles and a network that predicts its own band, and admitting in Outcome Analysis that my method does not win on every measure. Before the Full Draft I still need a final audit of every number in the paper, as listed in Next Steps.
+\item[\#curation] I gathered and organized material from many sources so that someone else could follow it. Every dataset I imported is cataloged with its source link, license, import date, loader and location, which matters because the data come from several groups with their own terms of use. The work is filed in one folder per week, each with a summary of its hypotheses, findings and open items, and every unit of work is in a work log, as described in Working Habits and Tools. When I found mistakes, I added correction entries instead of rewriting old ones, so the history stays visible. In mid-October the MetaboNet file went missing from my computer and stopped one run, which exposed a gap in this curation: raw data that is not ours to redistribute stays out of the public repository, so it had no backup of its own.
 \end{description}
 
 \subsection{Major Learning Outcomes}
 
 \begin{description}
-\item[\#cs156-MLCode] I replicated per-patient forecasting networks and fixed the shared-seed bug in the weight search.
-\item[\#cs156-MLExplanation] In my second-reader slides, I explained in plain words what the autoencoder was meant to show, and later why it did not show enough.
-\item[\#cs166-EmpiricalAnalysis] I used simulated patients with planted sensor noise, and shuffled the situation labels to check that a gain did not come from splitting the data alone.
-\item[\#cs114-ModelSelection] I compared band methods at matched false-alarm rates and tested whether a coarser or finer situation grid changed the result.
-\item[\#cs110-CodeReadability] Shared code sits in one library, and project rules fix how scripts find files.
+\item[\#cs156-MLCode] I built and trained one CNN-LSTM forecaster per patient, a network that reads recent readings and predicts glucose 60 minutes ahead, first for the GLIMMER replication and then for 215 patients across 11 studies. When the per-patient weight search seemed to give a gain, checking the results turned up the shared random seed that made every search identical, as described in Navigation. I also trained autoencoders, five-member deep ensembles and a network that predicts its own band. The lesson I carry is that code that runs without errors can still be wrong, so every model now gets its own seed by rule.
+\item[\#cs156-MLExplanation] I had to explain what each model learned, not only how well it scored. For the autoencoder, I used PCA and then t-SNE to show that its summary had learned glucose level and trend, and a later test put a number on it: level and trend explained 87\% of the summary, as described in Feedback and How I Used It. For the bands, I mapped coverage by situation and showed that an 80\% GARCH band covered anywhere from 64\% to 95\% of readings on AZT1D depending on the situation, as described in Outcome Analysis. These explanations changed the work: the situation map became the basis of the situation-aware bands, and the autoencoder result led me to close that line.
+\item[\#cs166-EmpiricalAnalysis] In mid-October I built simulated patients whose true answer was known, and then judged that the test could not settle the question because the simulated patients were too easy to forecast, as described in Navigation. I also shuffled the situation labels many times to check that the gain from situation bands did not come from splitting the data alone. I checked how uneven coverage looks from chance alone before calling any unevenness real. Each of these is a way of asking what the result would look like if my idea were wrong.
+\item[\#cs114-ModelSelection] I compared the band methods at a matched false-alarm rate in late September, because wider bands only add alarms and would otherwise look better than they are. In mid-October I tested whether a coarser or finer situation grid changed the result and found that a moderately fine grid of level by trend is needed, not that my grid is uniquely right. I compared my band with deep ensembles \parencite{lakshminarayanan2017ensembles} and a conformalized quantile network \parencite{romano2019cqr}, and I fixed the GARCH baseline's scale before comparing, as described in How I Checked the AI's Work. These comparisons are summarized in Outcome Analysis.
+\item[\#cs110-CodeReadability] Shared code sits in one library that stays put, while each week's scripts and notebooks live in that week's folder. Project rules fix how scripts and notebooks find the repository root, so that no path depends on how deep a file sits. The rules the AI follows are written in one file it reads at the start of every session, as described in Use of Generative AI. This structure made it possible to trace the seed bug and the label error back to their source and fix them.
 \end{description}
 
 \subsection{Habits of Mind}
 
 \begin{description}
-\item[\#hypothesisdevelopment] The protocol requires each question to be one sentence about a quantity that can be measured.
-\item[\#testability] Each rule names a metric and a threshold, so a result can clearly fail.
-\item[\#gapanalysis] I record a gap as ``not found in a stated search'' and log the searches; one gap that came from AI research still needs my own confirmation.
-\item[\#studyreplication] I began by replicating GLIMMER, and the protocol says to replicate before extending.
-\item[\#dataviz] Figures are read before results are written, and paper figures are titled by the question they answer.
-\item[\#confidenceintervals] Intervals come from resampling whole patients, since readings from one patient are not independent.
-\item[\#sampling] I treat the patient as the unit, and tested the main finding on 153 patients from eight studies never used to design it.
-\item[\#biasidentification] I caught one patient making up 53\% of a dataset, and the mislabeled BrisT1D patients.
-\item[\#organization] I work from 7:30 to 9:30am with fallbacks, and keep weekly folders and a work log.
-\item[\#professionalism] After I misread what Prof.\ Watson wanted in September, I set a daily reminder to check Slack.
-\item[\#audience] I wrote the second-reader slides and this document for non-specialists, explaining each method in plain words.
+\item[\#hypothesisdevelopment] I turned vague ideas into claims that could be checked. Prof.\ Watson's suggestion about approximate entropy became one sentence: a patient's sample entropy predicts their forecast error beyond their glucose variability, by at least 15\%. The research protocol requires every question to be written this way, about a quantity that can be measured. When a test failed and I had a better design, I wrote it as a new hypothesis rather than changing the old one, as described in Use of Generative AI.
+\item[\#testability] Each rule names a measure and a threshold, so a result can clearly fail. The test on the eight outside studies, for example, required the situation bands to be at least 20\% more even than GARCH in at least six of the eight; they passed in all eight. Because the rule was saved before the run, anyone can check it. Many of my tests did fail, which is the evidence that the rules had teeth.
+\item[\#gapanalysis] In early October a literature check showed that the situation-aware method I thought was new already had a name, Mondrian conformal prediction, so I placed the contribution in what it reveals about glucose forecasts rather than in the method itself. I keep a log of the searches I ran, and I record a gap as ``not found in these searches'' rather than ``does not exist.'' The log also lists close precedents that the paper must cite, such as a study that reported band coverage by glucose range in intensive care. Writing the gap this narrowly keeps me from overclaiming.
+\item[\#studyreplication] I began the capstone by replicating GLIMMER rather than extending it straight away. The replication reproduced the main effect, more dangerous events caught, but the seed bug showed that the per-patient tuning gain did not hold, as described in Navigation. The same habit shaped the research program: a result counts as a finding only if it holds on at least two independent datasets, and as a main result only if it also holds on the outside studies.
+\item[\#dataviz] In late September I drew how the Clarke error grid zones changed as I widened the GARCH band (Figure~\ref{fig:garchzones}). The figure showed that wider bands mostly moved forecasts into zone C, the zone of unnecessary treatment, while barely reducing zone D, the dangerous misses. In early October the t-SNE map showed what the autoencoder had learned more clearly than PCA had (Figure~\ref{fig:tsne}). I read each figure before writing up a result, and I title paper figures by the question they answer. Figures are part of how I check a claim, not only how I present it.
+\item[\#confidenceintervals] Readings from one patient are not independent, so I build intervals by resampling whole patients or whole studies, not single readings. For example, children had 7.5\% higher forecast error than adults after accounting for glucose variability, with a 90\% interval of 3.3\% to 12.4\%. The protocol requires a result to still hold when patients are resampled before it counts as a finding, as described in Use of Generative AI.
+\item[\#sampling] I treat the patient as the unit of analysis. In HUPA-UCM one patient makes up 53\% of the readings, so a pooled result there could describe one person, and I report results by patient. The outside test used 153 patients from eight studies chosen by fixed rules and never used to design the method. Results from one seed or a few patients are labelled preliminary.
+\item[\#biasidentification] The biases I had to watch most were my own. After weeks of work on uncertainty bands, I had every reason to want them to work. When they failed my first test in late September, it would have been easy to hunt for a measure on which they looked good. The seed bug, described in Navigation, also showed me how easily I trust a result that looks good: the code ran without errors, and the tuned models seemed to lower the error. I guarded against these biases in three ways. I write the rule for success before each run, so I cannot move it after seeing the answer; I keep every failed test in the register; and I check the code and labels behind results before relying on them, the kind of check that surfaced both the seed bug and the wrong treatment labels. Reporting all five designs for a band that is honest by patient and by situation at once, not only the best one, was the same kind of guard against tuning a method until something won.
+\item[\#organization] Early on I kept checklists in Notion. In early October I drew a week-by-week plan on my iPad, then realized that handwriting was too slow and could not be searched or read by AI, so I rebuilt it as a Gantt chart in Notion, as described in Planning. I block 7:30 to 9:30am for the capstone, and when I noticed I was skipping it on some days I chose an earlier wake-up with fallbacks, as described in Working Habits and Tools. The weekly folders and the work log keep the research findable.
+\item[\#professionalism] OhioT1DM requires an access request, so I emailed the dataset's maintainer and followed the access form the maintainer sent, and I record each dataset's license in the catalog. When I realized in late September that I had missed what Prof.\ Watson wanted, I set a daily reminder to follow Slack more closely. I fixed broken baselines before comparing against them instead of beating weak versions, and I logged corrections openly.
+\item[\#audience] My readers include faculty outside diabetes research, so I explain each method in one plain clause the first time it appears, as in this document's descriptions of GARCH, conformal prediction and t-SNE, and I define hypoglycemia, hyperglycemia and the Clarke grid before using them. I describe band quality as whether an 80\% band really contains the true value 80\% of the time, which a reader can check without the statistics behind it.
 \end{description}
 
 \section{Next Steps Toward the Full Draft}
 
-The Full Draft is due December 11, 2026. Most of the remaining work is writing. The paper draft already has the abstract, introduction, data and methods. What remains is to write the results and discussion around the main finding: an honest band needs a fixed adjustment for the situation and a slow adjustment for each patient, learned while the band is in use. I am also moving the writing from Google Docs to LaTeX, which handles the structure of a paper better and is easier to work on with the AI.
+I now have a wide body of research: 85 hypotheses in the register across 11 studies, with a main result that holds on eight studies never used to design it. What I do not yet have is one clear paper. The next stage is to shape this work into a single argument and to decide which results belong in it and which stay in the supplement.
 
-I still need to choose a target venue, since the venue sets the length and format. \todo{TO FILL: candidate venues and how I will choose}
+The capstone requirements may already be met by this work, but a publishable paper may need expanded research. The current version of the paper has the research methods, an explanation of the approach, and the use of the forecasting model to create bands that stay consistent with their stated coverage across situations and patients. What remains is to write the results and discussion around the main finding: an honest band needs a fixed adjustment for the situation and a slow adjustment for each patient, learned while the band is in use.
 
-Two optional checks are blocked by the missing MetaboNet file: comparing my bands against deep ensembles on OhioT1DM, and repeating the analysis on a larger panel of up to 60 patients per held-out study. The paper does not depend on either, so I will download the file again and run them if time allows. Before the Full Draft I will also audit every number in the paper against its result file and bring the paper supplement up to date with the register.
+I may also expand the research in a different direction. I collected proceedings from the AAAI Conference on Artificial Intelligence to see what current research there looks like and which directions it values. After reading them, I will decide whether the present framing fits, or whether the paper needs an extension to be competitive there. \todo{TO FILL: which direction I take after reading the AAAI proceedings, whether I target AAAI or another venue, and what I think its reviewers will ask for first}
 
-The Second Presentation, the Go or No Go review, is on November 20. \todo{TO FILL: what I want to have ready for the November 20 presentation}
+Several practical items remain before the Full Draft, which is due December 11, 2026:
+
+\begin{itemize}
+\item Audit every number in the paper against its result file, and bring the paper supplement up to date with the hypothesis register, which has grown since the supplement was made.
+\item Restore the MetaboNet file and, if time allows, run the two optional checks it blocks: comparing my bands with deep ensembles on OhioT1DM, and repeating the analysis on a larger panel of up to 60 patients per held-out study. The paper does not depend on either.
+\item Move the paper itself into LaTeX, as I did for this document, since LaTeX handles the structure of a paper better than Google Docs and is easier to work on with the AI.
+\end{itemize}
+
+The Second Presentation, the go or no-go review, is on November 20. By then I want the direction of the paper settled, so that the remaining weeks go to writing rather than new research. \todo{TO FILL: what I want to have ready for the November 20 presentation}
