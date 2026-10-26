@@ -1,0 +1,34 @@
+% Capstone paper (work product), initial draft for the Midterm Deliverable. APA 7 student paper.
+% Build: pdflatex main && biber main && pdflatex main && pdflatex main
+\documentclass[stu,12pt,donotrepeattitle,floatsintext]{apa7}
+
+\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[style=apa,backend=biber]{biblatex}
+\addbibresource{references.bib}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\hypersetup{hidelinks}
+
+% Visible placeholders for planned or unchecked content.
+\newcommand{\todo}[1]{\textcolor{red!70!black}{[#1]}}
+
+\input{title.tex}
+\authorsnames{Tomer Weissman}
+\authorsaffiliations{Minerva University}
+\course{CP193: Capstone Directed Study I (Machine Learning)}
+\professor{Prof. Watson}
+\duedate{October 31, 2026}
+
+\abstract{\input{abstract.tex}}
+
+\begin{document}
+\maketitle
+
+\input{body.tex}
+
+\printbibliography
+
+\end{document}

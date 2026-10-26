@@ -665,3 +665,12 @@ commits: pending (this commit)
 runtime: rewrite workflow 7 min (6 agents: 3 writers, 3 definition-alignment critics); definitions read from the HC handbook (myMinerva), Forum outcome index and the Capstone Handbook
 outcome: Overview now names catching my own errors and deep understanding as what I am proudest of (protocol only in the AI section); passion sentence simplified; Slack paragraph removed. Outcome Analysis rewritten qualitatively (model deliverables, four own outcomes, experiential assessment, high-level HC/LO reflection). All capstone LOs, major LOs (official Forum wording, #cs156-MLExplaination spelling) and 12 HCs rewritten against handbook definitions and pitfalls; #biasidentification now names my own cognitive biases (sunk cost, confirmation bias, working-code heuristic, planning fallacy) and #biasmitigation added. 36 pages.
 notes: placeholders added for proofreading (#professionalism), tailoring the second-reader slides (#audience), and the HC/LO plan reflection (#outcomeanalysis). Tomer to confirm #testability was added when he revisited the plan (repo shows it as a suggested addition).
+
+## 2026-10-25 | 12_10 | Initial paper draft (work product) and combined Midterm PDF
+type: docs
+status: done
+files: capstone/paper/ (main.tex, title.tex, abstract.tex, body.tex, references.bib, main.pdf, figures/situation_vs_garch.png, figures/external_situation_distance.png), capstone/midterm/build.sh, capstone/midterm/Weissman_Midterm_Deliverable.pdf, capstone/process_doc/body.tex, capstone/process_doc/main.pdf
+commits: pending (this commit)
+runtime: drafting workflow 8 min (10 agents: 4 section writers, 4 fact-checkers, 1 editor, 1 reference verifier)
+outcome: 20-page APA initial paper: introduction, related work, full Data section with a study table, core Methods (forecaster, situations, GARCH and situation-aware bands, consistency measures) with remaining methods as planned stubs, short initial Results on consistency across situations (pooled 11 studies; all 8 held-out studies), short Discussion. Combined with the process documentation into one 56-page Midterm PDF (paper first).
+notes: corrected the process documentation: the mid-October rescaling was of GARCH used as an error-size predictor, not the GARCH band (WORK_LOG Oct 17; group_bands.garch uses z*sigma as fitted). External figure cropped to its left panel with the hypothesis ID removed from the title. Open: 5 \todo{CITE} placeholders for recent glucose-uncertainty papers, HUPA-UCM filler exclusion check, cover sheet not yet added.
