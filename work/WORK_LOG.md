@@ -656,3 +656,12 @@ commits: pending (this commit)
 runtime: revision workflow 8 min (10 agents: 4 rewriters, 4 checklist and fact checkers, 1 editor, 1 reference verifier); compile under a minute
 outcome: 30-page draft. Removed: Project Brief mention, external-validation sentence, three-axes figure, Setbacks, Modeling Professional Process, pre-registration/evidence tiers, annotated AI examples, Volkan's feedback, slides paragraph. Added: hypo/hyperglycemia definitions, band-edge warning and Clarke grid explanations with figures, methods-alike figure, situation-aware result as the chosen direction with a heat-map figure, planning progression (Notion checklists, iPad, Gantt), research protocol as the centrepiece of the AI section, longer HC and LO entries (#biasidentification about personal bias), rewritten Outcome Analysis and Next Steps. Clarke 1987 reference added and verified.
 notes: 5 placeholders remain for Tomer (rebalancing plan, confirming success criteria, how he reads the AI's code, AAAI direction, Nov 20 goals). Journal quotes taken from Notion should be confirmed by Tomer.
+
+## 2026-10-25 | 12_10 | Process documentation: HCs, LOs and Outcome Analysis aligned with official definitions
+type: docs
+status: done
+files: capstone/process_doc/body.tex, capstone/process_doc/main.pdf
+commits: pending (this commit)
+runtime: rewrite workflow 7 min (6 agents: 3 writers, 3 definition-alignment critics); definitions read from the HC handbook (myMinerva), Forum outcome index and the Capstone Handbook
+outcome: Overview now names catching my own errors and deep understanding as what I am proudest of (protocol only in the AI section); passion sentence simplified; Slack paragraph removed. Outcome Analysis rewritten qualitatively (model deliverables, four own outcomes, experiential assessment, high-level HC/LO reflection). All capstone LOs, major LOs (official Forum wording, #cs156-MLExplaination spelling) and 12 HCs rewritten against handbook definitions and pitfalls; #biasidentification now names my own cognitive biases (sunk cost, confirmation bias, working-code heuristic, planning fallacy) and #biasmitigation added. 36 pages.
+notes: placeholders added for proofreading (#professionalism), tailoring the second-reader slides (#audience), and the HC/LO plan reflection (#outcomeanalysis). Tomer to confirm #testability was added when he revisited the plan (repo shows it as a suggested addition).
