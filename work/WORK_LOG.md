@@ -683,3 +683,20 @@ commits: pending (this commit)
 runtime: edits by hand; figure redraw and compile under a minute
 outcome: "studies" changed to "datasets" throughout. Draft and status wording and all red PLANNED blocks removed. Only one red note remains: analyses by patient and by day. Abstract now defines a situation and separates the 60-minute horizon from the 30-minute trend. New table of level and trend cutoffs, with the reason for each level edge: 70, 180 and 250 from Battelino 2019; 120 is our own split. Removed: the literature-search gap paragraph, the false OhioT1DM "no reply" sentence, the therapy-label caveat, the noise floor and bootstrap paragraphs (no result in the draft uses them), and the Planned Results section. Added plain explanations: windows and the 64/16/20 split, what is combined each time results are pooled, the region input, and why the band uses z_0.9. HUPA-UCM filler stated as a kept limitation. Seed caveat stated once, with the H75 second-seed agreement. License details moved to a Data Availability section. CITE placeholders replaced with verified Rodriguez-Almeida 2025 and Tan and McBeth 2026; the MAKE, Zhu and Technologies sentences were cut. Figure 2 redrawn without the per-patient bars. Paper is 19 pages; the Midterm PDF is 55.
 notes: Removed planned items stay on the plan: robustness forecasters, the 60-per-dataset panel, band extensions (GARCH-normalized, online per-patient scale, cold start, baselines), and further analyses. The MetaboNet-Bench license claim was checked against its Table 3. Week 26_10 has not been started yet.
+
+## 2026-10-27 | 12_10 | Midterm slides reworked: one claim and its evidence per slide
+type: docs
+status: done
+files: slide deck artifact (private, claude.ai), not in the repo
+commits: pending (this commit)
+runtime: under a minute of computation (per-situation widths and per-patient coverage on AZT1D from cached frames)
+outcome: Kept the 8-point structure. Each slide now has a headline that states its claim and one piece of evidence:
+- GLIMMER replication: 51% to 72% of events caught; worse RMSE; the per-patient gain was a seed bug (37.4 to 41.1).
+- Field focuses on accuracy: GLIMMER, Gluformer, TFT examples.
+- Bands decide warnings: 68 to 100% false alarms with ordinary bands.
+- Methods alike: 74 to 76.5% caught at matched false alarms.
+- One rule is wrong by situation: GARCH grid, 62% vs 90%.
+- Situations need different widths: AZT1D full width 56 to 138 mg/dL.
+- Outcome: 62 to 91% vs 72 to 82%.
+- Next steps: per-patient coverage of situation-aware bands on AZT1D still 55 to 90%.
+notes: The new numbers came from this session's run of group_bands on cached AZT1D frames (situation_mondrian half-widths times 2, averaged per situation; coverage per patient). On the same data, per-patient coverage for GARCH is 72.5 to 88.1%.
